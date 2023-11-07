@@ -1,5 +1,6 @@
 import AuthRoute from "./Auth.route.js"
 import UserRoute from "./marketing/User.route.js";
+import MobilRoute from "./marketing/Mobil.route.js";
 import TipeBoxRoute from "./marketing/TipeBox.route.js";
 import RekeningRoute from "./marketing/Rekening.route.js";
 import KualitasRoute from "./marketing/Kualitas.route.js";
@@ -11,6 +12,7 @@ class PrimaryHandler {
     constructor(Server) {
         new AuthRoute(Server);
         new UserRoute(Server);
+        new MobilRoute(Server);
         new TipeBoxRoute(Server);
         new RekeningRoute(Server);
         new KualitasRoute(Server);
