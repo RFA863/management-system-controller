@@ -1,0 +1,67 @@
+import UserModel from "../../../models/User.model.js";
+
+class UserService {
+    constructor(Server) {
+        this.Server = Server;
+        this.API = this.Server.API;
+        this.UserModel = new UserModel(this.Server).table;
+    }
+
+    async input(data) {
+        const getUser = await this.UserModel.findOne({
+            where: {
+                email: data.email,
+                password: data.password,
+                posisi: data.posisi,
+                akses: data.akses
+            }
+        })
+
+        if (getUser !== null) return -1;
+
+        const addUser = await this.UserModel.create({
+            email: data.email,
+            password: data.password,
+            posisi: data.posisi,
+            akses: data.akses
+        })
+
+        return addUser;
+    }
+
+    async get() {
+        const getUser = await this.UserModel.findAll();
+
+        if (getUser.length === 0) return -1;
+
+        return getUser;
+    }
+
+    async update(data, id) {
+        const updateUser = await this.UserModel.update({
+            email: data.email,
+            password: data.password,
+            posisi: data.posisi,
+            akses: data.akses
+        }, {
+            where: {
+                id: id
+            }
+        })
+
+        return updateUser;
+    }
+
+    async delete(id) {
+        const deleteUser = await this.UserModel.destroy({
+            where: {
+                id: id
+            }
+        })
+
+        return deleteUser;
+    }
+
+}
+
+export default UserService;
