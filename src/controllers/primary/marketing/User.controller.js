@@ -15,7 +15,7 @@ class UserController {
     }
 
     async input(req, res) {
-        if (req.middlewares.authorization.marketing !== true)
+        if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
                 messagge: "Forbidden",
             });
@@ -38,7 +38,7 @@ class UserController {
     }
 
     async get(req, res) {
-        if (req.middlewares.authorization.marketing !== true)
+        if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
                 messagge: "Forbidden",
             });
@@ -53,7 +53,7 @@ class UserController {
     }
 
     async update(req, res) {
-        if (req.middlewares.authorization.marketing !== true)
+        if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
                 messagge: "Forbidden",
             });
@@ -73,7 +73,7 @@ class UserController {
     }
 
     async delete(req, res) {
-        if (req.middlewares.authorization.marketing !== true)
+        if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
                 messagge: "Forbidden",
             });

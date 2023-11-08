@@ -1,18 +1,17 @@
 import Ajv from "ajv";
 
 import ResponsePreset from "../../../helpers/ResponsePreset.helper.js";
-import RekeningService from "../../../services/primary/marketing/Rekening.service.js";
-import RekeningValidator from "../../../validators/primary/marketing/Rekening.validator.js";
+import SupirService from "../../../services/primary/marketing/Supir.service.js";
+import SupirValidator from "../../../validators/primary/marketing/Supir.validator.js";
 
-
-class RekeningController {
+class SupirController {
     constructor(Server) {
         this.Server = Server;
         this.API = this.Server.API;
         this.Ajv = new Ajv();
         this.ResponsePreset = new ResponsePreset();
-        this.RekeningValidator = new RekeningValidator();
-        this.RekeningService = new RekeningService(this.Server);
+        this.SupirValidator = new SupirValidator();
+        this.SupirService = new SupirService(this.Server);
     }
 
     async input(req, res) {
@@ -21,14 +20,14 @@ class RekeningController {
                 messagge: "Forbidden",
             });
 
-        const schemaValidate = this.Ajv.compile(this.RekeningValidator.inputRekening)
+        const schemaValidate = this.Ajv.compile(this.SupirValidator.inputSupir)
         if (!schemaValidate(req.body))
             return res.status(400).json(this.ResponsePreset.resErr(
                 "400", schemaValidate.errors[0].message, "validator", schemaValidate.errors[0]
             ))
 
         const data = req.body;
-        const inputSrv = await this.RekeningService.input(data);
+        const inputSrv = await this.SupirService.input(data);
 
         if (inputSrv === -1)
             return res.status(403).json(this.ResponsePreset.resErr(
@@ -44,14 +43,13 @@ class RekeningController {
                 messagge: "Forbidden",
             });
 
-        const getSrv = await this.RekeningService.get();
+        const getSrv = await this.SupirService.get();
 
         if (getSrv === -1)
             return res.status(404).json(this.ResponsePreset.resErr(
-                "404", "Forbiden, Data Not Found", "Service", { code: -1 }));
+                "404", "Data not Found", "service", { code: -1 }));
 
         res.status(200).json(this.ResponsePreset.resOK("Ok", getSrv));
-
     }
 
     async update(req, res) {
@@ -60,7 +58,7 @@ class RekeningController {
                 messagge: "Forbidden",
             });
 
-        const schemaValidate = this.Ajv.compile(this.RekeningValidator.inputRekening)
+        const schemaValidate = this.Ajv.compile(this.SupirValidator.inputSupir)
         if (!schemaValidate(req.body))
             return res.status(400).json(this.ResponsePreset.resErr(
                 "400", schemaValidate.errors[0].message, "validator", schemaValidate.errors[0]
@@ -69,7 +67,7 @@ class RekeningController {
         const data = req.body;
         const id = req.params.id;
 
-        const updateSrv = await this.RekeningService.update(data, id);
+        const updateSrv = await this.SupirService.update(data, id);
 
         res.status(200).json(this.ResponsePreset.resOK("Ok", null));
     }
@@ -82,12 +80,10 @@ class RekeningController {
 
         const id = req.params.id;
 
-        const deleteSrv = await this.RekeningService.delete(id);
+        const deleteSrv = await this.SupirService.delete(id);
 
         res.status(200).json(this.ResponsePreset.resOK("Ok", null));
-
     }
-
 }
 
-export default RekeningController;
+export default SupirController;

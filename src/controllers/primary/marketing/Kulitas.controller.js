@@ -15,7 +15,7 @@ class KualitasController {
     }
 
     async input(req, res) {
-        if (req.middlewares.authorization.marketing !== true)
+        if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
                 messagge: "Forbidden",
             });
@@ -39,7 +39,7 @@ class KualitasController {
     }
 
     async get(req, res) {
-        if (req.middlewares.authorization.marketing !== true)
+        if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
                 messagge: "Forbidden",
             });
@@ -54,7 +54,7 @@ class KualitasController {
     }
 
     async update(req, res) {
-        if (req.middlewares.authorization.marketing !== true)
+        if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
                 messagge: "Forbidden",
             });
@@ -74,7 +74,7 @@ class KualitasController {
     }
 
     async delete(req, res) {
-        if (req.middlewares.authorization.marketing !== true)
+        if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
                 messagge: "Forbidden",
             });

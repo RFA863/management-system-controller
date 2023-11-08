@@ -15,7 +15,7 @@ class MobilController {
     }
 
     async input(req, res) {
-        if (req.middlewares.authorization.marketing === false)
+        if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
                 messagge: "Forbidden",
             });
@@ -38,7 +38,7 @@ class MobilController {
     }
 
     async get(req, res) {
-        if (req.middlewares.authorization.marketing === false)
+        if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
                 messagge: "Forbidden",
             });
@@ -53,7 +53,7 @@ class MobilController {
     }
 
     async update(req, res) {
-        if (req.middlewares.authorization.marketing === false)
+        if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
                 messagge: "Forbidden",
             });
@@ -73,7 +73,7 @@ class MobilController {
     }
 
     async delete(req, res) {
-        if (req.middlewares.authorization.marketing === false)
+        if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
                 messagge: "Forbidden",
             });

@@ -15,7 +15,7 @@ class RumusIndexController {
     }
 
     async input(req, res) {
-        if (req.middlewares.authorization.marketing !== true)
+        if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
                 messagge: "Forbidden",
             });
@@ -38,7 +38,7 @@ class RumusIndexController {
     }
 
     async get(req, res) {
-        if (req.middlewares.authorization.marketing !== true)
+        if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
                 messagge: "Forbidden",
             });
@@ -55,7 +55,7 @@ class RumusIndexController {
     }
 
     async update(req, res) {
-        if (req.middlewares.authorization.marketing !== true)
+        if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
                 messagge: "Forbidden",
             });
@@ -76,7 +76,7 @@ class RumusIndexController {
     }
 
     async delete(req, res) {
-        if (req.middlewares.authorization.marketing !== true)
+        if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
                 messagge: "Forbidden",
             });

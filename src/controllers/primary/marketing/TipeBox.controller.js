@@ -17,7 +17,7 @@ class TipeBoxController {
     }
 
     async input(req, res) {
-        if (req.middlewares.authorization.marketing !== true)
+        if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
                 messagge: "Forbidden",
             });
@@ -40,7 +40,8 @@ class TipeBoxController {
     }
 
     async get(req, res) {
-        if (req.middlewares.authorization.marketing !== true)
+        ;
+        if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
                 messagge: "Forbidden",
             });
@@ -56,7 +57,7 @@ class TipeBoxController {
     }
 
     async update(req, res) {
-        if (req.middlewares.authorization.marketing !== true)
+        if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
                 messagge: "Forbidden",
             });
@@ -76,7 +77,7 @@ class TipeBoxController {
     }
 
     async delete(req, res) {
-        if (req.middlewares.authorization.marketing !== true)
+        if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
                 messagge: "Forbidden",
             });
