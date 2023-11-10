@@ -1,9 +1,11 @@
 import RumusIndexModel from "../../../models/RumusIndex.model.js"
+import TipeBoxModel from "../../../models/TipeBox.model.js";
 
 class RumusIndexService {
     constructor(Server) {
         this.Server = Server;
         this.API = this.Server.API;
+        this.TipeBoxModel = new TipeBoxModel(this.Server).table;
         this.RumusIndexModel = new RumusIndexModel(this.Server).table;
     }
 
@@ -11,7 +13,6 @@ class RumusIndexService {
         const getRumusIndex = await this.RumusIndexModel.findOne({
             where: {
                 id_tipebox: id,
-                nama: data.nama,
                 rumuspanjang: data.rumusPanjang,
                 rumuslebar: data.rumusLebar,
                 rumusoversize: data.rumusOversize,
@@ -23,7 +24,6 @@ class RumusIndexService {
 
         const addRumusIndex = await this.RumusIndexModel.create({
             id_tipebox: id,
-            nama: data.nama,
             rumuspanjang: data.rumusPanjang,
             rumuslebar: data.rumusLebar,
             rumusoversize: data.rumusOversize,
@@ -40,6 +40,16 @@ class RumusIndexService {
             }
         });
 
+        for (let i in getRumusIndex) {
+            const getTipeBox = await this.TipeBoxModel.findAll({
+                where: {
+                    id: getRumusIndex[i].dataValues.id_tipebox,
+                }
+            })
+
+            getRumusIndex[i].dataValues.TipeBox = getTipeBox.map((val) => val.dataValues.nama);
+        }
+
         if (getRumusIndex.length === 0) return -1;
 
         return getRumusIndex;
@@ -47,7 +57,6 @@ class RumusIndexService {
 
     async update(data, id) {
         const updateRumusIndex = await this.RumusIndexModel.update({
-            nama: data.nama,
             rumuspanjang: data.rumusPanjang,
             rumuslebar: data.rumusLebar,
             rumusoversize: data.rumusOversize,

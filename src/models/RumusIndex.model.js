@@ -21,10 +21,6 @@ class RumusIndexModel {
                         key: "id",
                     },
                 },
-                nama: {
-                    type: DataTypes.STRING(50),
-                    allowNull: false,
-                },
                 rumuspanjang: {
                     type: DataTypes.STRING(50),
                     allowNull: false,

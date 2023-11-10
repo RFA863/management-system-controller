@@ -2,12 +2,6 @@ class RumusIndexValidator {
     inputRumusIndex = {
         type: "object",
         properties: {
-            nama: {
-                type: "string",
-                maxLength: 50,
-                minLength: 1,
-                nullable: false,
-            },
             rumusPanjang: {
                 type: "string",
                 maxLength: 50,
@@ -34,7 +28,7 @@ class RumusIndexValidator {
             },
         },
 
-        required: ["nama", "rumusPanjang", "rumusLebar", "rumusOversize", "rumusTotal"],
+        required: ["rumusPanjang", "rumusLebar", "rumusOversize", "rumusTotal"],
         additionalProperties: false,
     };
 }

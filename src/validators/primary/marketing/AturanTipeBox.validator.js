@@ -9,15 +9,9 @@ class AturanTipeBoxValidator {
                 nullable: false,
             },
 
-            aturan: {
-                type: "string",
-                maxLength: 50,
-                minLength: 1,
-                nullable: false,
-            },
         },
 
-        required: ["nama", "aturan"],
+        required: ["nama"],
         additionalProperties: false,
     };
 }

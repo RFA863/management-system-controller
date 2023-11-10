@@ -1,10 +1,12 @@
 import AturanTipeBoxModel from "../../../models/AturanTipeBox.model.js";
+import TipeBoxModel from "../../../models/TipeBox.model.js";
 
 class AturanTipeBoxService {
     constructor(Server) {
         this.Server = Server;
         this.API = this.Server.API;
         this.AturanTipeBoxModel = new AturanTipeBoxModel(this.Server).table;
+        this.TipeBoxModel = new TipeBoxModel(this.Server).table;
     }
 
     async input(data, id) {
@@ -12,7 +14,7 @@ class AturanTipeBoxService {
             where: {
                 id_tipebox: id,
                 nama: data.nama,
-                aturan: data.aturan,
+
             }
         })
 
@@ -21,7 +23,6 @@ class AturanTipeBoxService {
         const addAturanTipeBox = await this.AturanTipeBoxModel.create({
             id_tipebox: id,
             nama: data.nama,
-            aturan: data.aturan,
         })
 
         return addAturanTipeBox;
@@ -34,6 +35,17 @@ class AturanTipeBoxService {
                 id_tipebox: id,
             }
         })
+
+        for (let i in getAturanTipeBox) {
+            const getTipeBox = await this.TipeBoxModel.findAll({
+                where: {
+                    id: getAturanTipeBox[i].dataValues.id_tipebox,
+                }
+            })
+
+            getAturanTipeBox[i].dataValues.TipeBox = getTipeBox.map((val) => val.dataValues.nama)
+        }
+
         if (getAturanTipeBox.length === 0) return -1;
 
         return getAturanTipeBox;
@@ -42,7 +54,6 @@ class AturanTipeBoxService {
     async update(data, id) {
         const updateAturanTipeBox = await this.AturanTipeBoxModel.update({
             nama: data.nama,
-            aturan: data.aturan,
         }, {
             where: {
                 id: id

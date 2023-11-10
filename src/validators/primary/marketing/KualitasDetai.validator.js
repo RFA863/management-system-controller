@@ -4,7 +4,7 @@ class KualitasDetailValidator {
         properties: {
             id_kualitas: {
                 type: "number",
-                maximum: 11,
+                maximum: 1000,
                 minimum: 1,
                 nullable: false,
             },

@@ -16,14 +16,12 @@ CREATE TABLE aturan_tipebox (
 id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 id_tipebox INT NOT NULL,
 nama VARCHAR(50) NOT NULL,
-aturan VARCHAR(50) NOT NULL,
 FOREIGN KEY (id_tipebox) REFERENCES tipebox(id)
 );
 
 CREATE TABLE rumusindex (
 id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 id_tipeBox INT NOT NULL,
-nama VARCHAR(50) NOT NULL,
 rumuspanjang VARCHAR(50) NOT NULL,
 rumuslebar VARCHAR(50) NOT NULL,
 rumusoversize VARCHAR(50) NOT NULL,
@@ -60,4 +58,27 @@ noplat VARCHAR(50) NOT NULL
 CREATE TABLE supir (
 id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 nama VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE customer (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nomor INT NOT NULL,
+    nama VARCHAR(50) NOT NULL,
+    kode VARCHAR(25) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    npwp BOOL NOT NULL,
+    nonpwp VARCHAR(25),
+    notelp VARCHAR(25) NOT NULL, 
+    nofax VARCHAR(25),  
+    alamat VARCHAR(50) NOT NULL,
+    alamatinvoice VARCHAR(50) NOT NULL 
+);
+
+CREATE TABLE index_table (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  id_customer INT NOT NULL,
+  id_kualitasdetail INT NOT NULL,
+  indexvalue INT(25) NOT NULL,
+  FOREIGN KEY (id_customer) REFERENCES customer(id),
+  FOREIGN KEY (id_kualitasdetail) REFERENCES kualitas_detail(id)
 );

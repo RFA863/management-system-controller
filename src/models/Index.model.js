@@ -1,11 +1,11 @@
 // Library
 import { DataTypes } from "sequelize";
 
-class AturanTipeBoxModel {
+class IndexModel {
     constructor(server) {
 
         const table = server.model.db.define(
-            "aturan_tipebox",
+            "index_table",
             {
                 id: {
                     type: DataTypes.INTEGER,
@@ -13,23 +13,33 @@ class AturanTipeBoxModel {
                     primaryKey: true,
                     autoIncrement: true,
                 },
-                id_tipebox: {
+                id_customer: {
                     type: DataTypes.INTEGER,
                     allowNull: false,
                     references: {
-                        model: "tipebox",
+                        model: "customer",
                         key: "id",
                     },
                 },
-                nama: {
-                    type: DataTypes.STRING(50),
+
+                id_kualitasdetail: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false,
+                    references: {
+                        model: "kualitas_detail",
+                        key: "id",
+                    },
+                },
+
+                indexvalue: {
+                    type: DataTypes.INTEGER(25),
                     allowNull: false,
                 },
 
             },
 
             {
-                tableName: "aturan_tipebox",
+                tableName: "index_table",
                 timestamps: false,
             }
         );
@@ -38,4 +48,4 @@ class AturanTipeBoxModel {
     }
 }
 
-export default AturanTipeBoxModel;
+export default IndexModel;
