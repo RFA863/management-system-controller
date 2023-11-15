@@ -14,7 +14,7 @@ class CustomerService {
             }
         });
 
-        console.log(data);
+
         if (getCustomer !== null) return -1;
         if (data.npwp === true && data.noNpwp.trim() === '') return -2;
         if (data.npwp === false && data.noNpwp.trim() !== '') return -3;
@@ -36,9 +36,7 @@ class CustomerService {
     }
 
     async get() {
-        const getCustomer = await this.CustomerModel.findAll({
-            attributes: ['id', 'nomor', 'nama', 'kode', 'email', 'npwp', 'nonpwp']
-        })
+        const getCustomer = await this.CustomerModel.findAll()
 
         if (getCustomer.length === 0) return -1;
 

@@ -82,3 +82,14 @@ CREATE TABLE index_table (
   FOREIGN KEY (id_customer) REFERENCES customer(id),
   FOREIGN KEY (id_kualitasdetail) REFERENCES kualitas_detail(id)
 );
+
+CREATE TABLE orders (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  id_customer INT NOT NULL,
+  no_po VARCHAR(255) NOT NULL,
+  tanggal_order DATE NOT NULL,
+  tanggal_kirim DATE NOT NULL,
+  created_at DATE NOT NULL,
+  updated_at DATE NOT NULL,
+  FOREIGN KEY (id_customer) REFERENCES customer(id)
+  );

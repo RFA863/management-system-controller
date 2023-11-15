@@ -10,6 +10,7 @@ class TipeBoxService {
 
     async input(data) {
 
+
         const getTipeBox = await this.TipeBoxModel.findOne({
             where: {
                 nama: data.nama,
