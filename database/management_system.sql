@@ -93,3 +93,32 @@ CREATE TABLE orders (
   updated_at DATE NOT NULL,
   FOREIGN KEY (id_customer) REFERENCES customer(id)
   );
+
+  CREATE TABLE tipebox_detail (
+  id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  id_tipebox INT(11) NOT NULL,
+  nama VARCHAR(255) ,
+  rumus_panjang VARCHAR(255)  NOT NULL ,
+  rumus_lebar VARCHAR(255)  NOT NULL,
+  rumus_oversize VARCHAR(255)  NOT NULL,
+  konstanta_panjang BOOLEAN  NOT NULL,
+  konstanta_lebar BOOLEAN  NOT NULL,
+  created_at DATETIME NOT NULL,
+  updated_at DATETIME NOT NULL,
+ FOREIGN KEY (id_tipebox) REFERENCES tipebox(id)
+);
+
+CREATE TABLE kualitas_tipebox (
+  id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  id_tipebox INT(11) NOT NULL,
+  id_kualitas INT(11) NOT NULL,
+  konstanta_panjang INT(11) NOT NULL,
+  konstanta_lebar_ganjil INT(11) NOT NULL,
+  konstanta_lebar_genap INT(11) NOT NULL,
+  kuping INT(11) NOT NULL,
+  created_at DATETIME NOT NULL,
+  updated_at DATETIME NOT NULL,
+  FOREIGN KEY (id_tipebox) REFERENCES tipebox(id),
+  FOREIGN KEY (id_kualitas) REFERENCES kualitas(id)
+);
+

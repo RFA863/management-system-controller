@@ -19,13 +19,11 @@ class OrderValidator {
 
             tanggalOrder: {
                 type: "string",
-                // format: "date",
                 nullable: false,
             },
 
             tanggalKirim: {
                 type: "string",
-                // format: "date",
                 nullable: false,
             },
         },

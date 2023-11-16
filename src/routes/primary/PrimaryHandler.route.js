@@ -10,7 +10,9 @@ import KualitasRoute from "./marketing/Kualitas.route.js";
 import CustomerRoute from "./marketing/Customer.route.js";
 import RumusIndexRoute from "./marketing/RumusIndex.route.js";
 import AturanTipeBoxRoute from "./marketing/AturanTipeBox.route.js";
+import TipeBoxDetailRoute from "./marketing/TipeBoxDetail.route.js";
 import KualitasDetailRoute from "./marketing/KualitasDetail.route.js";
+import KualitasTipeBoxRoute from "./marketing/KualitasTipeBox.route.js";
 
 class PrimaryHandler {
     constructor(Server) {
@@ -26,7 +28,9 @@ class PrimaryHandler {
         new CustomerRoute(Server);
         new RumusIndexRoute(Server);
         new AturanTipeBoxRoute(Server);
+        new TipeBoxDetailRoute(Server);
         new KualitasDetailRoute(Server);
+        new KualitasTipeBoxRoute(Server);
     }
 }
 
