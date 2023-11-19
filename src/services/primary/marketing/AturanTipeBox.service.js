@@ -23,6 +23,8 @@ class AturanTipeBoxService {
         const addAturanTipeBox = await this.AturanTipeBoxModel.create({
             id_tipebox: id,
             nama: data.nama,
+            created_at: new Date(),
+            updated_at: new Date(),
         })
 
         return addAturanTipeBox;
@@ -54,6 +56,7 @@ class AturanTipeBoxService {
     async update(data, id) {
         const updateAturanTipeBox = await this.AturanTipeBoxModel.update({
             nama: data.nama,
+            updated_at: new Date(),
         }, {
             where: {
                 id: id

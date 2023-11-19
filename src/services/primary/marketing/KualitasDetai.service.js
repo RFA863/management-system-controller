@@ -24,6 +24,8 @@ class KualitasDetailService {
             id_kualitas: data.id_kualitas,
             nama: data.nama,
             kode: data.kode,
+            created_at: new Date(),
+            updated_at: new Date(),
         })
 
         return addKualitasDetail;
@@ -52,6 +54,7 @@ class KualitasDetailService {
             id_kualitas: data.id_kualitas,
             nama: data.nama,
             kode: data.kode,
+            updated_at: new Date(),
         }, {
             where: {
                 id: id,

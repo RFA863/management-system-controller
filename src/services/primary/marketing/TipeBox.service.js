@@ -23,6 +23,8 @@ class TipeBoxService {
         const addTipeBox = await this.TipeBoxModel.create({
             nama: data.nama,
             kode: data.kode,
+            created_at: new Date(),
+            updated_at: new Date(),
         })
 
         return addTipeBox;
@@ -40,6 +42,7 @@ class TipeBoxService {
         const updateTipeBox = await this.TipeBoxModel.update({
             nama: data.nama,
             kode: data.kode,
+            updated_at: new Date(),
         }, {
             where: {
                 id: id

@@ -24,6 +24,8 @@ class RekeningService {
             norekening: data.noRekening,
             atasnama: data.atasNama,
             ct: data.ct,
+            created_at: new Date(),
+            updated_at: new Date(),
         })
 
         return addRekening;
@@ -46,6 +48,7 @@ class RekeningService {
             norekening: data.noRekening,
             atasnama: data.atasNama,
             ct: data.ct,
+            updated_at: new Date(),
         }, {
             where: {
                 id: id

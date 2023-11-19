@@ -4,14 +4,12 @@ class IndexValidator {
         properties: {
             id_customer: {
                 type: "number",
-                maximum: 1000,
                 minimum: 1,
                 nullable: false,
             },
 
             id_kualitasDetail: {
                 type: "number",
-                maximum: 1000,
                 minimum: 1,
                 nullable: false,
             },

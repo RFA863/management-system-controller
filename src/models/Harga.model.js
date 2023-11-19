@@ -1,11 +1,11 @@
 // Library
 import { DataTypes } from "sequelize";
 
-class KualitasTipeBoxModel {
+class HargaModel {
     constructor(server) {
 
         const table = server.model.db.define(
-            "kualitas_tipebox",
+            "harga",
             {
                 id: {
                     type: DataTypes.INTEGER,
@@ -13,7 +13,22 @@ class KualitasTipeBoxModel {
                     primaryKey: true,
                     autoIncrement: true,
                 },
-
+                id_order: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false,
+                    references: {
+                        model: "orders",
+                        key: "id",
+                    },
+                },
+                id_job: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false,
+                    references: {
+                        model: "job",
+                        key: "id",
+                    },
+                },
                 id_tipebox: {
                     type: DataTypes.INTEGER,
                     allowNull: false,
@@ -22,35 +37,53 @@ class KualitasTipeBoxModel {
                         key: "id",
                     },
                 },
-
-                id_kualitas: {
+                id_kualitas_detail: {
                     type: DataTypes.INTEGER,
                     allowNull: false,
                     references: {
-                        model: "kualitas",
+                        model: "kualitas_detail",
                         key: "id",
                     },
                 },
+                id_index: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false,
+                    references: {
+                        model: "index_table",
+                        key: "id",
+                    },
+                },
+                id_customer: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false,
+                    references: {
+                        model: "customer",
+                        key: "id",
+                    },
+                },
+                panjang: {
+                    type: DataTypes.INTEGER,
+                    allowNull: true,
+                },
+                lebar: {
+                    type: DataTypes.INTEGER,
+                    allowNull: true,
+                },
 
-                konstanta_panjang: {
+                penambahan_harga: {
+                    type: DataTypes.INTEGER,
+                    allowNull: true,
+                },
+                pengurangan_harga: {
+                    type: DataTypes.INTEGER,
+                    allowNull: true,
+                },
+
+                total_harga: {
                     type: DataTypes.INTEGER,
                     allowNull: false,
                 },
 
-                konstanta_lebar_ganjil: {
-                    type: DataTypes.INTEGER,
-                    allowNull: false,
-                },
-
-                konstanta_lebar_genap: {
-                    type: DataTypes.INTEGER,
-                    allowNull: false,
-                },
-
-                kuping: {
-                    type: DataTypes.INTEGER,
-                    allowNull: false,
-                },
 
                 created_at: {
                     type: DataTypes.DATE,
@@ -65,7 +98,7 @@ class KualitasTipeBoxModel {
             },
 
             {
-                tableName: "kualitas_tipebox",
+                tableName: "harga",
                 timestamps: false,
             }
         );
@@ -74,4 +107,4 @@ class KualitasTipeBoxModel {
     }
 }
 
-export default KualitasTipeBoxModel;
+export default HargaModel;

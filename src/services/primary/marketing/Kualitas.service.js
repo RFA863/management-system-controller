@@ -17,7 +17,9 @@ class KualitasService {
         if (getKualitas !== null) return -1;
 
         const addKualitas = await this.KualitasModel.create({
-            nama: data.nama
+            nama: data.nama,
+            created_at: new Date(),
+            updated_at: new Date(),
         })
 
         return addKualitas;
@@ -33,7 +35,8 @@ class KualitasService {
 
     async update(data, id) {
         const updateKualitas = await this.KualitasModel.update({
-            nama: data.nama
+            nama: data.nama,
+            updated_at: new Date(),
         }, {
             where: {
                 id: id

@@ -28,6 +28,8 @@ class RumusIndexService {
             rumuslebar: data.rumusLebar,
             rumusoversize: data.rumusOversize,
             rumustotal: data.rumusTotal,
+            created_at: new Date(),
+            updated_at: new Date(),
         })
 
         return addRumusIndex;
@@ -61,6 +63,7 @@ class RumusIndexService {
             rumuslebar: data.rumusLebar,
             rumusoversize: data.rumusOversize,
             rumustotal: data.rumusTotal,
+            updated_at: new Date(),
         }, {
             where: {
                 id: id,

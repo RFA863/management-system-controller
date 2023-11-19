@@ -23,7 +23,9 @@ class UserService {
             email: data.email,
             password: data.password,
             posisi: data.posisi,
-            akses: data.akses
+            akses: data.akses,
+            created_at: new Date(),
+            updated_at: new Date(),
         })
 
         return addUser;
@@ -42,7 +44,8 @@ class UserService {
             email: data.email,
             password: data.password,
             posisi: data.posisi,
-            akses: data.akses
+            akses: data.akses,
+            updated_at: new Date(),
         }, {
             where: {
                 id: id

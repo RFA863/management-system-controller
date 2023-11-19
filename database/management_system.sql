@@ -3,19 +3,25 @@ CREATE TABLE user (
     posisi VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
     password VARCHAR(50) NOT NULL,
-    akses BOOLEAN NOT NULL
+    akses BOOLEAN NOT NULL,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL
 );
 
 CREATE TABLE tipebox (
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     nama VARCHAR(50) NOT NULL,
-    kode VARCHAR(25) NOT NULL
+    kode VARCHAR(25) NOT NULL,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL
 );
 
 CREATE TABLE aturan_tipebox (
 id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 id_tipebox INT NOT NULL,
 nama VARCHAR(50) NOT NULL,
+created_at DATETIME NOT NULL,
+updated_at DATETIME NOT NULL,
 FOREIGN KEY (id_tipebox) REFERENCES tipebox(id)
 );
 
@@ -26,12 +32,16 @@ rumuspanjang VARCHAR(50) NOT NULL,
 rumuslebar VARCHAR(50) NOT NULL,
 rumusoversize VARCHAR(50) NOT NULL,
 rumustotal VARCHAR(50) NOT NULL,
+created_at DATETIME NOT NULL,
+updated_at DATETIME NOT NULL,
 FOREIGN KEY (id_tipebox) REFERENCES  tipebox(id)
 );
 
 CREATE TABLE kualitas (
 id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-nama VARCHAR(50) NOT NULL
+nama VARCHAR(50) NOT NULL,
+created_at DATETIME NOT NULL,
+updated_at DATETIME NOT NULL
 );
 
 CREATE TABLE kualitas_detail (
@@ -39,6 +49,8 @@ id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 id_kualitas INT NOT NULL,
 nama VARCHAR(50) NOT NULL,
 kode VARCHAR(50) NOT NULL,
+created_at DATETIME NOT NULL,
+updated_at DATETIME NOT NULL,
 FOREIGN KEY (id_kualitas) REFERENCES kualitas(id)
 );
 
@@ -47,17 +59,23 @@ id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 bank VARCHAR(50) NOT NULL,
 norekening VARCHAR(25) NOT NULL,
 atasnama VARCHAR(50) NOT NULL,
-ct BOOLEAN NOT NULL
+ct BOOLEAN NOT,
+created_at DATETIME NOT NULL,
+updated_at DATETIME NOT NULL
 );
 
 CREATE TABLE mobil (
 id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-noplat VARCHAR(50) NOT NULL
+noplat VARCHAR(50) NOT NULL,
+created_at DATETIME NOT NULL,
+updated_at DATETIME NOT NULL
 );
 
 CREATE TABLE supir (
 id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-nama VARCHAR(50) NOT NULL
+nama VARCHAR(50) NOT NULL,
+created_at DATETIME NOT NULL,
+updated_at DATETIME NOT NULL
 );
 
 CREATE TABLE customer (
@@ -71,7 +89,9 @@ CREATE TABLE customer (
     notelp VARCHAR(25) NOT NULL, 
     nofax VARCHAR(25),  
     alamat VARCHAR(50) NOT NULL,
-    alamatinvoice VARCHAR(50) NOT NULL 
+    alamatinvoice VARCHAR(50) NOT NULL,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL
 );
 
 CREATE TABLE index_table (
@@ -79,6 +99,8 @@ CREATE TABLE index_table (
   id_customer INT NOT NULL,
   id_kualitasdetail INT NOT NULL,
   indexvalue INT(25) NOT NULL,
+  created_at DATETIME NOT NULL,
+  updated_at DATETIME NOT NULL,
   FOREIGN KEY (id_customer) REFERENCES customer(id),
   FOREIGN KEY (id_kualitasdetail) REFERENCES kualitas_detail(id)
 );
@@ -89,8 +111,8 @@ CREATE TABLE orders (
   no_po VARCHAR(255) NOT NULL,
   tanggal_order DATE NOT NULL,
   tanggal_kirim DATE NOT NULL,
-  created_at DATE NOT NULL,
-  updated_at DATE NOT NULL,
+  created_at DATETIME NOT NULL,
+  updated_at DATETIME NOT NULL,
   FOREIGN KEY (id_customer) REFERENCES customer(id)
   );
 
@@ -122,3 +144,59 @@ CREATE TABLE kualitas_tipebox (
   FOREIGN KEY (id_kualitas) REFERENCES kualitas(id)
 );
 
+
+CREATE TABLE job (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_tipebox INT NOT NULL,
+    id_kualitas_detail INT NOT NULL,
+    id_kualitas_tipebox INT NOT NULL,
+    id_customer INT NOT NULL,
+    id_order INT NOT NULL,
+    no_job VARCHAR(255) NOT NULL,
+    panjang INT NOT NULL,
+    lebar INT NOT NULL,
+    tinggi INT NOT NULL,
+    total_panjang INT NOT NULL,
+    total_lebar INT NOT NULL,
+    warna VARCHAR(50),
+    perekat VARCHAR(50),
+    keterangan VARCHAR(255),
+    jumlah INT NOT NULL,
+    ukuran_pengiriman VARCHAR(255),
+    ukuran_kirim BOOLEAN NOT NULL,
+    index_harga BOOLEAN NOT NULL,
+    cancel BOOLEAN  NOT NULL,
+    surat_jalan BOOLEAN NOT NULL,
+    payment BOOLEAN NOT NULL,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL,
+    FOREIGN KEY (id_tipebox) REFERENCES tipebox (id),
+    FOREIGN KEY (id_kualitas_detail) REFERENCES kualitas_detail(id),
+    FOREIGN KEY (id_kualitas_tipebox) REFERENCES kualitas_tipebox(id),
+    FOREIGN KEY (id_customer) REFERENCES customer(id),
+    FOREIGN KEY (id_order) REFERENCES orders(id)
+);
+
+
+CREATE TABLE harga (
+    id INT NOT NULL  AUTO_INCREMENT PRIMARY KEY,
+    id_order INT NOT NULL,
+    id_job INT NOT NULL,
+    id_tipebox INT NOT NULL,
+    id_kualitas_detail INT,
+    id_index INT NOT NULL,
+    id_customer INT NOT NULL,
+    panjang INT ,
+    lebar INT ,
+    penambahan_harga INT,
+    pengurangan_harga INT,
+    total_harga INT NOT NULL,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL,
+    FOREIGN KEY (id_order) REFERENCES orders(id),
+    FOREIGN KEY (id_job) REFERENCES job(id),
+    FOREIGN KEY (id_tipebox) REFERENCES tipebox(id),
+    FOREIGN KEY (id_kualitas_detail) REFERENCES kualitas_detail(id),
+    FOREIGN KEY (id_index) REFERENCES index_table(id),
+    FOREIGN KEY (id_customer) REFERENCES customer(id)
+);

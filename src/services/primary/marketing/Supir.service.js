@@ -17,7 +17,9 @@ class SupirService {
         if (getSupir !== null) return -1;
 
         const addSupir = await this.SupirModel.create({
-            nama: data.nama
+            nama: data.nama,
+            created_at: new Date(),
+            updated_at: new Date(),
         });
 
         return addSupir;
@@ -34,7 +36,8 @@ class SupirService {
 
     async update(data, id) {
         const updateSupir = await this.SupirModel.update({
-            nama: data.nama
+            nama: data.nama,
+            updated_at: new Date(),
         }, {
             where: {
                 id: id

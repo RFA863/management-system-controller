@@ -18,6 +18,8 @@ class MobilService {
 
         const addMobil = await this.MobilModel.create({
             noplat: data.noPlat,
+            created_at: new Date(),
+            updated_at: new Date(),
         })
 
         return addMobil;
@@ -34,6 +36,7 @@ class MobilService {
     async update(data, id) {
         const updateMobil = await this.MobilModel.update({
             noplat: data.noPlat,
+            updated_at: new Date(),
         }, {
             where: {
                 id: id,

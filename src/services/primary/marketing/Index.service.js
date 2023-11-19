@@ -25,6 +25,8 @@ class IndexService {
             id_customer: data.id_customer,
             id_kualitasdetail: data.id_kualitasDetail,
             indexvalue: data.indexValue,
+            created_at: new Date(),
+            updated_at: new Date(),
         })
 
         return addIndex;
@@ -61,6 +63,7 @@ class IndexService {
             id_customer: data.id_customer,
             id_kualitasdetail: data.id_kualitasDetail,
             indexvalue: data.indexValue,
+            updated_at: new Date(),
         }, {
             where: {
                 id: id,

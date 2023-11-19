@@ -30,14 +30,17 @@ class OrderModel {
                     type: DataTypes.DATE,
                     allowNull: false,
                 },
+
                 tanggal_kirim: {
                     type: DataTypes.DATE,
                     allowNull: false,
                 },
+
                 created_at: {
                     type: DataTypes.DATE,
                     allowNull: false,
                 },
+
                 updated_at: {
                     type: DataTypes.DATE,
                     allowNull: false,

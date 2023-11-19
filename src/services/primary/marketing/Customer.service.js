@@ -30,6 +30,8 @@ class CustomerService {
             nofax: data.noFax,
             alamat: data.alamat,
             alamatinvoice: data.alamatInvoice,
+            created_at: new Date(),
+            updated_at: new Date(),
         });
 
         return addCustomer;
@@ -58,6 +60,7 @@ class CustomerService {
             nofax: data.noFax,
             alamat: data.alamat,
             alamatinvoice: data.alamatInvoice,
+            updated_at: new Date(),
         }, {
             where: {
                 id: id

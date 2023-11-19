@@ -1,4 +1,5 @@
 import AuthRoute from "./Auth.route.js"
+import JobRoute from "./marketing/Job.route.js";
 import UserRoute from "./marketing/User.route.js";
 import IndexRoute from "./marketing/Index.route.js";
 import SupirRoute from "./marketing/Supir.route.js";
@@ -16,6 +17,7 @@ import KualitasTipeBoxRoute from "./marketing/KualitasTipeBox.route.js";
 
 class PrimaryHandler {
     constructor(Server) {
+        new JobRoute(Server);
         new AuthRoute(Server);
         new UserRoute(Server);
         new IndexRoute(Server);
