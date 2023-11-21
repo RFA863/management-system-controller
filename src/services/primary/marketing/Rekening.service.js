@@ -42,6 +42,16 @@ class RekeningService {
     }
 
     async update(data, id) {
+        const getRekening = await this.RekeningModel.findOne({
+            where: {
+                bank: data.bank,
+                norekening: data.noRekening,
+                atasnama: data.atasNama,
+                ct: data.ct,
+            }
+        })
+
+        if (getRekening !== null) return -1;
 
         const updateRekening = await this.RekeningModel.update({
             bank: data.bank,

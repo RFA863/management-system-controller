@@ -77,6 +77,11 @@ class TipeBoxController {
 
         const updateSrv = await this.TipeBoxService.update(data, req.params.id, date);
 
+        if (updateSrv === -1)
+            return res.status(403).json(this.ResponsePreset.resErr(
+                "403", "Forbiden, Tipe Box already exist", "service", { code: -1 }
+            ));
+
         res.status(200).json(this.ResponsePreset.resOK("Ok", null));
     }
 

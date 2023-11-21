@@ -80,13 +80,18 @@ class CustomerController {
         const updateSrv = await this.CustomerService.update(data, id);
 
         if (updateSrv === -1)
-            return res.status(400).json(this.ResponsePreset.resErr(
-                "400", "No NPWP must not be empty", "service", { code: -1 }
+            return res.status(403).json(this.ResponsePreset.resErr(
+                403, "Forbiden, Data already exist", "service", { code: -1 }
             ));
 
         if (updateSrv === -2)
             return res.status(400).json(this.ResponsePreset.resErr(
-                "400", "No NPWP must not be filled in", "service", { code: -2 }
+                "400", "No NPWP must not be empty", "service", { code: -2 }
+            ));
+
+        if (updateSrv === -3)
+            return res.status(400).json(this.ResponsePreset.resErr(
+                "400", "No NPWP must not be filled in", "service", { code: -3 }
             ));
 
         res.status(200).json(this.ResponsePreset.resOK("Ok", null));

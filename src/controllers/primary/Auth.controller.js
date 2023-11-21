@@ -24,6 +24,15 @@ class AuthController {
                 'service',
                 { code: -1 }
             ));
+
+        if (loginSrv === -2)
+            return res.status(401).json(this.ResponsePreset.resErr(
+                401,
+                "Access Denied",
+                "service",
+                { code: -2 }
+            ));
+
         res.status(200).json(this.ResponsePreset.resOK('OK', loginSrv))
     }
 }

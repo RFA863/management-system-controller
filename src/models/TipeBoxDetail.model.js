@@ -38,17 +38,7 @@ class TipeBoxDetailModel {
 
                 rumus_oversize: {
                     type: DataTypes.STRING(255),
-                    allowNull: false,
-                },
-
-                konstanta_panjang: {
-                    type: DataTypes.BOOLEAN,
-                    allowNull: false,
-                },
-
-                konstanta_lebar: {
-                    type: DataTypes.BOOLEAN,
-                    allowNull: false,
+                    allowNull: true,
                 },
 
                 created_at: {

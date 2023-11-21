@@ -1,8 +1,8 @@
 import Ajv from "ajv";
 
 import ResponsePreset from "../../../helpers/ResponsePreset.helper.js";
-import KualitasDetailService from "../../../services/primary/marketing/KualitasDetai.service.js";
-import KualitasDetailValidator from "../../../validators/primary/marketing/KualitasDetai.validator.js";
+import KualitasDetailService from "../../../services/primary/marketing/KualitasDetail.service.js";
+import KualitasDetailValidator from "../../../validators/primary/marketing/KualitasDetail.validator.js";
 
 class KualitasDetailController {
     constructor(Server) {
@@ -68,6 +68,10 @@ class KualitasDetailController {
         const id = req.params.id;
 
         const updateSrv = await this.KualitasDetailService.update(data, id);
+
+        if (updateSrv === -1) return res.status(403).json(this.ResponsePreset.resErr(
+            "403", "Data already exist", "service", { code: -1 }
+        ));
 
         res.status(200).json(this.ResponsePreset.resOK("Ok", null));
     }

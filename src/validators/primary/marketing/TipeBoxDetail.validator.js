@@ -34,22 +34,13 @@ class TipeBoxDetailValidator {
                 type: "string",
                 maxLength: 255,
                 minLength: 1,
-                nullable: false,
+                nullable: true,
             },
 
-            konstantaPanjang: {
-                type: "boolean",
-                nullable: false,
-            },
-
-            konstantaLebar: {
-                type: "boolean",
-                nullable: false,
-            },
 
         },
 
-        required: ["id_tipebox", "nama", "rumusPanjang", "rumusLebar", "rumusOversize", "konstantaPanjang", "konstantaLebar"],
+        required: ["id_tipebox", "nama", "rumusPanjang", "rumusLebar", "rumusOversize"],
         additionalProperties: false,
     };
 }

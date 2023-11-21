@@ -49,7 +49,7 @@ class IndexService {
             })
 
             getIndex[i].dataValues.Customer = getCustomer.map((val) => val.dataValues.nama);
-            getIndex[i].dataValues.Kualitas_Detail = getKualitasDetail.map((val) => val.dataValues.kode);
+            getIndex[i].dataValues.Kualitas_Detail = getKualitasDetail.map((val) => val.dataValues.nama) + "|" + getKualitasDetail.map((val) => val.dataValues.kode);
 
         }
 
@@ -59,6 +59,15 @@ class IndexService {
     }
 
     async update(data, id) {
+        const getIndex = await this.IndexModel.findOne({
+            where: {
+                id_customer: data.id_customer,
+                id_kualitasdetail: data.id_kualitasDetail,
+            }
+        });
+
+        if (getIndex !== null) return -1;
+
         const updateIndex = await this.IndexModel.update({
             id_customer: data.id_customer,
             id_kualitasdetail: data.id_kualitasDetail,

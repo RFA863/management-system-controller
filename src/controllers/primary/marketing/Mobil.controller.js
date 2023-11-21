@@ -69,6 +69,11 @@ class MobilController {
 
         const updateSrv = await this.MobilService.update(data, id);
 
+        if (updateSrv === -1)
+            return res.status(403).json(this.ResponsePreset.resErr(
+                "403", "Forbiden, Data already exist", "service", { code: -1 }
+            ));
+
         res.status(200).json(this.ResponsePreset.resOK("Ok", null));
     }
 

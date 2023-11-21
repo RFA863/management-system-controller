@@ -16,8 +16,6 @@ class TipeBoxDetailService {
                 rumus_panjang: data.rumusPanjang,
                 rumus_lebar: data.rumusLebar,
                 rumus_oversize: data.rumusOversize,
-                konstanta_panjang: data.konstantaPanjang,
-                konstanta_lebar: data.konstantaLebar,
             }
         })
 
@@ -25,11 +23,10 @@ class TipeBoxDetailService {
 
         const addTipeBoxDetail = await this.TipeBoxDetailModel.create({
             id_tipebox: data.id_tipebox,
+            nama: data.nama,
             rumus_panjang: data.rumusPanjang,
             rumus_lebar: data.rumusLebar,
             rumus_oversize: data.rumusOversize,
-            konstanta_panjang: data.konstantaPanjang,
-            konstanta_lebar: data.konstantaLebar,
             created_at: new Date(),
             updated_at: new Date(),
         })
@@ -62,8 +59,6 @@ class TipeBoxDetailService {
                 rumus_panjang: data.rumusPanjang,
                 rumus_lebar: data.rumusLebar,
                 rumus_oversize: data.rumusOversize,
-                konstanta_panjang: data.konstantaPanjang,
-                konstanta_lebar: data.konstantaLebar,
             }
         })
 
@@ -74,8 +69,6 @@ class TipeBoxDetailService {
             rumus_panjang: data.rumusPanjang,
             rumus_lebar: data.rumusLebar,
             rumus_oversize: data.rumusOversize,
-            konstanta_panjang: data.konstantaPanjang,
-            konstanta_lebar: data.konstantaLebar,
             updated_at: new Date(),
         }, {
             where: {

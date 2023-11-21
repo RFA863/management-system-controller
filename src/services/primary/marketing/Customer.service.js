@@ -10,7 +10,16 @@ class CustomerService {
     async input(data) {
         const getCustomer = await this.CustomerModel.findOne({
             where: {
-                nama: data.nama
+                nomor: data.nomor,
+                nama: data.nama,
+                kode: data.kode,
+                email: data.email,
+                npwp: data.npwp,
+                nonpwp: data.noNpwp,
+                notelp: data.noTelp,
+                nofax: data.noFax,
+                alamat: data.alamat,
+                alamatinvoice: data.alamatInvoice,
             }
         });
 
@@ -46,8 +55,24 @@ class CustomerService {
     }
 
     async update(data, id) {
-        if (data.npwp === true && data.noNpwp.trim() === '') return -1;
-        if (data.npwp === false && data.noNpwp.trim() !== '') return -2;
+        const getCustomer = await this.CustomerModel.findOne({
+            where: {
+                nomor: data.nomor,
+                nama: data.nama,
+                kode: data.kode,
+                email: data.email,
+                npwp: data.npwp,
+                nonpwp: data.noNpwp,
+                notelp: data.noTelp,
+                nofax: data.noFax,
+                alamat: data.alamat,
+                alamatinvoice: data.alamatInvoice,
+            }
+        });
+
+        if (getCustomer !== null) return -1;
+        if (data.npwp === true && data.noNpwp.trim() === '') return -2;
+        if (data.npwp === false && data.noNpwp.trim() !== '') return -3;
 
         const updateCustomer = await this.CustomerModel.update({
             nomor: data.nomor,

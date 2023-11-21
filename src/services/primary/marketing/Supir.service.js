@@ -35,6 +35,14 @@ class SupirService {
     }
 
     async update(data, id) {
+        const getSupir = await this.SupirModel.findOne({
+            where: {
+                nama: data.nama
+            }
+        });
+
+        if (getSupir !== null) return -1;
+
         const updateSupir = await this.SupirModel.update({
             nama: data.nama,
             updated_at: new Date(),

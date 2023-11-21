@@ -34,6 +34,14 @@ class MobilService {
     }
 
     async update(data, id) {
+        const getMobil = await this.MobilModel.findOne({
+            where: {
+                noplat: data.noPlat,
+            }
+        });
+
+        if (getMobil !== null) return -1;
+
         const updateMobil = await this.MobilModel.update({
             noplat: data.noPlat,
             updated_at: new Date(),

@@ -1,5 +1,5 @@
 import AuthorizationMiddleware from "../../../middlewares/Authorization.middleware.js";
-import KualitasController from "../../../controllers/primary/marketing/Kulitas.controller.js";
+import KualitasController from "../../../controllers/primary/marketing/Kualitas.controller.js";
 
 class KualitasRoute {
     constructor(Server) {

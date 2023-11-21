@@ -32,7 +32,7 @@ class AturanTipeBoxController {
 
         if (inputSrv === -1)
             return res.status(403).json(this.ResponsePreset.resErr(
-                "403", "Forbiden, Tipe Box already exist", "service", { code: -1 }
+                "403", "Forbiden, Data already exist", "service", { code: -1 }
             ));
 
         res.status(200).json(this.ResponsePreset.resOK("Ok", null))
@@ -69,6 +69,14 @@ class AturanTipeBoxController {
 
         const data = req.body;
         const updateSrv = await this.AturanTipeBoxService.update(data, req.params.id);
+
+        if (updateSrv === -1)
+            return res.status(403), json(this.ResponsePreset.resErr(
+                403,
+                "Forbiden, Data Already exist",
+                "service",
+                { code: -1 }
+            ))
 
         res.status(200).json(this.ResponsePreset.resOK("Ok", null));
 

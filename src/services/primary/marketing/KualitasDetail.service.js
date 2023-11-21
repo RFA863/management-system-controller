@@ -50,6 +50,16 @@ class KualitasDetailService {
     }
 
     async update(data, id) {
+        const getKualitasDetail = await this.KualitasDetailModel.findOne({
+            where: {
+                id_kualitas: data.id_kualitas,
+                nama: data.nama,
+                kode: data.kode,
+            }
+        })
+
+        if (getKualitasDetail !== null) return -1;
+
         const updateKualitasDetail = await this.KualitasDetailModel.update({
             id_kualitas: data.id_kualitas,
             nama: data.nama,

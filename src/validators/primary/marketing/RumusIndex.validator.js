@@ -17,8 +17,8 @@ class RumusIndexValidator {
             rumusOversize: {
                 type: "string",
                 maxLength: 50,
-                minLength: 1,
-                nullable: false,
+                minLength: 0,
+                nullable: true,
             },
             rumusTotal: {
                 type: "string",

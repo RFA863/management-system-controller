@@ -58,6 +58,18 @@ class RumusIndexService {
     }
 
     async update(data, id) {
+        const getRumusIndex = await this.RumusIndexModel.findOne({
+            where: {
+                id_tipebox: id,
+                rumuspanjang: data.rumusPanjang,
+                rumuslebar: data.rumusLebar,
+                rumusoversize: data.rumusOversize,
+                rumustotal: data.rumusTotal,
+            }
+        })
+
+        if (getRumusIndex !== null) return -1;
+
         const updateRumusIndex = await this.RumusIndexModel.update({
             rumuspanjang: data.rumusPanjang,
             rumuslebar: data.rumusLebar,

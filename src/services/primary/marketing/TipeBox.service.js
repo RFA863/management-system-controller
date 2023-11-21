@@ -39,6 +39,16 @@ class TipeBoxService {
     }
 
     async update(data, id) {
+
+        const getTipeBox = await this.TipeBoxModel.findOne({
+            where: {
+                nama: data.nama,
+                kode: data.kode,
+            }
+        })
+
+        if (getTipeBox !== null) return -1;
+
         const updateTipeBox = await this.TipeBoxModel.update({
             nama: data.nama,
             kode: data.kode,

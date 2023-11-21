@@ -54,6 +54,16 @@ class AturanTipeBoxService {
     }
 
     async update(data, id) {
+        const getAturanTipeBox = await this.AturanTipeBoxModel.findOne({
+            where: {
+                id_tipebox: id,
+                nama: data.nama,
+
+            }
+        })
+
+        if (getAturanTipeBox !== null) return -1;
+
         const updateAturanTipeBox = await this.AturanTipeBoxModel.update({
             nama: data.nama,
             updated_at: new Date(),

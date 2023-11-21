@@ -25,12 +25,12 @@ updated_at DATETIME NOT NULL,
 FOREIGN KEY (id_tipebox) REFERENCES tipebox(id)
 );
 
-CREATE TABLE rumusindex (
+CREATE TABLE rumus_index (
 id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 id_tipeBox INT NOT NULL,
 rumuspanjang VARCHAR(50) NOT NULL,
 rumuslebar VARCHAR(50) NOT NULL,
-rumusoversize VARCHAR(50) NOT NULL,
+rumusoversize VARCHAR(50) ,
 rumustotal VARCHAR(50) NOT NULL,
 created_at DATETIME NOT NULL,
 updated_at DATETIME NOT NULL,
@@ -59,7 +59,7 @@ id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 bank VARCHAR(50) NOT NULL,
 norekening VARCHAR(25) NOT NULL,
 atasnama VARCHAR(50) NOT NULL,
-ct BOOLEAN NOT,
+ct BOOLEAN NOT NULL,
 created_at DATETIME NOT NULL,
 updated_at DATETIME NOT NULL
 );
@@ -122,9 +122,7 @@ CREATE TABLE orders (
   nama VARCHAR(255) ,
   rumus_panjang VARCHAR(255)  NOT NULL ,
   rumus_lebar VARCHAR(255)  NOT NULL,
-  rumus_oversize VARCHAR(255)  NOT NULL,
-  konstanta_panjang BOOLEAN  NOT NULL,
-  konstanta_lebar BOOLEAN  NOT NULL,
+  rumus_oversize VARCHAR(255) ,
   created_at DATETIME NOT NULL,
   updated_at DATETIME NOT NULL,
  FOREIGN KEY (id_tipebox) REFERENCES tipebox(id)

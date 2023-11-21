@@ -5,7 +5,7 @@ class RumusIndexModel {
     constructor(server) {
 
         const table = server.model.db.define(
-            "rumusindex",
+            "rumus_index",
             {
                 id: {
                     type: DataTypes.INTEGER,
@@ -31,7 +31,7 @@ class RumusIndexModel {
                 },
                 rumusoversize: {
                     type: DataTypes.STRING(50),
-                    allowNull: false,
+                    allowNull: true,
                 },
                 rumustotal: {
                     type: DataTypes.STRING(50),
@@ -52,7 +52,7 @@ class RumusIndexModel {
             },
 
             {
-                tableName: "rumusindex",
+                tableName: "rumus_index",
                 timestamps: false,
             }
         );

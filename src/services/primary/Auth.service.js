@@ -27,10 +27,12 @@ class AuthService {
         });
 
         if (getDataUserModel === null) return -1;
+        if (getDataUserModel.akses === false) return -2;
 
         const posisi = getDataUserModel.posisi;
+        const token = this.generateToken(posisi)
 
-        return this.generateToken(posisi);
+        return { posisi, token };
     }
 
 }

@@ -40,6 +40,17 @@ class UserService {
     }
 
     async update(data, id) {
+        const getUser = await this.UserModel.findOne({
+            where: {
+                email: data.email,
+                password: data.password,
+                posisi: data.posisi,
+                akses: data.akses
+            }
+        })
+
+        if (getUser !== null) return -1;
+
         const updateUser = await this.UserModel.update({
             email: data.email,
             password: data.password,

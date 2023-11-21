@@ -34,6 +34,14 @@ class KualitasService {
     }
 
     async update(data, id) {
+        const getKualitas = await this.KualitasModel.findOne({
+            where: {
+                nama: data.nama,
+            }
+        })
+
+        if (getKualitas !== null) return -1;
+
         const updateKualitas = await this.KualitasModel.update({
             nama: data.nama,
             updated_at: new Date(),
