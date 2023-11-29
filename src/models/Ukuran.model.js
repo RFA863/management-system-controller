@@ -1,11 +1,11 @@
 // Library
 import { DataTypes } from "sequelize";
 
-class HargaModel {
+class UkuranModel {
     constructor(server) {
 
         const table = server.model.db.define(
-            "harga_job",
+            "ukuran_job",
             {
                 id: {
                     type: DataTypes.INTEGER,
@@ -25,29 +25,38 @@ class HargaModel {
 
                 panjang: {
                     type: DataTypes.INTEGER,
-                    allowNull: true,
+                    allowNull: false,
                 },
 
                 lebar: {
                     type: DataTypes.INTEGER,
-                    allowNull: true,
+                    allowNull: false,
                 },
 
-                penambahan_harga: {
-                    type: DataTypes.INTEGER,
-                    allowNull: true,
-                },
-
-                pengurangan_harga: {
-                    type: DataTypes.INTEGER,
-                    allowNull: true,
-                },
-
-                total_harga: {
+                tinggi: {
                     type: DataTypes.INTEGER,
                     allowNull: false,
                 },
 
+                total_panjang: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false,
+                },
+
+                total_lebar: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false,
+                },
+
+                ukuran: {
+                    type: DataTypes.STRING(255),
+                    allowNull: false,
+                },
+
+                ukuran_pengiriman: {
+                    type: DataTypes.STRING(255),
+                    allowNull: false,
+                },
 
                 created_at: {
                     type: DataTypes.DATE,
@@ -62,7 +71,7 @@ class HargaModel {
             },
 
             {
-                tableName: "harga_job",
+                tableName: "ukuran_job",
                 timestamps: false,
             }
         );
@@ -71,4 +80,4 @@ class HargaModel {
     }
 }
 
-export default HargaModel;
+export default UkuranModel;

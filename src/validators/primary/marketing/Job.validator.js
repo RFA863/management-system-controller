@@ -14,12 +14,6 @@ class JobValidator {
                 nullable: false,
             },
 
-            // id_customer: {
-            //     type: "number",
-            //     minimum: 1,
-            //     nullable: false,
-            // },
-
             panjang: {
                 type: "number",
                 maximum: 500000,

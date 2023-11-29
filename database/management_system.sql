@@ -147,20 +147,16 @@ CREATE TABLE job (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_tipebox INT NOT NULL,
     id_kualitas_detail INT NOT NULL,
-    id_kualitas_tipebox INT NOT NULL,
-    id_customer INT NOT NULL,
     id_order INT NOT NULL,
+    id_customer INT NOT NULL,
     no_job VARCHAR(255) NOT NULL,
-    panjang INT NOT NULL,
-    lebar INT NOT NULL,
-    tinggi INT NOT NULL,
-    total_panjang INT NOT NULL,
-    total_lebar INT NOT NULL,
+    no_nt varchar(255) NOT NULL,
     warna VARCHAR(50),
     perekat VARCHAR(50),
     keterangan VARCHAR(255),
     jumlah INT NOT NULL,
-    ukuran_pengiriman VARCHAR(255),
+    sisa INT NOT NULL,
+    selesai INT NOT NULL,
     ukuran_kirim BOOLEAN NOT NULL,
     index_harga BOOLEAN NOT NULL,
     cancel BOOLEAN  NOT NULL,
@@ -170,20 +166,13 @@ CREATE TABLE job (
     updated_at DATETIME NOT NULL,
     FOREIGN KEY (id_tipebox) REFERENCES tipebox (id),
     FOREIGN KEY (id_kualitas_detail) REFERENCES kualitas_detail(id),
-    FOREIGN KEY (id_kualitas_tipebox) REFERENCES kualitas_tipebox(id),
-    FOREIGN KEY (id_customer) REFERENCES customer(id),
     FOREIGN KEY (id_order) REFERENCES orders(id)
 );
 
 
-CREATE TABLE harga (
+CREATE TABLE harga_job (
     id INT NOT NULL  AUTO_INCREMENT PRIMARY KEY,
-    id_order INT NOT NULL,
     id_job INT NOT NULL,
-    id_tipebox INT NOT NULL,
-    id_kualitas_detail INT,
-    id_index INT NOT NULL,
-    id_customer INT NOT NULL,
     panjang INT ,
     lebar INT ,
     penambahan_harga INT,
@@ -191,10 +180,33 @@ CREATE TABLE harga (
     total_harga INT NOT NULL,
     created_at DATETIME NOT NULL,
     updated_at DATETIME NOT NULL,
-    FOREIGN KEY (id_order) REFERENCES orders(id),
-    FOREIGN KEY (id_job) REFERENCES job(id),
-    FOREIGN KEY (id_tipebox) REFERENCES tipebox(id),
-    FOREIGN KEY (id_kualitas_detail) REFERENCES kualitas_detail(id),
-    FOREIGN KEY (id_index) REFERENCES index_table(id),
-    FOREIGN KEY (id_customer) REFERENCES customer(id)
+    FOREIGN KEY (id_job) REFERENCES job(id)
+);
+
+CREATE TABLE ukuran_job (
+  id INT  NOT NULL  AUTO_INCREMENT PRIMARY KEY,
+  id_job INT NOT NULL,
+  panjang INT NOT NULL,
+  lebar INT NOT NULL,
+  tinggi INT NOT NULL,
+  total_panjang INT NOT NULL,
+  total_lebar INT NOT NULL,
+  ukuran VARCHAR(255),
+  ukuran_pengiriman VARCHAR(255),
+  created_at DATETIME NOT NULL,
+  updated_at DATETIME NOT NULL,
+  FOREIGN KEY (id_job) REFERENCES job(id)
+);
+
+CREATE TABLE surat_jalan(
+  id INT NOT NULL  AUTO_INCREMENT PRIMARY KEY,
+  id_job INT NOT NULL,
+  id_supir INT NOT NULL,
+  id_mobil INT NOT NULL,
+  tanggal_kirim DATE,
+  created_at DATETIME NOT NULL,
+  updated_at DATETIME NOT NULL,
+  FOREIGN KEY (id_job) REFERENCES job(id),
+  FOREIGN KEY (id_supir) REFERENCES supir(id),
+  FOREIGN KEY (id_mobil) REFERENCES mobil(id)
 );

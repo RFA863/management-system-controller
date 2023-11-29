@@ -2,7 +2,7 @@ import JobModel from "../../../models/Job.model.js";
 import HargaModel from "../../../models/Harga.model.js";
 import OrderModel from "../../../models/Order.model.js";
 import IndexModel from "../../../models/Index.model.js";
-import TipeBoxModel from "../../../models/TipeBox.model.js";
+import UkuranModel from "../../../models/Ukuran.model.js";
 import CustomerModel from "../../../models/Customer.model.js";
 import KualitasDetailModel from "../../../models/KualitasDetail.model.js";
 import KualitasTipeBoxModel from "../../../models/KualitasTipeBox.model.js";
@@ -15,6 +15,7 @@ class JobService {
         this.HargaModel = new HargaModel(this.Server).table;
         this.OrderModel = new OrderModel(this.Server).table;
         this.IndexModel = new IndexModel(this.Server).table;
+        this.UkuranModel = new UkuranModel(this.Server).table;
         this.CustomerModel = new CustomerModel(this.Server).table;
         this.KualitasDetailModel = new KualitasDetailModel(this.Server).table;
         this.KualitasTipeBoxModel = new KualitasTipeBoxModel(this.Server).table;
@@ -55,18 +56,34 @@ class JobService {
 
         if (getCustomer === null) return -4;
 
-        const generateNoPo = (counter) => {
-            let formattedCounter = String(counter).padStart(4, '0');
-            let noPo = getCustomer.kode + "." + formattedCounter;
 
-            return noPo;
-        }
 
         const getJobOrder = await this.JobModel.findAll({
             where: {
                 id_customer: getOrderCustomer.id_customer
             }
-        })
+        });
+
+        const getAllJobOrder = await this.JobModel.findAll();
+
+        const generateNoPo = (counter) => {
+            let formattedCounter = String(counter).padStart(4, '0');
+            let noPo = getCustomer.kode + "." + formattedCounter;
+
+            return noPo;
+        };
+
+        const generateNoNt = (counter) => {
+            let formattedCounter = String(counter).padStart(4, '0');
+
+            let currentDate = new Date();
+            let mounth = currentDate.getMonth() + 1;
+            let years = currentDate.getFullYear().toString().substring(2, 4);;
+
+            let noNt = mounth + "/" + years + "/" + formattedCounter;
+
+            return noNt;
+        };
 
         let konstantaLebar = 0;
 
@@ -84,19 +101,15 @@ class JobService {
             id_order: id,
             id_tipebox: data.id_tipebox,
             id_kualitas_detail: data.id_kualitas_detail,
-            id_kualitas_tipebox: getKualitasTipebox.id,
-            id_customer: getOrderCustomer.id_customer,
+            id_customer: getCustomer.id,
             no_job: generateNoPo(getJobOrder.length + 1),
-            panjang: data.panjang,
-            lebar: data.lebar,
-            tinggi: data.tinggi,
-            total_panjang: totalPanjang,
-            total_lebar: totalLebar,
+            no_nt: generateNoNt(getAllJobOrder.length + 1),
             warna: data.warna,
             perekat: data.perekat,
             keterangan: data.keterangan,
             jumlah: data.jumlah,
-            ukuran_pengiriman: data.ukuran_pengiriman,
+            sisa: 0,
+            selesai: 0,
             ukuran_kirim: data.ukuran_kirim,
             index_harga: data.index_harga,
             cancel: false,
@@ -105,6 +118,19 @@ class JobService {
             created_at: new Date(),
             updated_at: new Date(),
 
+        })
+
+        const addUkuran = await this.UkuranModel.create({
+            id_job: addJob.id,
+            panjang: data.panjang,
+            lebar: data.lebar,
+            tinggi: data.tinggi,
+            total_panjang: totalPanjang,
+            total_lebar: totalLebar,
+            ukuran: data.panjang + " x " + data.lebar + " x " + data.tinggi,
+            ukuran_pengiriman: data.ukuran_pengiriman,
+            created_at: new Date(),
+            updated_at: new Date(),
         })
 
         const getIndex = await this.IndexModel.findOne({
@@ -122,12 +148,8 @@ class JobService {
 
         if (data.index_harga === true) {
             const addHarga = await this.HargaModel.create({
-                id_order: id,
+
                 id_job: addJob.id,
-                id_tipebox: data.id_tipebox,
-                id_kualitas_detail: data.id_kualitas_detail,
-                id_customer: getOrderCustomer.id_customer,
-                id_index: getIndex.id,
                 panjang: data.index_panjang,
                 lebar: data.index_lebar,
                 penambahan_harga: data.penambahan_harga,
@@ -150,6 +172,8 @@ class JobService {
             }
         })
 
+        if (getJob === null) return -1;
+
         const getHarga = await this.HargaModel.findOne({
             where: {
                 id_job: id
@@ -164,7 +188,6 @@ class JobService {
 
         getJob.dataValues.harga = harga;
 
-        if (getJob === null) return -1;
 
         return getJob;
 
@@ -221,16 +244,10 @@ class JobService {
             id_tipebox: data.id_tipebox,
             id_kualitas_detail: data.id_kualitas_detail,
             id_kualitas_tipebox: getKualitasTipebox.id,
-            panjang: data.panjang,
-            lebar: data.lebar,
-            tinggi: data.tinggi,
-            total_panjang: totalPanjang,
-            total_lebar: totalLebar,
             warna: data.warna,
             perekat: data.perekat,
             keterangan: data.keterangan,
             jumlah: data.jumlah,
-            ukuran_pengiriman: data.ukuran_pengiriman,
             ukuran_kirim: data.ukuran_kirim,
             index_harga: data.index_harga,
             cancel: false,
@@ -241,6 +258,20 @@ class JobService {
         }, {
             where: {
                 id: id
+            }
+        })
+
+        const updateUkuran = await this.UkuranModel.update({
+            panjang: data.panjang,
+            lebar: data.lebar,
+            tinggi: data.tinggi,
+            total_panjang: totalPanjang,
+            total_lebar: totalLebar,
+            ukuran: data.panjang + " x " + data.lebar + " x " + data.tinggi,
+            ukuran_pengiriman: data.ukuran_pengiriman,
+        }, {
+            where: {
+                id_job: id
             }
         })
 
@@ -267,12 +298,7 @@ class JobService {
 
             if (getHarga === null) {
                 const addHarga = await this.HargaModel.create({
-                    id_order: getJob.id_order,
                     id_job: id,
-                    id_tipebox: data.id_tipebox,
-                    id_kualitas_detail: data.id_kualitas_detail,
-                    id_customer: getJob.id_customer,
-                    id_index: getIndex.id,
                     panjang: data.index_panjang,
                     lebar: data.index_lebar,
                     penambahan_harga: data.penambahan_harga,
@@ -286,10 +312,6 @@ class JobService {
             }
 
             const updateHarga = await this.HargaModel.update({
-                id_tipebox: data.id_tipebox,
-                id_kualitas_detail: data.id_kualitas_detail,
-                id_customer: getJob.id_customer,
-                id_index: getIndex.id,
                 panjang: data.index_panjang,
                 lebar: data.index_lebar,
                 penambahan_harga: data.penambahan_harga,
@@ -308,6 +330,12 @@ class JobService {
 
     async delete(id) {
         const deleteHarga = await this.HargaModel.destroy({
+            where: {
+                id_job: id,
+            }
+        })
+
+        const deleteUkuran = await this.UkuranModel.destroy({
             where: {
                 id_job: id,
             }

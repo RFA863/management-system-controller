@@ -1,11 +1,11 @@
 // Library
 import { DataTypes } from "sequelize";
 
-class HargaModel {
+class SuratJalanModel {
     constructor(server) {
 
         const table = server.model.db.define(
-            "harga_job",
+            "surat_jalan",
             {
                 id: {
                     type: DataTypes.INTEGER,
@@ -23,31 +23,28 @@ class HargaModel {
                     },
                 },
 
-                panjang: {
-                    type: DataTypes.INTEGER,
-                    allowNull: true,
-                },
-
-                lebar: {
-                    type: DataTypes.INTEGER,
-                    allowNull: true,
-                },
-
-                penambahan_harga: {
-                    type: DataTypes.INTEGER,
-                    allowNull: true,
-                },
-
-                pengurangan_harga: {
-                    type: DataTypes.INTEGER,
-                    allowNull: true,
-                },
-
-                total_harga: {
+                id_supir: {
                     type: DataTypes.INTEGER,
                     allowNull: false,
+                    references: {
+                        model: "supir",
+                        key: "id",
+                    },
                 },
 
+                id_mobil: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false,
+                    references: {
+                        model: "mobil",
+                        key: "id",
+                    },
+                },
+
+                tanggal_kirim: {
+                    type: DataTypes.DATE,
+                    allowNull: false,
+                },
 
                 created_at: {
                     type: DataTypes.DATE,
@@ -62,7 +59,7 @@ class HargaModel {
             },
 
             {
-                tableName: "harga_job",
+                tableName: "surat_jalan",
                 timestamps: false,
             }
         );
@@ -71,4 +68,4 @@ class HargaModel {
     }
 }
 
-export default HargaModel;
+export default SuratJalanModel;

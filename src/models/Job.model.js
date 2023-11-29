@@ -37,14 +37,7 @@ class JobModel {
                         key: "id",
                     },
                 },
-                id_kualitas_tipebox: {
-                    type: DataTypes.INTEGER,
-                    allowNull: false,
-                    references: {
-                        model: "kualitas_tipebox",
-                        key: "id",
-                    },
-                },
+
                 id_customer: {
                     type: DataTypes.INTEGER,
                     allowNull: false,
@@ -59,25 +52,9 @@ class JobModel {
                     allowNull: false
                 },
 
-                panjang: {
-                    type: DataTypes.INTEGER,
-                    allowNull: false,
-                },
-                lebar: {
-                    type: DataTypes.INTEGER,
-                    allowNull: false,
-                },
-                tinggi: {
-                    type: DataTypes.INTEGER,
-                    allowNull: false,
-                },
-                total_panjang: {
-                    type: DataTypes.INTEGER,
-                    allowNull: false,
-                },
-                total_lebar: {
-                    type: DataTypes.INTEGER,
-                    allowNull: false,
+                no_nt: {
+                    type: DataTypes.STRING,
+                    allowNull: false
                 },
 
                 warna: {
@@ -100,9 +77,14 @@ class JobModel {
                     allowNull: false,
                 },
 
-                ukuran_pengiriman: {
-                    type: DataTypes.STRING(255),
-                    allowNull: true,
+                sisa: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false,
+                },
+
+                selesai: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false,
                 },
 
                 ukuran_kirim: {
