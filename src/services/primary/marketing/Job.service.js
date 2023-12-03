@@ -3,6 +3,8 @@ import HargaModel from "../../../models/Harga.model.js";
 import OrderModel from "../../../models/Order.model.js";
 import IndexModel from "../../../models/Index.model.js";
 import UkuranModel from "../../../models/Ukuran.model.js";
+import TipeBoxModel from "../../../models/TipeBox.model.js";
+import KualitasModel from "../../../models/Kualitas.model.js";
 import CustomerModel from "../../../models/Customer.model.js";
 import KualitasDetailModel from "../../../models/KualitasDetail.model.js";
 import KualitasTipeBoxModel from "../../../models/KualitasTipeBox.model.js";
@@ -16,6 +18,8 @@ class JobService {
         this.OrderModel = new OrderModel(this.Server).table;
         this.IndexModel = new IndexModel(this.Server).table;
         this.UkuranModel = new UkuranModel(this.Server).table;
+        this.TipeBoxModel = new TipeBoxModel(this.Server).table;
+        this.KualitasModel = new KualitasModel(this.Server).table;
         this.CustomerModel = new CustomerModel(this.Server).table;
         this.KualitasDetailModel = new KualitasDetailModel(this.Server).table;
         this.KualitasTipeBoxModel = new KualitasTipeBoxModel(this.Server).table;
@@ -146,21 +150,18 @@ class JobService {
         const b = data.lebar + data.tinggi + data.index_lebar;
         const totalHarga = (a * b * getIndex.indexvalue) / 1000000
 
-        if (data.index_harga === true) {
-            const addHarga = await this.HargaModel.create({
 
-                id_job: addJob.id,
-                panjang: data.index_panjang,
-                lebar: data.index_lebar,
-                penambahan_harga: data.penambahan_harga,
-                pengurangan_harga: data.penurunan_harga,
-                total_harga: totalHarga,
-                created_at: new Date(),
-                updated_at: new Date(),
-            })
+        const addHarga = await this.HargaModel.create({
 
-            return addHarga
-        }
+            id_job: addJob.id,
+            panjang: data.index_panjang,
+            lebar: data.index_lebar,
+            penambahan_harga: data.penambahan_harga,
+            pengurangan_harga: data.penurunan_harga,
+            total_harga: totalHarga,
+            created_at: new Date(),
+            updated_at: new Date(),
+        })
 
         return addJob.id;
     }
@@ -181,10 +182,8 @@ class JobService {
         })
 
 
-        let harga = 0;
-        if (getHarga !== null) {
-            harga = getHarga.dataValues.total_harga;
-        }
+        const harga = getHarga.dataValues.total_harga;
+
 
         getJob.dataValues.harga = harga;
 
@@ -192,6 +191,58 @@ class JobService {
         return getJob;
 
 
+    }
+
+    async getJobOrder(id) {
+        const getJob = await this.JobModel.findAll({
+            where: {
+                id_order: id,
+            }
+        });
+
+        if (getJob.length === 0) return -1;
+
+        for (let i in getJob) {
+            const getHarga = await this.HargaModel.findAll({
+                where: {
+                    id_job: getJob[i].dataValues.id
+                }
+            });
+
+            const getUkuran = await this.UkuranModel.findAll({
+                where: {
+                    id_job: getJob[i].dataValues.id
+                }
+            });
+
+            const getTipeBox = await this.TipeBoxModel.findAll({
+                where: {
+                    id: getJob[i].dataValues.id_tipebox,
+                }
+            });
+
+            const getKualitasDetail = await this.KualitasDetailModel.findAll({
+                where: {
+                    id: getJob[i].dataValues.id_kualitas_detail
+                }
+            });
+
+            getJob[i].dataValues.harga = getHarga.map((val) => val.dataValues.total_harga);
+            getJob[i].dataValues.ukuran = getUkuran.map((val) => val.dataValues.ukuran);
+            getJob[i].dataValues.tipebox = getTipeBox.map((val) => val.dataValues.nama);
+            getJob[i].dataValues.kualitas_detail = getKualitasDetail.map((val) => val.dataValues.nama);
+            getJob[i].dataValues.id_kualitas = getKualitasDetail.map((val) => val.dataValues.id_kualitas);
+
+            const getKualitas = await this.KualitasDetailModel.findAll({
+                where: {
+                    id: getJob[i].dataValues.id_kualitas
+                }
+            });
+
+            getJob[i].dataValues.kualitas = getKualitas.map((val) => val.dataValues.nama);
+        }
+
+        return getJob;
     }
 
     async update(data, id) {

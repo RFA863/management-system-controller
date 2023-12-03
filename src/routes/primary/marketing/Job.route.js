@@ -18,6 +18,9 @@ class JobRoute {
         this.API.get(this.routePrefix + "/get/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.JobController.get(req, res));
 
+        this.API.get(this.routePrefix + "/getJobOrder/:id", this.AuthorizationMiddleware.check(),
+            (req, res) => this.JobController.getJobOrder(req, res));
+
         this.API.put(this.routePrefix + "/update/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.JobController.update(req, res));
 

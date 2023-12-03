@@ -19,6 +19,10 @@ class OrderRoute {
         this.API.get(this.routePrefix + "/get", this.AuthorizationMiddleware.check(),
             (req, res) => this.OrderConroller.get(req, res));
 
+        this.API.get(this.routePrefix + "/getDetail/:id", this.AuthorizationMiddleware.check(),
+            (req, res) => this.OrderConroller.getDetail(req, res));
+
+
         this.API.put(this.routePrefix + "/update/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.OrderConroller.update(req, res));
 
