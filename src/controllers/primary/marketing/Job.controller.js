@@ -52,10 +52,10 @@ class JobController {
                 "404", "Data Customer Not Found", "service", { code: -4 }
             ));
 
-        if (inputSrv === -5)
-            return res.status(404).json(this.ResponsePreset.resErr(
-                "404", "Data Index Not Found", "service", { code: -5 }
-            ));
+        // if (inputSrv === -5)
+        //     return res.status(404).json(this.ResponsePreset.resErr(
+        //         "404", "Data Index Not Found", "service", { code: -5 }
+        //     ));
 
         res.status(200).json(this.ResponsePreset.resOK("Ok", inputSrv))
     }
@@ -128,10 +128,10 @@ class JobController {
                 "404", "Data Customer Not Found", "service", { code: -4 }
             ));
 
-        if (updateSrv === -5)
-            return res.status(404).json(this.ResponsePreset.resErr(
-                "404", "Data Index Not Found", "service", { code: -5 }
-            ));
+        // if (updateSrv === -5)
+        //     return res.status(404).json(this.ResponsePreset.resErr(
+        //         "404", "Data Index Not Found", "service", { code: -5 }
+        //     ));
 
 
         res.status(200).json(this.ResponsePreset.resOK("Ok", null))

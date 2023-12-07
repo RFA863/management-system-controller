@@ -144,12 +144,18 @@ class JobService {
             }
         })
 
-        if (getIndex === null) return -5;
+        let totalHarga = 0;
 
-        const a = (data.panjang + data.lebar) * 2 + data.index_panjang;
-        const b = data.lebar + data.tinggi + data.index_lebar;
-        const totalHarga = (a * b * getIndex.indexvalue) / 1000000
+        if (getIndex !== null) {
+            const a = (data.panjang + data.lebar) * 2 + data.index_panjang;
+            const b = data.lebar + data.tinggi + data.index_lebar;
+            totalHarga = (a * b * getIndex.indexvalue) / 1000000;
 
+        }
+
+        if (data.index_harga === false) {
+            totalHarga = 0;
+        }
 
         const addHarga = await this.HargaModel.create({
 
@@ -174,7 +180,7 @@ class JobService {
         })
 
         if (getJob === null) return -1;
-
+        // console.log(getJob)
         const getHarga = await this.HargaModel.findOne({
             where: {
                 id_job: id
@@ -182,7 +188,8 @@ class JobService {
         })
 
 
-        const harga = getHarga.dataValues.total_harga;
+
+        const harga = getHarga.total_harga;
 
 
         getJob.dataValues.harga = harga;
@@ -333,48 +340,33 @@ class JobService {
             }
         })
 
-        if (getIndex === null) return -5;
+        let totalHarga = 0;
 
-        const a = (data.panjang + data.lebar) * 2 + data.index_panjang;
-        const b = data.lebar + data.tinggi + data.index_lebar;
-        const totalHarga = (a * b * getIndex.indexvalue) / 1000000
-
-        if (data.index_harga === true) {
-
-            const getHarga = await this.HargaModel.findOne({
-                where: {
-                    id_job: id
-                }
-            })
-
-            if (getHarga === null) {
-                const addHarga = await this.HargaModel.create({
-                    id_job: id,
-                    panjang: data.index_panjang,
-                    lebar: data.index_lebar,
-                    penambahan_harga: data.penambahan_harga,
-                    pengurangan_harga: data.penurunan_harga,
-                    total_harga: totalHarga,
-                    created_at: new Date(),
-                    updated_at: new Date(),
-                })
-
-                return;
-            }
-
-            const updateHarga = await this.HargaModel.update({
-                panjang: data.index_panjang,
-                lebar: data.index_lebar,
-                penambahan_harga: data.penambahan_harga,
-                pengurangan_harga: data.penurunan_harga,
-                total_harga: totalHarga,
-                updated_at: new Date(),
-            }, {
-                where: {
-                    id_job: id
-                }
-            })
+        if (getIndex !== null) {
+            const a = (data.panjang + data.lebar) * 2 + data.index_panjang;
+            const b = data.lebar + data.tinggi + data.index_lebar;
+            totalHarga = (a * b * getIndex.indexvalue) / 1000000
         }
+
+        if (data.index_harga === false) {
+            totalHarga = 0;
+        }
+
+
+        const updateHarga = await this.HargaModel.update({
+
+            panjang: data.index_panjang,
+            lebar: data.index_lebar,
+            penambahan_harga: data.penambahan_harga,
+            pengurangan_harga: data.penurunan_harga,
+            total_harga: totalHarga,
+            updated_at: new Date(),
+        }, {
+            where: {
+                id_job: id
+            }
+        })
+
 
         return;
     }
