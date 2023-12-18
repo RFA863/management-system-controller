@@ -115,7 +115,7 @@ class JobService {
             sisa: 0,
             selesai: 0,
             ukuran_kirim: data.ukuran_kirim,
-            index_harga: data.index_harga,
+            use_index: data.index,
             cancel: false,
             surat_jalan: false,
             payment: false,
@@ -123,6 +123,12 @@ class JobService {
             updated_at: new Date(),
 
         })
+
+        let ukuranPengiriman = data.panjang + " x " + data.lebar + " x " + data.tinggi;
+
+        if (data.ukuran_kirim === false) {
+            ukuranPengiriman = data.ukuran_pengiriman;
+        }
 
         const addUkuran = await this.UkuranModel.create({
             id_job: addJob.id,
@@ -132,7 +138,7 @@ class JobService {
             total_panjang: totalPanjang,
             total_lebar: totalLebar,
             ukuran: data.panjang + " x " + data.lebar + " x " + data.tinggi,
-            ukuran_pengiriman: data.ukuran_pengiriman,
+            ukuran_pengiriman: ukuranPengiriman,
             created_at: new Date(),
             updated_at: new Date(),
         })
@@ -144,17 +150,27 @@ class JobService {
             }
         })
 
+        let subTotal = 0;
         let totalHarga = 0;
+        let indexHarga = 0;
+        let isIndexed = false;
 
         if (getIndex !== null) {
             const a = (data.panjang + data.lebar) * 2 + data.index_panjang;
             const b = data.lebar + data.tinggi + data.index_lebar;
-            totalHarga = (a * b * getIndex.indexvalue) / 1000000;
+
+            subTotal = (a * b * getIndex.indexvalue) / 1000000;
+            totalHarga = subTotal + data.penambahan_harga - data.pengurangan_harga;
+
+            indexHarga = getIndex.indexvalue;
+
+            isIndexed = true;
 
         }
 
-        if (data.index_harga === false) {
+        if (data.index === false) {
             totalHarga = 0;
+            subTotal = 0;
         }
 
         const addHarga = await this.HargaModel.create({
@@ -163,7 +179,10 @@ class JobService {
             panjang: data.index_panjang,
             lebar: data.index_lebar,
             penambahan_harga: data.penambahan_harga,
-            pengurangan_harga: data.penurunan_harga,
+            pengurangan_harga: data.pengurangan_harga,
+            isIndexed: isIndexed,
+            index_harga: indexHarga,
+            sub_total: subTotal,
             total_harga: totalHarga,
             created_at: new Date(),
             updated_at: new Date(),
@@ -172,27 +191,163 @@ class JobService {
         return addJob.id;
     }
 
-    async get(id) {
-        const getJob = await this.JobModel.findOne({
+    async totalUkuran(data) {
+        const getKualitasDetail = await this.KualitasDetailModel.findOne({
+            where: {
+                id: data.id_kualitas_detail
+            }
+        })
+
+        if (getKualitasDetail === null) return -1;
+
+        const getKualitasTipebox = await this.KualitasTipeBoxModel.findOne({
+            where: {
+                id_tipebox: data.id_tipebox,
+                id_kualitas: getKualitasDetail.id_kualitas,
+            }
+        })
+
+        if (getKualitasTipebox === null) return -2;
+
+        let konstantaLebar = 0;
+
+        if (data.lebar % 2 === 0) {
+            konstantaLebar = getKualitasTipebox.konstanta_lebar_genap
+        } else if (data.lebar % 2 !== 0) {
+            konstantaLebar = getKualitasTipebox.konstanta_lebar_ganjil
+        }
+
+        const totalPanjang = getKualitasTipebox.kuping + data.panjang + data.lebar + data.panjang + (data.lebar + getKualitasTipebox.konstanta_panjang);
+        const totalLebar = ((data.lebar + konstantaLebar) / 2) + data.tinggi + ((data.lebar + konstantaLebar) / 2);
+
+        const rumusPanjang = getKualitasTipebox.kuping + " + " + data.panjang + " + " + data.lebar + " + " + data.panjang + " + " + (data.lebar + getKualitasTipebox.konstanta_panjang) + " = " + totalPanjang;
+        const rumusLebar = ((data.lebar + konstantaLebar) / 2) + " + " + data.tinggi + " + " + ((data.lebar + konstantaLebar) / 2) + " = " + totalLebar;
+
+        return { rumusPanjang, rumusLebar };
+    }
+
+    async cekIndex(id, data) {
+        const getOrderCustomer = await this.OrderModel.findOne({
             where: {
                 id: id
             }
         })
 
+        if (getOrderCustomer === null) return -1;
+
+        const getIndex = await this.IndexModel.findOne({
+            where: {
+                id_customer: getOrderCustomer.id_customer,
+                id_kualitasdetail: data.id_kualitas_detail,
+            }
+        })
+
+        if (getIndex === null) return -2;
+
+        return getIndex;
+    }
+
+    async cekHarga(id, data) {
+        const getOrderCustomer = await this.OrderModel.findOne({
+            where: {
+                id: id
+            }
+        })
+
+        if (getOrderCustomer === null) return -1;
+
+        const getIndex = await this.IndexModel.findOne({
+            where: {
+                id_customer: getOrderCustomer.id_customer,
+                id_kualitasdetail: data.id_kualitas_detail,
+            }
+        })
+
+        if (getIndex === null) return -2;
+
+        let subTotal = 0;
+        let totalHarga = 0;
+
+
+
+        if (getIndex !== null) {
+            const a = (data.panjang + data.lebar) * 2 + data.index_panjang;
+            const b = data.lebar + data.tinggi + data.index_lebar;
+
+            subTotal = (a * b * getIndex.indexvalue) / 1000000;
+            totalHarga = subTotal + data.penambahan_harga - data.pengurangan_harga;
+        }
+
+        if (data.index === false) {
+            totalHarga = 0;
+            subTotal = 0;
+        }
+
+        return { subTotal, totalHarga };
+
+    }
+
+    async get(id) {
+        const getJob = await this.JobModel.findOne({
+            where: {
+                id: id
+            }
+        });
+
         if (getJob === null) return -1;
-        // console.log(getJob)
+
         const getHarga = await this.HargaModel.findOne({
             where: {
                 id_job: id
             }
+
+        });
+
+        const getUkuran = await this.UkuranModel.findOne({
+            where: {
+                id_job: id
+            }
+        });
+
+        const getTipeBox = await this.TipeBoxModel.findOne({
+            where: {
+                id: getJob.id_tipebox
+            }
         })
 
+        const getKualitasDetail = await this.KualitasDetailModel.findOne({
+            where: {
+                id: getJob.id_kualitas_detail,
+            }
+        })
 
+        const getKualitas = await this.KualitasModel.findOne({
+            where: {
+                id: getKualitasDetail.id_kualitas
+            }
+        })
 
-        const harga = getHarga.total_harga;
+        getJob.dataValues.index_harga = getHarga.dataValues.index_harga;
+        getJob.dataValues.index_lebar = getHarga.dataValues.lebar;
+        getJob.dataValues.sub_total = getHarga.dataValues.sub_total;
+        getJob.dataValues.isIndexed = getHarga.dataValues.isIndexed;
+        getJob.dataValues.index_panjang = getHarga.dataValues.panjang;
+        getJob.dataValues.total_harga = getHarga.dataValues.total_harga;
+        getJob.dataValues.penambahan_harga = getHarga.dataValues.penambahan_harga;
+        getJob.dataValues.pengurangan_harga = getHarga.dataValues.pengurangan_harga;
 
+        getJob.dataValues.lebar = getUkuran.dataValues.lebar;
+        getJob.dataValues.tinggi = getUkuran.dataValues.tinggi;
+        getJob.dataValues.ukuran = getUkuran.dataValues.ukuran;
+        getJob.dataValues.panjang = getUkuran.dataValues.panjang;
+        getJob.dataValues.total_lebar = getUkuran.dataValues.total_lebar;
+        getJob.dataValues.total_panjang = getUkuran.dataValues.total_panjang;
+        getJob.dataValues.ukuran_pengiriman = getUkuran.dataValues.ukuran_pengiriman;
 
-        getJob.dataValues.harga = harga;
+        getJob.dataValues.tipebox = getTipeBox.dataValues.nama;
+        getJob.dataValues.kualitas = getKualitas.dataValues.nama;
+        getJob.dataValues.kualitas_detail = getKualitasDetail.dataValues.nama;
+        getJob.dataValues.kode_kualitas_detail = getKualitasDetail.dataValues.kode;
 
 
         return getJob;
@@ -307,7 +462,7 @@ class JobService {
             keterangan: data.keterangan,
             jumlah: data.jumlah,
             ukuran_kirim: data.ukuran_kirim,
-            index_harga: data.index_harga,
+            use_index: data.index,
             cancel: false,
             surat_jalan: false,
             payment: false,
@@ -319,6 +474,14 @@ class JobService {
             }
         })
 
+
+        let ukuranPengiriman = data.panjang + " x " + data.lebar + " x " + data.tinggi;
+
+        if (data.ukuran_kirim === false) {
+            ukuranPengiriman = data.ukuran_pengiriman;
+        }
+
+
         const updateUkuran = await this.UkuranModel.update({
             panjang: data.panjang,
             lebar: data.lebar,
@@ -326,7 +489,8 @@ class JobService {
             total_panjang: totalPanjang,
             total_lebar: totalLebar,
             ukuran: data.panjang + " x " + data.lebar + " x " + data.tinggi,
-            ukuran_pengiriman: data.ukuran_pengiriman,
+            ukuran_pengiriman: ukuranPengiriman,
+            updated_at: new Date(),
         }, {
             where: {
                 id_job: id
@@ -340,25 +504,38 @@ class JobService {
             }
         })
 
+        let subTotal = 0;
         let totalHarga = 0;
+        let indexHarga = 0;
+        let isIndexed = false;
 
         if (getIndex !== null) {
             const a = (data.panjang + data.lebar) * 2 + data.index_panjang;
             const b = data.lebar + data.tinggi + data.index_lebar;
-            totalHarga = (a * b * getIndex.indexvalue) / 1000000
+
+            subTotal = (a * b * getIndex.indexvalue) / 1000000;
+            totalHarga = subTotal + data.penambahan_harga - data.pengurangan_harga;
+
+            indexHarga = getIndex.indexvalue;
+
+            isIndexed = true;
+
         }
 
-        if (data.index_harga === false) {
+        if (data.index === false) {
             totalHarga = 0;
+            subTotal = 0;
         }
-
 
         const updateHarga = await this.HargaModel.update({
 
             panjang: data.index_panjang,
             lebar: data.index_lebar,
             penambahan_harga: data.penambahan_harga,
-            pengurangan_harga: data.penurunan_harga,
+            pengurangan_harga: data.pengurangan_harga,
+            isIndexed: isIndexed,
+            index_harga: indexHarga,
+            sub_total: subTotal,
             total_harga: totalHarga,
             updated_at: new Date(),
         }, {

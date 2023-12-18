@@ -60,6 +60,100 @@ class JobController {
         res.status(200).json(this.ResponsePreset.resOK("Ok", inputSrv))
     }
 
+    async totalUkuran(req, res) {
+        if (req.middlewares.authorization.posisi !== "marketing")
+            return res.status(403).json({
+                messagge: "Forbidden",
+            });
+
+        const schemaValidate = this.Ajv.compile(this.JobValidator.totalUkuran)
+        if (!schemaValidate(req.body))
+            return res.status(400).json(this.ResponsePreset.resErr(
+                "400", schemaValidate.errors[0].message, "validator", schemaValidate.errors[0]
+            ))
+
+        const data = req.body;
+
+        const totalUkuranSrv = await this.JobService.totalUkuran(data);
+
+
+        if (totalUkuranSrv === -1)
+            return res.status(404).json(this.ResponsePreset.resErr(
+                "404", "Data Kualitas Detail Not Found", "service", { code: -1 }
+            ));
+
+        if (totalUkuranSrv === -2)
+            return res.status(404).json(this.ResponsePreset.resErr(
+                "404", "Data Kualitas Tipe Box Not Found", "service", { code: -2 }
+            ));
+
+        res.status(200).json(this.ResponsePreset.resOK("Ok", totalUkuranSrv));
+    }
+
+    async cekIndex(req, res) {
+        if (req.middlewares.authorization.posisi !== "marketing")
+            return res.status(403).json({
+                messagge: "Forbidden",
+            });
+
+        const data = req.body;
+        const id = req.params.id;
+
+
+        if (data.id_kualitas_detail === "" || data.id_kualitas_detail === 0 || data.id_kualitas_detail === null)
+            return res.status(403).json(this.ResponsePreset.resErr(
+                403, "Data can't be empty", "validator", { code: -1 }
+            ));
+
+        const cekIndexSrv = await this.JobService.cekIndex(id, data);
+
+        if (cekIndexSrv === -1)
+            return res.status(404).json(this.ResponsePreset.resErr(
+                "404", "Data Order Not Found", "service", { code: -1 }
+            ));
+
+        if (cekIndexSrv === -2)
+            return res.status(404).json(this.ResponsePreset.resErr(
+                "404", "Index Not Found", "service", { code: -2 }
+            ));
+
+        res.status(200).json(this.ResponsePreset.resOK("Ok", cekIndexSrv));
+
+
+    }
+
+    async cekHarga(req, res) {
+        if (req.middlewares.authorization.posisi !== "marketing")
+            return res.status(403).json({
+                messagge: "Forbidden",
+            });
+
+        const schemaValidate = this.Ajv.compile(this.JobValidator.cekHarga)
+        if (!schemaValidate(req.body))
+            return res.status(400).json(this.ResponsePreset.resErr(
+                "400", schemaValidate.errors[0].message, "validator", schemaValidate.errors[0]
+            ))
+
+        const data = req.body;
+        const id = req.params.id;
+
+        const cekHargaSrv = await this.JobService.cekHarga(id, data);
+
+        if (cekHargaSrv === -1)
+            return res.status(404).json(this.ResponsePreset.resErr(
+                "404", "Data Order Not Found", "service", { code: -1 }
+            ));
+
+        if (cekHargaSrv === -2)
+            return res.status(404).json(this.ResponsePreset.resErr(
+                "404", "Index Not Found", "service", { code: -2 }
+            ));
+
+        res.status(200).json(this.ResponsePreset.resOK("Ok", cekHargaSrv));
+
+
+    }
+
     async get(req, res) {
         if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
@@ -127,11 +221,6 @@ class JobController {
             return res.status(404).json(this.ResponsePreset.resErr(
                 "404", "Data Customer Not Found", "service", { code: -4 }
             ));
-
-        // if (updateSrv === -5)
-        //     return res.status(404).json(this.ResponsePreset.resErr(
-        //         "404", "Data Index Not Found", "service", { code: -5 }
-        //     ));
 
 
         res.status(200).json(this.ResponsePreset.resOK("Ok", null))

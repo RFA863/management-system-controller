@@ -77,7 +77,7 @@ class JobValidator {
                 nullable: false,
             },
 
-            index_harga: {
+            index: {
                 type: "boolean",
                 nullable: false,
             },
@@ -115,10 +115,126 @@ class JobValidator {
         required: ["id_tipebox", "id_kualitas_detail",
             "panjang", "lebar", "tinggi", "warna", "perekat",
             "keterangan", "jumlah", "ukuran_pengiriman",
-            "ukuran_kirim", "index_harga", "index_panjang",
+            "ukuran_kirim", "index", "index_panjang",
             "index_lebar", "penambahan_harga", "pengurangan_harga"],
         additionalProperties: false,
     };
+
+    cekHarga = {
+        type: "object",
+        properties: {
+
+
+            id_kualitas_detail: {
+                type: "number",
+                minimum: 1,
+                nullable: false,
+            },
+
+            panjang: {
+                type: "number",
+                maximum: 500000,
+                minimum: 0,
+                nullable: false,
+            },
+
+            lebar: {
+                type: "number",
+                maximum: 500000,
+                minimum: 0,
+                nullable: false,
+            },
+
+            tinggi: {
+                type: "number",
+                maximum: 500000,
+                minimum: 0,
+                nullable: false,
+            },
+
+            index_panjang: {
+                type: "number",
+                maximum: 500000,
+                minimum: 0,
+                nullable: true,
+            },
+
+            index_lebar: {
+                type: "number",
+                maximum: 500000,
+                minimum: 0,
+                nullable: true,
+            },
+
+            penambahan_harga: {
+                type: "number",
+                maximum: 500000,
+                minimum: 0,
+                nullable: true,
+            },
+
+            pengurangan_harga: {
+                type: "number",
+                maximum: 500000,
+                minimum: 0,
+                nullable: true,
+            },
+
+        },
+
+        required: ["id_kualitas_detail",
+            "panjang", "lebar", "tinggi", "index_panjang",
+            "index_lebar", "penambahan_harga", "pengurangan_harga"],
+        additionalProperties: false,
+    }
+
+    totalUkuran = {
+        type: "object",
+        properties: {
+
+            id_tipebox: {
+                type: "number",
+                minimum: 1,
+                nullable: false
+            },
+
+            id_kualitas_detail: {
+                type: "number",
+                minimum: 1,
+                nullable: false,
+            },
+
+            panjang: {
+                type: "number",
+                maximum: 500000,
+                minimum: 0,
+                nullable: false,
+            },
+
+            lebar: {
+                type: "number",
+                maximum: 500000,
+                minimum: 0,
+                nullable: false,
+            },
+
+            tinggi: {
+                type: "number",
+                maximum: 500000,
+                minimum: 0,
+                nullable: false,
+            },
+
+
+
+
+
+        },
+
+        required: ["id_tipebox", "id_kualitas_detail",
+            "panjang", "lebar", "tinggi"],
+        additionalProperties: false,
+    }
 }
 
 export default JobValidator;

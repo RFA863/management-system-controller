@@ -92,7 +92,7 @@ class JobModel {
                     allowNull: false,
                 },
 
-                index_harga: {
+                use_index: {
                     type: DataTypes.BOOLEAN,
                     allowNull: false,
                 },

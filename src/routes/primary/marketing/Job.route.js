@@ -15,6 +15,15 @@ class JobRoute {
         this.API.post(this.routePrefix + "/input/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.JobController.input(req, res));
 
+        this.API.post(this.routePrefix + "/total_ukuran", this.AuthorizationMiddleware.check(),
+            (req, res) => this.JobController.totalUkuran(req, res));
+
+        this.API.post(this.routePrefix + "/cek_index/:id", this.AuthorizationMiddleware.check(),
+            (req, res) => this.JobController.cekIndex(req, res));
+
+        this.API.post(this.routePrefix + "/cek_harga/:id", this.AuthorizationMiddleware.check(),
+            (req, res) => this.JobController.cekHarga(req, res));
+
         this.API.get(this.routePrefix + "/get/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.JobController.get(req, res));
 

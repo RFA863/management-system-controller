@@ -31,7 +31,7 @@ class OrderService {
             updated_at: new Date(),
         })
 
-        return addOrder;
+        return addOrder.id;
     }
 
     async get() {
@@ -61,13 +61,15 @@ class OrderService {
 
         const getCustomer = await this.CustomerModel.findAll({
             where: {
-                id: getDetailOrder.dataValues.id_customer,
+                id: getDetailOrder.id_customer,
             }
         })
 
         getDetailOrder.dataValues.Customer = getCustomer.map((val) => val.dataValues.nama);
 
-        return getDetailOrder;
+        const detailOrder = [getDetailOrder];
+
+        return detailOrder;
     }
 
     async update(data, id) {

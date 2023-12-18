@@ -43,6 +43,21 @@ class HargaModel {
                     allowNull: true,
                 },
 
+                isIndexed: {
+                    type: DataTypes.BOOLEAN,
+                    allowNull: false,
+                },
+
+                index_harga: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false,
+                },
+
+                sub_total: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false,
+                },
+
                 total_harga: {
                     type: DataTypes.INTEGER,
                     allowNull: false,
