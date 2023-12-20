@@ -24,6 +24,12 @@ class JobRoute {
         this.API.post(this.routePrefix + "/cek_harga/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.JobController.cekHarga(req, res));
 
+        this.API.get(this.routePrefix + "/getAll", this.AuthorizationMiddleware.check(),
+            (req, res) => this.JobController.getAll(req, res));
+
+        this.API.get(this.routePrefix + "/getCancel", this.AuthorizationMiddleware.check(),
+            (req, res) => this.JobController.getCancel(req, res));
+
         this.API.get(this.routePrefix + "/get/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.JobController.get(req, res));
 
@@ -33,8 +39,8 @@ class JobRoute {
         this.API.put(this.routePrefix + "/update/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.JobController.update(req, res));
 
-        this.API.delete(this.routePrefix + "/delete/:id", this.AuthorizationMiddleware.check(),
-            (req, res) => this.JobController.delete(req, res));
+        this.API.put(this.routePrefix + "/cancel/:id", this.AuthorizationMiddleware.check(),
+            (req, res) => this.JobController.cancel(req, res));
     }
 }
 

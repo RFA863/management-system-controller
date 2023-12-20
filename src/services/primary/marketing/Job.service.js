@@ -287,6 +287,102 @@ class JobService {
 
     }
 
+    async getAll() {
+        const getJob = await this.JobModel.findAll({
+            where: {
+                cancel: false
+            }
+        })
+
+        if (getJob.length === 0) return -1;
+
+        for (let i in getJob) {
+            const getUkuran = await this.UkuranModel.findAll({
+                where: {
+                    id_job: getJob[i].dataValues.id
+                }
+            })
+
+            const getHarga = await this.HargaModel.findAll({
+                where: {
+                    id_job: getJob[i].dataValues.id
+                }
+            })
+
+            const getKualitasDetail = await this.KualitasDetailModel.findAll({
+                where: {
+                    id: getJob[i].dataValues.id_kualitas_detail
+                }
+            })
+
+
+
+            getJob[i].dataValues.ukuran = getUkuran.map((val) => val.dataValues.ukuran);
+            getJob[i].dataValues.ukuran_pengiriman = getUkuran.map((val) => val.dataValues.ukuran_pengiriman);
+            getJob[i].dataValues.total_harga = getHarga.map((val) => val.dataValues.total_harga)
+            getJob[i].dataValues.id_kualitas = getKualitasDetail.map((val) => val.dataValues.id_kualitas);
+
+            const getKualitas = await this.KualitasModel.findAll({
+                where: {
+                    id: getJob[i].dataValues.id_kualitas
+                }
+            })
+
+            getJob[i].dataValues.kualitas = getKualitas.map((val) => val.dataValues.nama) + " | " + getKualitasDetail.map((val) => val.dataValues.nama) + " | " + getKualitasDetail.map((val) => val.dataValues.kode);
+        }
+
+        return getJob;
+    }
+
+    async getCancel() {
+        const getJob = await this.JobModel.findAll({
+            where: {
+                cancel: true
+            }
+        });
+
+        if (getJob.length === 0) return -1;
+
+        for (let i in getJob) {
+
+            const getOrder = await this.OrderModel.findAll({
+                where: {
+                    id: getJob[i].dataValues.id_order
+                }
+            });
+
+            const getUkuran = await this.UkuranModel.findAll({
+                where: {
+                    id_job: getJob[i].dataValues.id
+                }
+            });
+
+            const getCustomer = await this.CustomerModel.findAll({
+                where: {
+                    id: getJob[i].dataValues.id_customer,
+                }
+            });
+
+            const getKualitasDetail = await this.KualitasDetailModel.findAll({
+                where: {
+                    id: getJob[i].dataValues.id_kualitas_detail,
+                }
+            });
+
+            getJob[i].dataValues.no_po = getOrder.map((val) => val.dataValues.no_po);
+            getJob[i].dataValues.tanggal_order = getOrder.map((val) => val.dataValues.tanggal_order);
+            getJob[i].dataValues.tanggal_kirim = getOrder.map((val) => val.dataValues.tanggal_kirim);
+            getJob[i].dataValues.customer = getCustomer.map((val) => val.dataValues.nama);
+            getJob[i].dataValues.kualitas = getKualitasDetail.map((val) => val.dataValues.nama) + "|" + getKualitasDetail.map((val) => val.dataValues.kode);
+            getJob[i].dataValues.ukuran = getUkuran.map((val) => val.dataValues.ukuran)
+
+
+        }
+
+
+        return getJob;
+    }
+
     async get(id) {
         const getJob = await this.JobModel.findOne({
             where: {
@@ -359,6 +455,7 @@ class JobService {
         const getJob = await this.JobModel.findAll({
             where: {
                 id_order: id,
+                cancel: false,
             }
         });
 
@@ -367,7 +464,8 @@ class JobService {
         for (let i in getJob) {
             const getHarga = await this.HargaModel.findAll({
                 where: {
-                    id_job: getJob[i].dataValues.id
+                    id_job: getJob[i].dataValues.id,
+
                 }
             });
 
@@ -548,22 +646,15 @@ class JobService {
         return;
     }
 
-    async delete(id) {
-        const deleteHarga = await this.HargaModel.destroy({
-            where: {
-                id_job: id,
-            }
-        })
+    async cancel(id) {
+        const cancelJob = await this.JobModel.update({
 
-        const deleteUkuran = await this.UkuranModel.destroy({
-            where: {
-                id_job: id,
-            }
-        })
+            cancel: true,
+            updated_at: new Date(),
 
-        const deleteJob = await this.JobModel.destroy({
+        }, {
             where: {
-                id: id,
+                id: id
             }
         })
 

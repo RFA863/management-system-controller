@@ -154,6 +154,38 @@ class JobController {
 
     }
 
+    async getAll(req, res) {
+        if (req.middlewares.authorization.posisi !== "marketing")
+            return res.status(403).json({
+                messagge: "Forbidden",
+            });
+
+        const getAllSrv = await this.JobService.getAll();
+
+        if (getAllSrv === -1) return res.status(404).json(this.ResponsePreset.resErr(
+            "404", "Data not Found", "service", { code: -1 }
+        ))
+
+        res.status(200).json(this.ResponsePreset.resOK("Ok", getAllSrv));
+
+    }
+
+    async getCancel(req, res) {
+        if (req.middlewares.authorization.posisi !== "marketing")
+            return res.status(403).json({
+                messagge: "Forbidden",
+            });
+
+        const getCancelSrv = await this.JobService.getCancel();
+
+        if (getCancelSrv === -1) return res.status(404).json(this.ResponsePreset.resErr(
+            "404", "Data not Found", "service", { code: -1 }
+        ))
+
+        res.status(200).json(this.ResponsePreset.resOK("Ok", getCancelSrv));
+
+    }
+
     async get(req, res) {
         if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
@@ -226,7 +258,7 @@ class JobController {
         res.status(200).json(this.ResponsePreset.resOK("Ok", null))
     }
 
-    async delete(req, res) {
+    async cancel(req, res) {
         if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
                 messagge: "Forbidden",
@@ -234,7 +266,7 @@ class JobController {
 
         const id = req.params.id;
 
-        const deleteSrv = await this.JobService.delete(id);
+        const cancelSrv = await this.JobService.cancel(id);
 
         res.status(200).json(this.ResponsePreset.resOK("Ok", null));
     }
