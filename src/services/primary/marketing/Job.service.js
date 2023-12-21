@@ -505,6 +505,95 @@ class JobService {
         return getJob;
     }
 
+
+    async getJobDetail(id) {
+        const getJob = await this.JobModel.findOne({
+            where: {
+                id: id,
+
+            }
+        });
+
+        if (getJob.length === 0) return -1;
+
+
+        const getHarga = await this.HargaModel.findOne({
+            where: {
+                id_job: id,
+
+            }
+        });
+
+        const getUkuran = await this.UkuranModel.findOne({
+            where: {
+                id_job: id
+            }
+        });
+
+        const getTipeBox = await this.TipeBoxModel.findOne({
+            where: {
+                id: getJob.dataValues.id_tipebox,
+            }
+        });
+
+        const getKualitasDetail = await this.KualitasDetailModel.findOne({
+            where: {
+                id: getJob.dataValues.id_kualitas_detail
+            }
+        });
+
+        const getCustomer = await this.CustomerModel.findOne({
+            where: {
+                id: getJob.id_customer,
+            }
+        })
+        const getOrder = await this.OrderModel.findOne({
+            where: {
+                id: getJob.id_order,
+            }
+        })
+
+        getJob.dataValues.ukuran = getUkuran.dataValues.ukuran;
+        getJob.dataValues.tipebox = getTipeBox.dataValues.nama;
+        getJob.dataValues.customer = getCustomer.dataValues.nama;
+        getJob.dataValues.harga = getHarga.dataValues.total_harga;
+        getJob.dataValues.tanggal_order = getOrder.dataValues.tanggal_order;
+        getJob.dataValues.id_kualitas = getKualitasDetail.dataValues.id_kualitas;
+        getJob.dataValues.ukuran_pengiriman = getUkuran.dataValues.ukuran_pengiriman;
+
+        const getKualitas = await this.KualitasDetailModel.findOne({
+            where: {
+                id: getJob.dataValues.id_kualitas
+            }
+        });
+
+        getJob.dataValues.kualitas = getKualitas.dataValues.nama + " | " + getKualitasDetail.dataValues.nama + " | " + getKualitasDetail.dataValues.kode;
+
+
+        return getJob;
+    }
+
+    async getCustomerJob(id) {
+
+        const getOrder = await this.OrderModel.findOne({
+            where: {
+                id: id
+            }
+        });
+
+        if (getOrder === null) return -1;
+
+        const getCustomer = await this.CustomerModel.findOne({
+            where: {
+                id: getOrder.id_customer
+            }
+        });
+
+        if (getOrder === null) return -2;
+
+        return { getCustomer, getOrder };
+    }
+
     async update(data, id) {
         const getKualitasDetail = await this.KualitasDetailModel.findOne({
             where: {

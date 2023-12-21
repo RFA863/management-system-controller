@@ -50,6 +50,29 @@ class OrderService {
         return getOrder;
     }
 
+    async getByCustomer(id) {
+        const getOrder = await this.OrderModel.findAll({
+            where: {
+                id_customer: id
+            }
+        });
+
+        if (getOrder.length === 0) return -1;
+
+        for (let i in getOrder) {
+            const getCustomer = await this.CustomerModel.findAll({
+                where: {
+                    id: id,
+                }
+            })
+            getOrder[i].dataValues.Customer = getCustomer.map((val) => val.dataValues.nama);
+        }
+
+
+
+        return getOrder;
+    }
+
     async getDetail(id) {
         const getDetailOrder = await this.OrderModel.findOne({
             where: {

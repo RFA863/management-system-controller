@@ -17,6 +17,10 @@ class OrderDetailService {
 
     async getAll() {
         const getJob = await this.JobModel.findAll({
+            where: {
+                cancel: false,
+            }
+        }, {
             attributes: ["id", "id_order", "id_customer", "id_kualitas_detail", "no_job", "jumlah", "sisa", "selesai"],
         });
 

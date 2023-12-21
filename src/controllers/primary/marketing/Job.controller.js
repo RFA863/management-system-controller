@@ -218,6 +218,42 @@ class JobController {
         res.status(200).json(this.ResponsePreset.resOK("Ok", getJobOrderSrv));
     }
 
+    async getJobDetail(req, res) {
+        if (req.middlewares.authorization.posisi !== "marketing")
+            return res.status(403).json({
+                messagge: "Forbidden",
+            });
+
+        const id = req.params.id;
+        const getJobDetailSrv = await this.JobService.getJobDetail(id);
+
+        if (getJobDetailSrv === -1) return res.status(404).json(this.ResponsePreset.resErr(
+            "404", "Data not Found", "service", { code: -1 }
+        ))
+
+        res.status(200).json(this.ResponsePreset.resOK("Ok", getJobDetailSrv));
+    }
+
+    async getCustomerJob(req, res) {
+        if (req.middlewares.authorization.posisi !== "marketing")
+            return res.status(403).json({
+                messagge: "Forbidden",
+            });
+
+        const id = req.params.id;
+        const getCustomerJobSrv = await this.JobService.getCustomerJob(id);
+
+        if (getCustomerJobSrv === -1) return res.status(404).json(this.ResponsePreset.resErr(
+            "404", "Order not Found", "service", { code: -1 }
+        ))
+
+        if (getCustomerJobSrv === -2) return res.status(404).json(this.ResponsePreset.resErr(
+            "404", "Customer not Found", "service", { code: -2 }
+        ))
+
+        res.status(200).json(this.ResponsePreset.resOK("Ok", getCustomerJobSrv));
+    }
+
     async update(req, res) {
         if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({

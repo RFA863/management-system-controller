@@ -19,6 +19,9 @@ class OrderRoute {
         this.API.get(this.routePrefix + "/get", this.AuthorizationMiddleware.check(),
             (req, res) => this.OrderConroller.get(req, res));
 
+        this.API.get(this.routePrefix + "/get_customer/:id", this.AuthorizationMiddleware.check(),
+            (req, res) => this.OrderConroller.getByCustomer(req, res));
+
         this.API.get(this.routePrefix + "/getDetail/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.OrderConroller.getDetail(req, res));
 
