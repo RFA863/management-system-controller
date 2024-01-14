@@ -82,17 +82,7 @@ class AturanTipeBoxController {
 
     }
 
-    async delete(req, res) {
-        if (req.middlewares.authorization.posisi !== "marketing")
-            return res.status(403).json({
-                messagge: "Forbidden",
-            });
 
-
-        const deleteSrv = await this.AturanTipeBoxService.delete(req.params.id);
-
-        res.status(200).json(this.ResponsePreset.resOK("Ok", null));
-    }
 }
 
 export default AturanTipeBoxController;

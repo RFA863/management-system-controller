@@ -76,14 +76,5 @@ class AturanTipeBoxService {
         return updateAturanTipeBox;
     }
 
-    async delete(id) {
-        const deleteAturanTipeBox = await this.AturanTipeBoxModel.destroy({
-            where: {
-                id: id,
-            }
-        })
-
-        return deleteAturanTipeBox;
-    }
 }
 export default AturanTipeBoxService;

@@ -21,9 +21,7 @@ class AturanTipeBoxRoute {
         this.API.put(this.routePrefix + "/update/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.AturanTipeBoxController.update(req, res)
         );
-        this.API.delete(this.routePrefix + "/delete/:id", this.AuthorizationMiddleware.check(),
-            (req, res) => this.AturanTipeBoxController.delete(req, res)
-        );
+
     }
 }
 

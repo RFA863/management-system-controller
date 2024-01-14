@@ -22,8 +22,7 @@ class UserRoute {
         this.API.put(this.routePrefix + "/update/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.UserController.update(req, res));
 
-        this.API.delete(this.routePrefix + "/delete/:id", this.AuthorizationMiddleware.check(),
-            (req, res) => this.UserController.delete(req, res));
+
 
     }
 

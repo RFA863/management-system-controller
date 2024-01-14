@@ -22,8 +22,7 @@ class IndexRoute {
         this.API.put(this.routePrefix + "/update/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.IndexController.update(req, res));
 
-        this.API.delete(this.routePrefix + "/delete/:id", this.AuthorizationMiddleware.check(),
-            (req, res) => this.IndexController.delete(req, res));
+
     }
 }
 

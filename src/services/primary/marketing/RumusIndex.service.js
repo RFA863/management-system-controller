@@ -86,15 +86,6 @@ class RumusIndexService {
 
     }
 
-    async delete(id) {
-        const deleteRumusIndex = await this.RumusIndexModel.destroy({
-            where: {
-                id: id,
-            }
-        })
-
-        return deleteRumusIndex;
-    }
 }
 
 export default RumusIndexService;

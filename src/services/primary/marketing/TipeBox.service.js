@@ -62,14 +62,5 @@ class TipeBoxService {
         return updateTipeBox;
     }
 
-    async delete(id) {
-        const deleteTipeBox = await this.TipeBoxModel.destroy({
-            where: {
-                id: id
-            }
-        });
-
-        return deleteTipeBox;
-    }
 }
 export default TipeBoxService;

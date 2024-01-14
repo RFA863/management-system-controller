@@ -5,7 +5,8 @@ CREATE TABLE user (
     password VARCHAR(50) NOT NULL,
     akses BOOLEAN NOT NULL,
     created_at DATETIME NOT NULL,
-    updated_at DATETIME NOT NULL
+    updated_at DATETIME NOT NULL,
+    deleted_at DATETIME
 );
 
 CREATE TABLE tipebox (
@@ -13,7 +14,8 @@ CREATE TABLE tipebox (
     nama VARCHAR(50) NOT NULL,
     kode VARCHAR(25) NOT NULL,
     created_at DATETIME NOT NULL,
-    updated_at DATETIME NOT NULL
+    updated_at DATETIME NOT NULL,
+    deleted_at DATETIME
 );
 
 CREATE TABLE aturan_tipebox (
@@ -22,6 +24,7 @@ id_tipebox INT NOT NULL,
 nama VARCHAR(50) NOT NULL,
 created_at DATETIME NOT NULL,
 updated_at DATETIME NOT NULL,
+deleted_at DATETIME,
 FOREIGN KEY (id_tipebox) REFERENCES tipebox(id)
 );
 
@@ -34,6 +37,7 @@ rumusoversize VARCHAR(50) ,
 rumustotal VARCHAR(50) NOT NULL,
 created_at DATETIME NOT NULL,
 updated_at DATETIME NOT NULL,
+deleted_at DATETIME,
 FOREIGN KEY (id_tipebox) REFERENCES  tipebox(id)
 );
 
@@ -41,7 +45,8 @@ CREATE TABLE kualitas (
 id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 nama VARCHAR(50) NOT NULL,
 created_at DATETIME NOT NULL,
-updated_at DATETIME NOT NULL
+updated_at DATETIME NOT NULL,
+deleted_at DATETIME
 );
 
 CREATE TABLE kualitas_detail (
@@ -51,6 +56,7 @@ nama VARCHAR(50) NOT NULL,
 kode VARCHAR(50) NOT NULL,
 created_at DATETIME NOT NULL,
 updated_at DATETIME NOT NULL,
+deleted_at DATETIME,
 FOREIGN KEY (id_kualitas) REFERENCES kualitas(id)
 );
 
@@ -61,21 +67,24 @@ norekening VARCHAR(25) NOT NULL,
 atasnama VARCHAR(50) NOT NULL,
 ct BOOLEAN NOT NULL,
 created_at DATETIME NOT NULL,
-updated_at DATETIME NOT NULL
+updated_at DATETIME NOT NULL,
+deleted_at DATETIME
 );
 
 CREATE TABLE mobil (
 id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 noplat VARCHAR(50) NOT NULL,
 created_at DATETIME NOT NULL,
-updated_at DATETIME NOT NULL
+updated_at DATETIME NOT NULL,
+deleted_at DATETIME
 );
 
 CREATE TABLE supir (
 id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 nama VARCHAR(50) NOT NULL,
 created_at DATETIME NOT NULL,
-updated_at DATETIME NOT NULL
+updated_at DATETIME NOT NULL,
+deleted_at DATETIME
 );
 
 CREATE TABLE customer (
@@ -86,12 +95,13 @@ CREATE TABLE customer (
     email VARCHAR(50) NOT NULL,
     npwp BOOL NOT NULL,
     nonpwp VARCHAR(25),
-    notelp VARCHAR(25) NOT NULL, 
+    notelp VARCHAR(100) NOT NULL, 
     nofax VARCHAR(25),  
     alamat VARCHAR(50) NOT NULL,
     alamatinvoice VARCHAR(50) NOT NULL,
     created_at DATETIME NOT NULL,
-    updated_at DATETIME NOT NULL
+    updated_at DATETIME NOT NULL,
+    deleted_at DATETIME
 );
 
 CREATE TABLE index_table (
@@ -101,6 +111,7 @@ CREATE TABLE index_table (
   indexvalue INT(25) NOT NULL,
   created_at DATETIME NOT NULL,
   updated_at DATETIME NOT NULL,
+  deleted_at DATETIME,
   FOREIGN KEY (id_customer) REFERENCES customer(id),
   FOREIGN KEY (id_kualitasdetail) REFERENCES kualitas_detail(id)
 );
@@ -113,6 +124,7 @@ CREATE TABLE orders (
   tanggal_kirim DATE NOT NULL,
   created_at DATETIME NOT NULL,
   updated_at DATETIME NOT NULL,
+  deleted_at DATETIME,
   FOREIGN KEY (id_customer) REFERENCES customer(id)
   );
 
@@ -125,6 +137,7 @@ CREATE TABLE orders (
   rumus_oversize VARCHAR(255) ,
   created_at DATETIME NOT NULL,
   updated_at DATETIME NOT NULL,
+  deleted_at DATETIME,
  FOREIGN KEY (id_tipebox) REFERENCES tipebox(id)
 );
 
@@ -138,6 +151,7 @@ CREATE TABLE kualitas_tipebox (
   kuping INT(11) NOT NULL,
   created_at DATETIME NOT NULL,
   updated_at DATETIME NOT NULL,
+  deleted_at DATETIME,
   FOREIGN KEY (id_tipebox) REFERENCES tipebox(id),
   FOREIGN KEY (id_kualitas) REFERENCES kualitas(id)
 );
@@ -164,6 +178,7 @@ CREATE TABLE job (
     payment BOOLEAN NOT NULL,
     created_at DATETIME NOT NULL,
     updated_at DATETIME NOT NULL,
+    deleted_at DATETIME,
     FOREIGN KEY (id_tipebox) REFERENCES tipebox (id),
     FOREIGN KEY (id_kualitas_detail) REFERENCES kualitas_detail(id),
     FOREIGN KEY (id_order) REFERENCES orders(id)
@@ -179,10 +194,11 @@ CREATE TABLE harga_job (
     pengurangan_harga INT,
     isIndexed BOOLEAN NOT NULL,
     index_harga INT NOT NULL,
-    sub_total INT NOT NULL,
-    total_harga INT NOT NULL,
+    sub_total FLOAT NOT NULL,
+    total_harga FLOAT NOT NULL,
     created_at DATETIME NOT NULL,
     updated_at DATETIME NOT NULL,
+    deleted_at DATETIME,
     FOREIGN KEY (id_job) REFERENCES job(id)
 );
 
@@ -198,6 +214,7 @@ CREATE TABLE ukuran_job (
   ukuran_pengiriman VARCHAR(255),
   created_at DATETIME NOT NULL,
   updated_at DATETIME NOT NULL,
+  deleted_at DATETIME,
   FOREIGN KEY (id_job) REFERENCES job(id)
 );
 
@@ -206,9 +223,11 @@ CREATE TABLE surat_jalan(
   id_job INT NOT NULL,
   id_supir INT NOT NULL,
   id_mobil INT NOT NULL,
-  tanggal_kirim DATE,
+  tanggal_kirim DATE NOT NULL,
+  close_order BOOLEAN NOT NULL,
   created_at DATETIME NOT NULL,
   updated_at DATETIME NOT NULL,
+  deleted_at DATETIME,
   FOREIGN KEY (id_job) REFERENCES job(id),
   FOREIGN KEY (id_supir) REFERENCES supir(id),
   FOREIGN KEY (id_mobil) REFERENCES mobil(id)

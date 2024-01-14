@@ -66,16 +66,6 @@ class UserService {
         return updateUser;
     }
 
-    async delete(id) {
-        const deleteUser = await this.UserModel.destroy({
-            where: {
-                id: id
-            }
-        })
-
-        return deleteUser;
-    }
-
 }
 
 export default UserService;

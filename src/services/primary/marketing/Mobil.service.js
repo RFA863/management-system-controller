@@ -54,15 +54,6 @@ class MobilService {
         return updateMobil;
     }
 
-    async delete(id) {
-        const deleteMobil = await this.MobilModel.destroy({
-            where: {
-                id: id
-            }
-        })
-
-        return deleteMobil;
-    }
 }
 
 export default MobilService;

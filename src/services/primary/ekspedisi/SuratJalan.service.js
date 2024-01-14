@@ -15,30 +15,47 @@ class SuratJalanService {
         this.SuratJalanModel = new SuratJalanModel(this.Server).table;
     }
 
-    async input(data) {
+    async input(data, id) {
         const getSuratJalan = await this.SuratJalanModel.findOne({
             where: {
-                id_job: data.id_job,
+                id_job: id,
             }
         });
 
         if (getSuratJalan !== null) return -1;
 
         const addSuratJalan = await this.SuratJalanModel.create({
-            id_job: data.id_job,
+            id_job: id,
             id_supir: data.id_supir,
             id_mobil: data.id_mobil,
             tanggal_kirim: data.tanggalKirim,
+            close_order: data.closeOrder,
             created_at: new Date(),
             updated_at: new Date(),
         });
 
+        const getJob = await this.JobModel.findOne({
+            where: {
+                id: id
+            }
+        });
+
+        let brngSelesai = getJob.jumlah;
+        let brngSisa = 0;
+
+        if (data.closeOrder === true) {
+            brngSelesai = data.selesai;
+            brngSisa = getJob.jumlah - data.selesai;
+        }
+
         const updateJob = await this.JobModel.update({
             surat_jalan: true,
+            selesai: brngSelesai,
+            sisa: brngSisa,
             updated_at: new Date(),
         }, {
             where: {
-                id: data.id_job
+                id: id
             }
         })
 
@@ -75,6 +92,8 @@ class SuratJalanService {
         getSuratJalan.dataValues.no_nt = getJob.dataValues.no_nt;
         getSuratJalan.dataValues.no_po = getJob.dataValues.no_po;
         getSuratJalan.dataValues.jumlah = getJob.dataValues.jumlah;
+        getSuratJalan.dataValues.selesai = getJob.dataValues.selesai;
+        getSuratJalan.dataValues.sisa = getJob.dataValues.sisa;
         getSuratJalan.dataValues.keterangan = getJob.dataValues.keterangan;
         getSuratJalan.dataValues.supir = getSupir.dataValues.nama;
         getSuratJalan.dataValues.no_plat = getmobil.dataValues.noplat;
@@ -83,18 +102,19 @@ class SuratJalanService {
     }
 
     async update(data, id) {
-        // const getSuratJalan = await this.SuratJalanModel.findOne({
-        //     where: {
-        //         id_job: data.id_job,
-        //     }
-        // });
+        const getSuratJalan = await this.SuratJalanModel.findOne({
+            where: {
+                id: id,
+            }
+        });
 
-        // if (getSuratJalan !== null) return -1;
+        if (getSuratJalan === null) return -1;
 
         const updateSuratJalan = await this.SuratJalanModel.update({
             id_supir: data.id_supir,
             id_mobil: data.id_mobil,
             tanggal_kirim: data.tanggalKirim,
+            closeOrder: data.closeOrder,
             updated_at: new Date(),
         }, {
             where: {
@@ -102,18 +122,36 @@ class SuratJalanService {
             }
         })
 
-        return updateSuratJalan;
-    }
 
-    async delete(id) {
-        const deleteSuratJalan = await this.SuratJalanModel.destroy({
+
+        const getJob = await this.JobModel.findOne({
             where: {
-                id: id,
+                id: getSuratJalan.id_job
+            }
+        });
+
+        let brngSelesai = getJob.jumlah;
+        let brngSisa = 0;
+
+        if (data.closeOrder === true) {
+            brngSelesai = data.selesai;
+            brngSisa = getJob.jumlah - data.selesai;
+        }
+
+        const updateJob = await this.JobModel.update({
+            surat_jalan: true,
+            selesai: brngSelesai,
+            sisa: brngSisa,
+            updated_at: new Date(),
+        }, {
+            where: {
+                id: getSuratJalan.id_job
             }
         })
 
-        return deleteSuratJalan;
+        return updateSuratJalan;
     }
+
 }
 
 export default SuratJalanService;

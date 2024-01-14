@@ -87,15 +87,6 @@ class KualitasTipeBoxService {
         return updateKualitasTipeBox;
     }
 
-    async delete(id) {
-        const deleteKualitasTipeBox = await this.KualitasTipeBoxModel.destroy({
-            where: {
-                id: id
-            }
-        })
-
-        return deleteKualitasTipeBox;
-    }
 }
 
 export default KualitasTipeBoxService;

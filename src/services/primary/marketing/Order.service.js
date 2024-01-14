@@ -123,16 +123,6 @@ class OrderService {
 
     }
 
-    async delete(id) {
-        const deleteOrder = await this.OrderModel.destroy({
-            where: {
-                id: id
-            }
-        })
-
-        return deleteOrder;
-    }
-
 }
 
 

@@ -45,7 +45,7 @@ class CustomerValidator {
 
             noTelp: {
                 type: "string",
-                maxLength: 25,
+                maxLength: 100,
                 minLength: 1,
                 nullable: false,
             },

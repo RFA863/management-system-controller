@@ -307,7 +307,6 @@ class JobController {
         res.status(200).json(this.ResponsePreset.resOK("Ok", null));
     }
 
-
 }
 
 export default JobController;

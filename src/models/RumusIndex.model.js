@@ -13,6 +13,7 @@ class RumusIndexModel {
                     primaryKey: true,
                     autoIncrement: true,
                 },
+
                 id_tipebox: {
                     type: DataTypes.INTEGER,
                     allowNull: false,
@@ -21,18 +22,22 @@ class RumusIndexModel {
                         key: "id",
                     },
                 },
+
                 rumuspanjang: {
                     type: DataTypes.STRING(50),
                     allowNull: false,
                 },
+
                 rumuslebar: {
                     type: DataTypes.STRING(50),
                     allowNull: false,
                 },
+
                 rumusoversize: {
                     type: DataTypes.STRING(50),
                     allowNull: true,
                 },
+
                 rumustotal: {
                     type: DataTypes.STRING(50),
                     allowNull: false,
@@ -47,6 +52,11 @@ class RumusIndexModel {
                 updated_at: {
                     type: DataTypes.DATE,
                     allowNull: false,
+                },
+
+                deleted_at: {
+                    type: DataTypes.DATE,
+                    allowNull: true,
                 },
 
             },

@@ -19,8 +19,7 @@ class RekeningRoute {
             (req, res) => this.RekeningController.get(req, res));
         this.API.put(this.routePrefix + "/update/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.RekeningController.update(req, res));
-        this.API.delete(this.routePrefix + "/delete/:id", this.AuthorizationMiddleware.check(),
-            (req, res) => this.RekeningController.delete(req, res));
+
     }
 }
 

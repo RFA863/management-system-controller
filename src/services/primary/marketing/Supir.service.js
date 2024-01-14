@@ -55,15 +55,6 @@ class SupirService {
         return updateSupir;
     }
 
-    async delete(id) {
-        const deleteSupir = await this.SupirModel.destroy({
-            where: {
-                id: id
-            }
-        });
-
-        return deleteSupir;
-    }
 }
 
 export default SupirService;

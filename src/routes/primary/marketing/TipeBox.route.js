@@ -26,9 +26,7 @@ class TipeBoxRoute {
             (req, res) => this.TipeBoxController.update(req, res)
         );
 
-        this.API.delete(this.routePrefix + "/delete/:id", this.AuthorizationMiddleware.check(),
-            (req, res) => this.TipeBoxController.delete(req, res)
-        );
+
     }
 }
 

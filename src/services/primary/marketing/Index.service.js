@@ -82,15 +82,6 @@ class IndexService {
         return updateIndex;
     }
 
-    async delete(id) {
-        const deleteIndex = await this.IndexModel.destroy({
-            where: {
-                id: id,
-            }
-        })
-
-        return deleteIndex;
-    }
 }
 
 export default IndexService;

@@ -68,14 +68,6 @@ class RekeningService {
         return updateRekening;
     }
 
-    async delete(id) {
-
-        const deleteRekening = await this.RekeningModel.destroy({
-            where: {
-                id: id
-            }
-        })
-    }
 }
 
 export default RekeningService;

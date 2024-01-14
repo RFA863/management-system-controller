@@ -54,16 +54,6 @@ class KualitasService {
         return updateKualitas;
     }
 
-    async delete(id) {
-        const deleteKualitas = await this.KualitasModel.destroy({
-            where: {
-                id: id
-            }
-        })
-
-        return deleteKualitas;
-
-    }
 }
 
 export default KualitasService;

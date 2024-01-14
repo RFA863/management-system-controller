@@ -34,6 +34,11 @@ class TipeBoxModel {
                     allowNull: false,
                 },
 
+                deleted_at: {
+                    type: DataTypes.DATE,
+                    allowNull: true,
+                },
+
             },
 
             {

@@ -40,7 +40,7 @@ class CustomerModel {
                 },
 
                 nonpwp: {
-                    type: DataTypes.STRING(25),
+                    type: DataTypes.STRING(100),
                     allowNull: true,
                 },
 
@@ -73,6 +73,11 @@ class CustomerModel {
                 updated_at: {
                     type: DataTypes.DATE,
                     allowNull: false,
+                },
+
+                deleted_at: {
+                    type: DataTypes.DATE,
+                    allowNull: true,
                 },
 
 

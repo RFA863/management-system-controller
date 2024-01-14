@@ -27,7 +27,8 @@ class SuratJalanController {
             ))
 
         const data = req.body;
-        const inputSrv = await this.SuratJalanService.input(data);
+        const id = req.params.id;
+        const inputSrv = await this.SuratJalanService.input(data, id);
 
         if (inputSrv === -1)
             return res.status(403).json(this.ResponsePreset.resErr(
@@ -78,18 +79,6 @@ class SuratJalanController {
         res.status(200).json(this.ResponsePreset.resOK("Ok", null))
     }
 
-    async delete(req, res) {
-        if (req.middlewares.authorization.posisi !== "ekspedisi")
-            return res.status(403).json({
-                messagge: "Forbidden",
-            });
-
-        const id = req.params.id;
-
-        const deleteSrv = await this.SuratJalanService.delete(id);
-
-        res.status(200).json(this.ResponsePreset.resOK("Ok", null));
-    }
 }
 
 export default SuratJalanController;

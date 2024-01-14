@@ -95,15 +95,6 @@ class CustomerService {
         return updateCustomer;
     }
 
-    async delete(id) {
-        const deleteCustomer = await this.CustomerModel.destroy({
-            where: {
-                id: id
-            }
-        })
-
-        return deleteCustomer;
-    }
 }
 
 export default CustomerService;

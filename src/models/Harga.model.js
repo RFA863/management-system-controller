@@ -54,12 +54,12 @@ class HargaModel {
                 },
 
                 sub_total: {
-                    type: DataTypes.INTEGER,
+                    type: DataTypes.FLOAT,
                     allowNull: false,
                 },
 
                 total_harga: {
-                    type: DataTypes.INTEGER,
+                    type: DataTypes.FLOAT,
                     allowNull: false,
                 },
 
@@ -72,6 +72,11 @@ class HargaModel {
                 updated_at: {
                     type: DataTypes.DATE,
                     allowNull: false,
+                },
+
+                deleted_at: {
+                    type: DataTypes.DATE,
+                    allowNull: true,
                 },
 
             },

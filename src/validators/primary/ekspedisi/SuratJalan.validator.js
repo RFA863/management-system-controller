@@ -2,11 +2,6 @@ class SuratJalanValidator {
     inputSuratJalan = {
         type: "object",
         properties: {
-            id_job: {
-                type: "number",
-                minimum: 1,
-                nullable: false,
-            },
 
             id_supir: {
                 type: "number",
@@ -25,9 +20,19 @@ class SuratJalanValidator {
                 type: "string",
                 nullable: false,
             },
+
+            closeOrder: {
+                type: "boolean",
+                nullable: false,
+            },
+
+            selesai: {
+                type: "number",
+                nullable: false,
+            }
         },
 
-        required: ["id_job", "id_supir", "id_mobil", "tanggalKirim"],
+        required: ["id_supir", "id_mobil", "tanggalKirim", "closeOrder", "selesai"],
         additionalProperties: false,
     };
 }

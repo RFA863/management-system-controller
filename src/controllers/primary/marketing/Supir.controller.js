@@ -77,18 +77,6 @@ class SupirController {
         res.status(200).json(this.ResponsePreset.resOK("Ok", null));
     }
 
-    async delete(req, res) {
-        if (req.middlewares.authorization.posisi !== "marketing")
-            return res.status(403).json({
-                messagge: "Forbidden",
-            });
-
-        const id = req.params.id;
-
-        const deleteSrv = await this.SupirService.delete(id);
-
-        res.status(200).json(this.ResponsePreset.resOK("Ok", null));
-    }
 }
 
 export default SupirController;

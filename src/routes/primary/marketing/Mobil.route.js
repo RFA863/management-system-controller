@@ -19,8 +19,7 @@ class MobilRoute {
             (req, res) => this.MobilController.get(req, res));
         this.API.put(this.routePrefix + "/update/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.MobilController.update(req, res));
-        this.API.delete(this.routePrefix + "/delete/:id", this.AuthorizationMiddleware.check(),
-            (req, res) => this.MobilController.delete(req, res));
+
     }
 
 }

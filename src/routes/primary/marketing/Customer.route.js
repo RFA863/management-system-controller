@@ -22,8 +22,7 @@ class CustomerRoute {
         this.API.put(this.routePrefix + "/update/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.CustomerController.update(req, res));
 
-        this.API.delete(this.routePrefix + "/delete/:id", this.AuthorizationMiddleware.check(),
-            (req, res) => this.CustomerController.delete(req, res));
+
     }
 
 }

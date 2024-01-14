@@ -13,7 +13,7 @@ class SuratJalanRoute {
     }
 
     route() {
-        this.API.post(this.routePrefix + "/input", this.AuthorizationMiddleware.check(),
+        this.API.post(this.routePrefix + "/input/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.SuratJalanController.input(req, res));
 
         this.API.get(this.routePrefix + "/get/:id", this.AuthorizationMiddleware.check(),
@@ -22,8 +22,7 @@ class SuratJalanRoute {
         this.API.put(this.routePrefix + "/update/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.SuratJalanController.update(req, res));
 
-        this.API.delete(this.routePrefix + "/delete/:id", this.AuthorizationMiddleware.check(),
-            (req, res) => this.SuratJalanController.delete(req, res));
+
     }
 }
 

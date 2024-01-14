@@ -22,8 +22,7 @@ class KualitasTipeBoxRoute {
         this.API.put(this.routePrefix + "/update/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.KualitasTipeBoxController.update(req, res));
 
-        this.API.delete(this.routePrefix + "/delete/:id", this.AuthorizationMiddleware.check(),
-            (req, res) => this.KualitasTipeBoxController.delete(req, res));
+
     }
 }
 

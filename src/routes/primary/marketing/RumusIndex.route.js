@@ -19,8 +19,7 @@ class RumusIndexRoute {
             (req, res) => this.RumusIndexController.get(req, res));
         this.API.put(this.routePrefix + "/update/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.RumusIndexController.update(req, res));
-        this.API.delete(this.routePrefix + "/delete/:id", this.AuthorizationMiddleware.check(),
-            (req, res) => this.RumusIndexController.delete(req, res));
+
     };
 }
 export default RumusIndexRoute;

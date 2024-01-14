@@ -19,8 +19,7 @@ class KualitasRoute {
             (req, res) => this.KualitasController.get(req, res));
         this.API.put(this.routePrefix + "/update/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.KualitasController.update(req, res));
-        this.API.delete(this.routePrefix + "/delete/:id", this.AuthorizationMiddleware.check(),
-            (req, res) => this.KualitasController.delete(req, res));
+
     }
 
 }

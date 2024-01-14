@@ -122,6 +122,11 @@ class JobModel {
                     allowNull: false,
                 },
 
+                deleted_at: {
+                    type: DataTypes.DATE,
+                    allowNull: true,
+                },
+
             },
 
             {
