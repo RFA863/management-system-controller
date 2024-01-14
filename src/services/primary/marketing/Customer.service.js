@@ -47,7 +47,11 @@ class CustomerService {
     }
 
     async get() {
-        const getCustomer = await this.CustomerModel.findAll()
+        const getCustomer = await this.CustomerModel.findAll({
+            where: {
+                deleted_at: null,
+            }
+        })
 
         if (getCustomer.length === 0) return -1;
 
@@ -93,6 +97,19 @@ class CustomerService {
         })
 
         return updateCustomer;
+    }
+
+    async delete(id) {
+        const deleteCustomer = await this.CustomerModel.update({
+            deleted_at: new Date(),
+            updated: new Date(),
+        }, {
+            where: {
+                id: id
+            }
+        })
+
+        return deleteCustomer;
     }
 
 }

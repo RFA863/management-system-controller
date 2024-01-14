@@ -26,7 +26,11 @@ class MobilService {
     }
 
     async get() {
-        const getMobil = await this.MobilModel.findAll();
+        const getMobil = await this.MobilModel.findAll({
+            where: {
+                deleted_at: null
+            }
+        });
 
         if (getMobil.length === 0) return -1;
 
@@ -52,6 +56,19 @@ class MobilService {
         })
 
         return updateMobil;
+    }
+
+    async delete(id) {
+        const deleteMobil = await this.MobilModel.update({
+            deleted_at: new Date(),
+            updated_at: new Date(),
+        }, {
+            where: {
+                id: id
+            }
+        })
+
+        return deleteMobil;
     }
 
 }

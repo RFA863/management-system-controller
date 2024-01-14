@@ -15,10 +15,15 @@ class RumusIndexRoute {
     route() {
         this.API.post(this.routePrefix + "/input/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.RumusIndexController.input(req, res));
+
         this.API.get(this.routePrefix + "/get/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.RumusIndexController.get(req, res));
+
         this.API.put(this.routePrefix + "/update/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.RumusIndexController.update(req, res));
+
+        this.API.put(this.routePrefix + "/delete/:id", this.AuthorizationMiddleware.check(),
+            (req, res) => this.RumusIndexController.delete(req, res));
 
     };
 }

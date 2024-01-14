@@ -33,7 +33,11 @@ class RekeningService {
 
     async get() {
 
-        const getRekening = await this.RekeningModel.findAll()
+        const getRekening = await this.RekeningModel.findAll({
+            where: {
+                deleted_at: null
+            }
+        })
 
         if (getRekening.length === 0) return -1;
 
@@ -66,6 +70,19 @@ class RekeningService {
         })
 
         return updateRekening;
+    }
+
+    async delete(id) {
+        const deleteRekening = await this.RekeningModel.update({
+            deleted_at: new Date(),
+            updated_at: new Date(),
+        }, {
+            where: {
+                id: id
+            }
+        })
+
+        return deleteRekening;
     }
 
 }

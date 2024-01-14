@@ -26,7 +26,11 @@ class SupirService {
     }
 
     async get() {
-        const getSupir = await this.SupirModel.findAll();
+        const getSupir = await this.SupirModel.findAll({
+            where: {
+                deleted_at: null
+            }
+        });
 
         if (getSupir.length === 0) return -1;
 
@@ -53,6 +57,19 @@ class SupirService {
         });
 
         return updateSupir;
+    }
+
+    async delete(id) {
+        const deleteSupir = await this.SupirModel.update({
+            deleted_at: new Date(),
+            updated_at: new Date(),
+        }, {
+            where: {
+                id: id
+            }
+        })
+
+        return deleteSupir;
     }
 
 }

@@ -15,10 +15,15 @@ class RekeningRoute {
     route() {
         this.API.post(this.routePrefix + "/input", this.AuthorizationMiddleware.check(),
             (req, res) => this.RekeningController.input(req, res));
+
         this.API.get(this.routePrefix + "/get", this.AuthorizationMiddleware.check(),
             (req, res) => this.RekeningController.get(req, res));
+
         this.API.put(this.routePrefix + "/update/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.RekeningController.update(req, res));
+
+        this.API.put(this.routePrefix + "/delete/:id", this.AuthorizationMiddleware.check(),
+            (req, res) => this.RekeningController.delete(req, res));
 
     }
 }

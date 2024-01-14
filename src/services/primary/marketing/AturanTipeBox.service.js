@@ -35,6 +35,7 @@ class AturanTipeBoxService {
         const getAturanTipeBox = await this.AturanTipeBoxModel.findAll({
             where: {
                 id_tipebox: id,
+                deleted_at: null,
             }
         })
 
@@ -74,6 +75,20 @@ class AturanTipeBoxService {
         })
 
         return updateAturanTipeBox;
+    }
+
+    async delete(id) {
+
+        const deleteAturanTipeBox = await this.AturanTipeBoxModel.update({
+            deleted_at: new Date(),
+            updated_at: new Date(),
+        }, {
+            where: {
+                id: id
+            }
+        })
+
+        return deleteAturanTipeBox;
     }
 
 }

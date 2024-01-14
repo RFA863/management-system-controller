@@ -39,6 +39,7 @@ class RumusIndexService {
         const getRumusIndex = await this.RumusIndexModel.findAll({
             where: {
                 id_tipebox: id,
+                deleted_at: null,
             }
         });
 
@@ -84,6 +85,19 @@ class RumusIndexService {
 
         return updateRumusIndex;
 
+    }
+
+    async delete(id) {
+        const deleteRumusIndex = await this.RumusIndexModel.update({
+            deleted_at: new Date(),
+            updated_at: new Date(),
+        }, {
+            where: {
+                id: id,
+            }
+        })
+
+        return deleteRumusIndex;
     }
 
 }
