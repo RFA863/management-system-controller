@@ -41,6 +41,11 @@ class SuratJalanModel {
                     },
                 },
 
+                no_suratjalan: {
+                    type: DataTypes.STRING(50),
+                    allowNull: false,
+                },
+
                 tanggal_kirim: {
                     type: DataTypes.DATE,
                     allowNull: false,

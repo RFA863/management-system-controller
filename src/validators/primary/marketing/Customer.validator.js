@@ -67,7 +67,7 @@ class CustomerValidator {
             alamatInvoice: {
                 type: "string",
                 maxLength: 50,
-                minLength: 1,
+                minLength: 0,
                 nullable: false,
             },
         },

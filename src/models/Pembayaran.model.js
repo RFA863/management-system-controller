@@ -32,10 +32,6 @@ class PembayaranModel {
                     },
                 },
 
-                dpp: {
-                    type: DataTypes.FLOAT,
-                    allowNull: false,
-                },
 
                 tgl_kontrabon: {
                     type: DataTypes.DATE,

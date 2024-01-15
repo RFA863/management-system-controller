@@ -5,6 +5,7 @@ import IndexRoute from "./marketing/Index.route.js";
 import SupirRoute from "./marketing/Supir.route.js";
 import MobilRoute from "./marketing/Mobil.route.js";
 import OrderRoute from "./marketing/Order.route.js";
+import InvoiceRoute from "./finance/Invoice.route.js";
 import TipeBoxRoute from "./marketing/TipeBox.route.js";
 import RekeningRoute from "./marketing/Rekening.route.js";
 import KualitasRoute from "./marketing/Kualitas.route.js";
@@ -26,6 +27,7 @@ class PrimaryHandler {
         new SupirRoute(Server);
         new MobilRoute(Server);
         new OrderRoute(Server);
+        new IndexRoute(Server);
         new TipeBoxRoute(Server);
         new RekeningRoute(Server);
         new KualitasRoute(Server);

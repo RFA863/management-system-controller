@@ -15,6 +15,12 @@ class SuratJalanValidator {
                 nullable: false,
             },
 
+            noSuratJalan: {
+                type: "string",
+                maxLength: 50,
+                minLength: 1,
+                nullable: false,
+            },
 
             tanggalKirim: {
                 type: "string",
@@ -32,7 +38,7 @@ class SuratJalanValidator {
             }
         },
 
-        required: ["id_supir", "id_mobil", "tanggalKirim", "closeOrder", "selesai"],
+        required: ["id_supir", "id_mobil", "noSuratJalan", "tanggalKirim", "closeOrder", "selesai"],
         additionalProperties: false,
     };
 }
