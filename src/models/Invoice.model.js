@@ -1,17 +1,26 @@
 // Library
 import { DataTypes } from "sequelize";
 
-class HargaModel {
+class InvoiceModel {
     constructor(server) {
 
         const table = server.model.db.define(
-            "harga_job",
+            "invoice",
             {
                 id: {
                     type: DataTypes.INTEGER,
                     allowNull: false,
                     primaryKey: true,
                     autoIncrement: true,
+                },
+
+                id_suratjalan: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false,
+                    references: {
+                        model: "surat_jalan",
+                        key: "id",
+                    },
                 },
 
                 id_job: {
@@ -23,49 +32,24 @@ class HargaModel {
                     },
                 },
 
-                panjang: {
-                    type: DataTypes.INTEGER,
-                    allowNull: true,
+                no_invoice: {
+                    type: DataTypes.STRING(50),
+                    allowNull: false,
                 },
 
-                lebar: {
-                    type: DataTypes.INTEGER,
-                    allowNull: true,
+                tanggal: {
+                    type: DataTypes.DATE,
+                    allowNull: false,
                 },
 
-                penambahan_harga: {
-                    type: DataTypes.INTEGER,
-                    allowNull: true,
-                },
-
-                pengurangan_harga: {
-                    type: DataTypes.INTEGER,
-                    allowNull: true,
-                },
-
-                isIndexed: {
+                berikat: {
                     type: DataTypes.BOOLEAN,
                     allowNull: false,
                 },
 
-                index_harga: {
-                    type: DataTypes.INTEGER,
-                    allowNull: false,
-                },
-
-                sub_total: {
+                ppn: {
                     type: DataTypes.FLOAT,
-                    allowNull: false,
-                },
-
-                total_harga: {
-                    type: DataTypes.FLOAT,
-                    allowNull: false,
-                },
-
-                harga_keseluruhan: {
-                    type: DataTypes.FLOAT,
-                    allowNull: false,
+                    allowNull: true,
                 },
 
                 created_at: {
@@ -86,7 +70,7 @@ class HargaModel {
             },
 
             {
-                tableName: "harga_job",
+                tableName: "invoice",
                 timestamps: false,
             }
         );
@@ -95,4 +79,4 @@ class HargaModel {
     }
 }
 
-export default HargaModel;
+export default InvoiceModel;

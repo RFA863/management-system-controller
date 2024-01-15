@@ -173,6 +173,8 @@ class JobService {
             subTotal = 0;
         }
 
+        let hargaKeseluruhan = totalHarga * data.jumlah;
+
         const addHarga = await this.HargaModel.create({
 
             id_job: addJob.id,
@@ -184,6 +186,7 @@ class JobService {
             index_harga: indexHarga,
             sub_total: subTotal,
             total_harga: totalHarga,
+            harga_keseluruhan: hargaKeseluruhan,
             created_at: new Date(),
             updated_at: new Date(),
         })
@@ -714,6 +717,8 @@ class JobService {
             subTotal = 0;
         }
 
+        let hargaKeseluruhan = totalHarga * data.jumlah;
+
         const updateHarga = await this.HargaModel.update({
 
             panjang: data.index_panjang,
@@ -724,6 +729,7 @@ class JobService {
             index_harga: indexHarga,
             sub_total: subTotal,
             total_harga: totalHarga,
+            harga_keseluruhan: hargaKeseluruhan,
             updated_at: new Date(),
         }, {
             where: {

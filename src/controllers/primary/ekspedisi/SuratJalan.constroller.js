@@ -55,6 +55,21 @@ class SuratJalanController {
         res.status(200).json(this.ResponsePreset.resOK("Ok", getSrv));
     }
 
+    async getAll(req, res) {
+        if (req.middlewares.authorization.posisi !== "ekspedisi" && req.middlewares.authorization.posisi !== "finance")
+            return res.status(403).json({
+                messagge: "Forbidden",
+            });
+
+        const getAllSrv = await this.SuratJalanService.getAll();
+
+        if (getAllSrv === -1) return res.status(404).json(this.ResponsePreset.resErr(
+            "404", "Data not Found", "service", { code: -1 }
+        ))
+
+        res.status(200).json(this.ResponsePreset.resOK("Ok", getAllSrv));
+    }
+
     async update(req, res) {
         if (req.middlewares.authorization.posisi !== "ekspedisi")
             return res.status(403).json({

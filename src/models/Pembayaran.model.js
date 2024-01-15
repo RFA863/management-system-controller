@@ -1,17 +1,26 @@
 // Library
 import { DataTypes } from "sequelize";
 
-class HargaModel {
+class PembayaranModel {
     constructor(server) {
 
         const table = server.model.db.define(
-            "harga_job",
+            "pembayaran",
             {
                 id: {
                     type: DataTypes.INTEGER,
                     allowNull: false,
                     primaryKey: true,
                     autoIncrement: true,
+                },
+
+                id_invoice: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false,
+                    references: {
+                        model: "invoice",
+                        key: "id",
+                    },
                 },
 
                 id_job: {
@@ -23,47 +32,37 @@ class HargaModel {
                     },
                 },
 
-                panjang: {
-                    type: DataTypes.INTEGER,
-                    allowNull: true,
-                },
-
-                lebar: {
-                    type: DataTypes.INTEGER,
-                    allowNull: true,
-                },
-
-                penambahan_harga: {
-                    type: DataTypes.INTEGER,
-                    allowNull: true,
-                },
-
-                pengurangan_harga: {
-                    type: DataTypes.INTEGER,
-                    allowNull: true,
-                },
-
-                isIndexed: {
-                    type: DataTypes.BOOLEAN,
-                    allowNull: false,
-                },
-
-                index_harga: {
-                    type: DataTypes.INTEGER,
-                    allowNull: false,
-                },
-
-                sub_total: {
+                dpp: {
                     type: DataTypes.FLOAT,
                     allowNull: false,
                 },
 
-                total_harga: {
+                tgl_kontrabon: {
+                    type: DataTypes.DATE,
+                    allowNull: false,
+                },
+
+                tgl_bayar: {
+                    type: DataTypes.DATE,
+                    allowNull: false,
+                },
+
+                metode_bayar: {
+                    type: DataTypes.STRING(50),
+                    allowNull: false,
+                },
+
+                total_bayar: {
                     type: DataTypes.FLOAT,
                     allowNull: false,
                 },
 
-                harga_keseluruhan: {
+                pembulatan: {
+                    type: DataTypes.INTEGER(6),
+                    allowNull: true,
+                },
+
+                sisa_bayar: {
                     type: DataTypes.FLOAT,
                     allowNull: false,
                 },
@@ -86,7 +85,7 @@ class HargaModel {
             },
 
             {
-                tableName: "harga_job",
+                tableName: "pembayaran",
                 timestamps: false,
             }
         );
@@ -95,4 +94,4 @@ class HargaModel {
     }
 }
 
-export default HargaModel;
+export default PembayaranModel;

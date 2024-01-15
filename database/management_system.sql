@@ -196,6 +196,7 @@ CREATE TABLE harga_job (
     index_harga INT NOT NULL,
     sub_total FLOAT NOT NULL,
     total_harga FLOAT NOT NULL,
+    harga_keseluruhan FLOAT NOT NULL,
     created_at DATETIME NOT NULL,
     updated_at DATETIME NOT NULL,
     deleted_at DATETIME,
@@ -231,4 +232,39 @@ CREATE TABLE surat_jalan(
   FOREIGN KEY (id_job) REFERENCES job(id),
   FOREIGN KEY (id_supir) REFERENCES supir(id),
   FOREIGN KEY (id_mobil) REFERENCES mobil(id)
+);
+
+CREATE TABLE invoice (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  id_suratjalan INT NOT NULL,
+  id_job INT NOT NULL,
+  no_invoice VARCHAR(50) NOT NULL,
+  tanggal DATE NOT NULL,
+  berikat BOOLEAN NOT NULL,
+  ppn FLOAT,
+  created_at DATETIME NOT NULL,
+  updated_at DATETIME NOT NULL,
+  deleted_at DATETIME,
+  FOREIGN KEY (id_suratjalan) REFERENCES  surat_jalan(id),
+  FEREIGN KEY (id_job) REFERENCES job(id)
+);
+
+CREATE TABLE pembayaran (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  id_invoice INT NOT NULL, 
+  id_job INT NOT NULL,
+  dpp FLOAT NOT NULL,
+  harga_bayar FLOAT NOT NULL,
+  tgl_kontrabon DATE NOT NULL,
+  tgl_bayar DATE NOT NULL,
+  metode_bayar VARCHAR(50) NOT NULL,
+  total_bayar FLOAT NOT NULL,
+  pembulatan INT(6),
+  sisa_bayar FLOAT NOT NULL,
+  keterangan VARCHAR(255),
+  created_at DATETIME NOT NULL,
+  updated_at DATETIME NOT NULL,
+  deleted_at DATETIME,
+  FOREIGN KEY (id_invoice) REFERENCES invoice(id),
+  FOREIGN KEY (id_job) REFERENCES job(id)
 );

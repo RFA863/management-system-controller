@@ -101,6 +101,48 @@ class SuratJalanService {
         return getSuratJalan;
     }
 
+    async getAll() {
+        const getSuratJalan = await this.SuratJalanModel.findAll({
+            where: {
+                deleted_at: null
+            }
+        })
+
+        if (getSuratJalan === null) return -1;
+
+        for (let i in getSuratJalan) {
+            const getJob = await this.JobModel.findOne({
+                where: {
+                    id: getSuratJalan[i].dataValues.id_job,
+                }
+            })
+
+            const getSupir = await this.SupirModel.findOne({
+                where: {
+                    id: getSuratJalan[i].dataValues.id_supir,
+                }
+            })
+
+            const getmobil = await this.MobilModel.findOne({
+                where: {
+                    id: getSuratJalan[i].dataValues.id_mobil,
+                }
+            })
+
+            getSuratJalan[i].dataValues.no_nt = getJob.dataValues.no_nt;
+            getSuratJalan[i].dataValues.no_po = getJob.dataValues.no_po;
+            getSuratJalan[i].dataValues.jumlah = getJob.dataValues.jumlah;
+            getSuratJalan[i].dataValues.selesai = getJob.dataValues.selesai;
+            getSuratJalan[i].dataValues.sisa = getJob.dataValues.sisa;
+            getSuratJalan[i].dataValues.keterangan = getJob.dataValues.keterangan;
+            getSuratJalan[i].dataValues.supir = getSupir.dataValues.nama;
+            getSuratJalan[i].dataValues.no_plat = getmobil.dataValues.noplat;
+
+        }
+
+        return getSuratJalan;
+    }
+
     async update(data, id) {
         const getSuratJalan = await this.SuratJalanModel.findOne({
             where: {
