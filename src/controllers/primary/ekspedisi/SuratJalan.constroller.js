@@ -70,6 +70,8 @@ class SuratJalanController {
         res.status(200).json(this.ResponsePreset.resOK("Ok", getAllSrv));
     }
 
+
+
     async update(req, res) {
         if (req.middlewares.authorization.posisi !== "ekspedisi")
             return res.status(403).json({

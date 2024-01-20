@@ -107,6 +107,11 @@ class JobModel {
                     allowNull: false,
                 },
 
+                invoice: {
+                    type: DataTypes.BOOLEAN,
+                    allowNull: false,
+                },
+
                 payment: {
                     type: DataTypes.BOOLEAN,
                     allowNull: false,

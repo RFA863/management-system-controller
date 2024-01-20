@@ -22,6 +22,9 @@ class SuratJalanRoute {
         this.API.get(this.routePrefix + "/getAll", this.AuthorizationMiddleware.check(),
             (req, res) => this.SuratJalanController.getAll(req, res));
 
+        this.API.get(this.routePrefix + "/getNoPayment", this.AuthorizationMiddleware.check(),
+            (req, res) => this.SuratJalanController.getNoPayment(req, res));
+
         this.API.put(this.routePrefix + "/update/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.SuratJalanController.update(req, res));
 

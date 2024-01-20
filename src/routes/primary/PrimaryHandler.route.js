@@ -13,6 +13,7 @@ import CustomerRoute from "./marketing/Customer.route.js";
 import SuratJalanRoute from "./ekspedisi/SuratJalan.route.js";
 import RumusIndexRoute from "./marketing/RumusIndex.route.js";
 import OrderDetailRoute from "./ekspedisi/OrderDetai.route.js";
+import ListSuratJalanRoute from "./finance/ListSuratJalan.route.js";
 import AturanTipeBoxRoute from "./marketing/AturanTipeBox.route.js";
 import TipeBoxDetailRoute from "./marketing/TipeBoxDetail.route.js";
 import KualitasDetailRoute from "./marketing/KualitasDetail.route.js";
@@ -27,7 +28,7 @@ class PrimaryHandler {
         new SupirRoute(Server);
         new MobilRoute(Server);
         new OrderRoute(Server);
-        new IndexRoute(Server);
+        new InvoiceRoute(Server);
         new TipeBoxRoute(Server);
         new RekeningRoute(Server);
         new KualitasRoute(Server);
@@ -37,6 +38,7 @@ class PrimaryHandler {
         new OrderDetailRoute(Server);
         new AturanTipeBoxRoute(Server);
         new TipeBoxDetailRoute(Server);
+        new ListSuratJalanRoute(Server);
         new KualitasDetailRoute(Server);
         new KualitasTipeBoxRoute(Server);
     }

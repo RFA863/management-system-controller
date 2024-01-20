@@ -118,6 +118,7 @@ class JobService {
             use_index: data.index,
             cancel: false,
             surat_jalan: false,
+            invoice: false,
             payment: false,
             created_at: new Date(),
             updated_at: new Date(),

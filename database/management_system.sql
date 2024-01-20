@@ -175,6 +175,7 @@ CREATE TABLE job (
     use_index BOOLEAN NOT NULL,
     cancel BOOLEAN  NOT NULL,
     surat_jalan BOOLEAN NOT NULL,
+    invoice BOOLEAN NOT NULL,
     payment BOOLEAN NOT NULL,
     created_at DATETIME NOT NULL,
     updated_at DATETIME NOT NULL,
@@ -224,7 +225,7 @@ CREATE TABLE surat_jalan(
   id_job INT NOT NULL,
   id_supir INT NOT NULL,
   id_mobil INT NOT NULL,
-  no_suratjalan VARCAHAR(50) NOT NULL,
+  no_suratjalan VARCHAR(50) NOT NULL,
   tanggal_kirim DATE NOT NULL,
   close_order BOOLEAN NOT NULL,
   created_at DATETIME NOT NULL,
@@ -249,7 +250,7 @@ CREATE TABLE invoice (
   updated_at DATETIME NOT NULL,
   deleted_at DATETIME,
   FOREIGN KEY (id_suratjalan) REFERENCES  surat_jalan(id),
-  FEREIGN KEY (id_job) REFERENCES job(id)
+  FOREIGN KEY (id_job) REFERENCES job(id)
 );
 
 CREATE TABLE pembayaran (

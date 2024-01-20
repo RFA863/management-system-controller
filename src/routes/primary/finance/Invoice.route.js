@@ -19,7 +19,7 @@ class InvoiceRoute {
         this.API.get(this.routePrefix + "/get/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.InvoiceController.get(req, res));
 
-        this.API.get(this.routePrefix + "getAll", this.AuthorizationMiddleware.check(),
+        this.API.get(this.routePrefix + "/getAll", this.AuthorizationMiddleware.check(),
             (req, res) => this.InvoiceController.getAll(req, res));
 
         this.API.put(this.routePrefix + "/update/:id", this.AuthorizationMiddleware.check(),

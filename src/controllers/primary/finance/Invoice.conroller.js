@@ -1,3 +1,5 @@
+import Ajv from "ajv";
+
 import ResponsePreset from "../../../helpers/ResponsePreset.helper.js";
 import InvoiceService from "../../../services/primary/finance/Invoice.service.js";
 import InvoiceValidator from "../../../validators/primary/finance/Invoice.validator.js";
@@ -6,6 +8,7 @@ class InvoiceController {
     constructor(Server) {
         this.Server = Server;
         this.API = this.Server.API;
+        this.Ajv = new Ajv();
         this.ResponsePreset = new ResponsePreset();
         this.InvoiceValidator = new InvoiceValidator();
         this.InvoiceService = new InvoiceService(this.Server);

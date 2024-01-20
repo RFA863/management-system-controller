@@ -28,8 +28,9 @@ class SuratJalanService {
             id_job: id,
             id_supir: data.id_supir,
             id_mobil: data.id_mobil,
-            tanggal_kirim: data.tanggalKirim,
             close_order: data.closeOrder,
+            tanggal_kirim: data.tanggalKirim,
+            no_suratjalan: data.noSuratJalan,
             created_at: new Date(),
             updated_at: new Date(),
         });
@@ -42,16 +43,19 @@ class SuratJalanService {
 
         let brngSelesai = getJob.jumlah;
         let brngSisa = 0;
+        let hargaKeseluruhan = getJob.harga_keseluruhan;
 
         if (data.closeOrder === true) {
             brngSelesai = data.selesai;
             brngSisa = getJob.jumlah - data.selesai;
+            hargaKeseluruhan = getJob.total_harga * data.selesai;
         }
 
         const updateJob = await this.JobModel.update({
             surat_jalan: true,
             selesai: brngSelesai,
             sisa: brngSisa,
+            harga_keseluruhan: hargaKeseluruhan,
             updated_at: new Date(),
         }, {
             where: {
@@ -143,6 +147,8 @@ class SuratJalanService {
         return getSuratJalan;
     }
 
+
+
     async update(data, id) {
         const getSuratJalan = await this.SuratJalanModel.findOne({
             where: {
@@ -155,8 +161,9 @@ class SuratJalanService {
         const updateSuratJalan = await this.SuratJalanModel.update({
             id_supir: data.id_supir,
             id_mobil: data.id_mobil,
+            close_order: data.closeOrder,
             tanggal_kirim: data.tanggalKirim,
-            closeOrder: data.closeOrder,
+            no_suratjalan: data.noSuratJalan,
             updated_at: new Date(),
         }, {
             where: {

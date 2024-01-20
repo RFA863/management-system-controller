@@ -55,6 +55,15 @@ class InvoiceService {
 
         })
 
+        const updateJob = await this.JobModel.update({
+            invoice: true,
+            updated_at: new Date(),
+        }, {
+            where: {
+                id: getSuratJalan.id_job,
+            }
+        })
+
         return InputInvoice;
     }
 

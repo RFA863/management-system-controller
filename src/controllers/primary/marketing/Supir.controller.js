@@ -38,7 +38,7 @@ class SupirController {
     }
 
     async get(req, res) {
-        if (req.middlewares.authorization.posisi !== "marketing")
+        if (req.middlewares.authorization.posisi !== "marketing" && req.middlewares.authorization.posisi !== "ekspedisi")
             return res.status(403).json({
                 messagge: "Forbidden",
             });
