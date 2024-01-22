@@ -35,7 +35,11 @@ class TipeBoxDetailService {
     }
 
     async get() {
-        const getTipeBoxDetail = await this.TipeBoxDetailModel.findAll();
+        const getTipeBoxDetail = await this.TipeBoxDetailModel.findAll({
+            where: {
+                deleted_at: null
+            }
+        });
 
         for (let i in getTipeBoxDetail) {
             const getTipeBox = await this.TipeBoxModel.findAll({
@@ -77,6 +81,19 @@ class TipeBoxDetailService {
         })
 
         return updateTipeBoxDetail;
+    }
+
+    async delete(id) {
+        const deleteTipeBoxDetail = await this.TipeBoxDetailModel.update({
+            deleted_at: new Date(),
+            updated_at: new Date(),
+        }, {
+            where: {
+                id: id
+            }
+        })
+
+        return deleteTipeBoxDetail;
     }
 
 }

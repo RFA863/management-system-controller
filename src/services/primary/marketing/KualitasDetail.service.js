@@ -32,7 +32,11 @@ class KualitasDetailService {
     }
 
     async get() {
-        const getKualitasDetail = await this.KualitasDetailModel.findAll()
+        const getKualitasDetail = await this.KualitasDetailModel.findAll({
+            where: {
+                deleted_at: null
+            }
+        })
 
         for (let i in getKualitasDetail) {
             const getKualitas = await this.KualitasModel.findAll({
@@ -72,6 +76,19 @@ class KualitasDetailService {
         })
 
         return updateKualitasDetail;
+    }
+
+    async delete(id) {
+        const deleteKualitasDetail = await this.KualitasDetailModel.update({
+            deleted_at: new Date(),
+            updated_at: new Date(),
+        }, {
+            where: {
+                id: id
+            }
+        })
+
+        return deleteKualitasDetail;
     }
 
 }

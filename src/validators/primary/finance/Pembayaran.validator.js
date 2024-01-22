@@ -21,26 +21,34 @@ class PembayaranValidator {
             },
 
             totalBayar: {
-                type: "float",
+                type: "number",
                 minimum: 1,
                 nullable: false
             },
 
             pembulatan: {
                 type: "number",
-                minimum: 0,
+                minimum: -999999999,
                 nullable: true
             },
 
-            sisaBayar: {
-                type: "float",
-                minimum: 1,
-                nullable: false,
+            tglCair: {
+                type: "string",
+                nullable: true
             },
+
+            keterangan: {
+                type: "string",
+                minLength: 0,
+                maxLength: 200,
+                nullable: true
+            }
+
+
 
         },
 
-        required: ["tglKontaraBon", "tglBayar", "metodeBayar", "totalBayar", "pembulatan", "sisaBayar"],
+        required: ["tglKontraBon", "tglBayar", "metodeBayar", "totalBayar", "pembulatan", "keterangan"],
         additionalProperties: false,
     };
 }

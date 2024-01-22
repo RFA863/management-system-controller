@@ -15,16 +15,16 @@ class TipeBoxRoute {
 
     route() {
         this.API.post(this.routePrefix + "/input", this.AuthorizationMiddleware.check(),
-            (req, res) => this.TipeBoxController.input(req, res)
-        );
+            (req, res) => this.TipeBoxController.input(req, res));
 
         this.API.get(this.routePrefix + "/get", this.AuthorizationMiddleware.check(),
-            (req, res) => this.TipeBoxController.get(req, res)
-        );
+            (req, res) => this.TipeBoxController.get(req, res));
 
         this.API.put(this.routePrefix + "/update/:id", this.AuthorizationMiddleware.check(),
-            (req, res) => this.TipeBoxController.update(req, res)
-        );
+            (req, res) => this.TipeBoxController.update(req, res));
+
+        this.API.put(this.routePrefix + "/delete/:id", this.AuthorizationMiddleware.check(),
+            (req, res) => this.TipeBoxController.delete(req, res));
 
 
     }

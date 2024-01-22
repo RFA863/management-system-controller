@@ -43,6 +43,11 @@ class PembayaranModel {
                     allowNull: false,
                 },
 
+                tgl_cair: {
+                    type: DataTypes.DATE,
+                    allowNull: true,
+                },
+
                 metode_bayar: {
                     type: DataTypes.STRING(50),
                     allowNull: false,

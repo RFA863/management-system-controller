@@ -36,7 +36,11 @@ class KualitasTipeBoxService {
     }
 
     async get() {
-        const getKualitasTipeBox = await this.KualitasTipeBoxModel.findAll();
+        const getKualitasTipeBox = await this.KualitasTipeBoxModel.findAll({
+            where: {
+                deleted_at: null
+            }
+        });
 
         for (let i in getKualitasTipeBox) {
             const getTipebox = await this.TipeBoxModel.findAll({
@@ -85,6 +89,15 @@ class KualitasTipeBoxService {
         })
 
         return updateKualitasTipeBox;
+    }
+
+    async delete(id) {
+        const deleteKualitasTipeBox = await this.KualitasTipeBoxModel.update({
+            deleted_at: new Date(),
+            updated_at: new Date(),
+        }, { where: { id: id } });
+
+        return deleteKualitasTipeBox;
     }
 
 }

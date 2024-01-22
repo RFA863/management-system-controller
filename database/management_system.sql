@@ -259,6 +259,7 @@ CREATE TABLE pembayaran (
   id_job INT NOT NULL,
   tgl_kontrabon DATE NOT NULL,
   tgl_bayar DATE NOT NULL,
+  tgl_cair DATE,
   metode_bayar VARCHAR(50) NOT NULL,
   total_bayar FLOAT NOT NULL,
   pembulatan INT(6),

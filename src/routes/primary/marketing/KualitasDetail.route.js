@@ -15,10 +15,15 @@ class KualitasDetailRoute {
     route() {
         this.API.post(this.routePrefix + "/input", this.AuthorizationMiddleware.check(),
             (req, res) => this.KualitasDetailController.input(req, res));
+
         this.API.get(this.routePrefix + "/get", this.AuthorizationMiddleware.check(),
             (req, res) => this.KualitasDetailController.get(req, res));
+
         this.API.put(this.routePrefix + "/update/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.KualitasDetailController.update(req, res));
+
+        this.API.put(this.routePrefix + "/delete/:id", this.AuthorizationMiddleware.check(),
+            (req, res) => this.KualitasDetailController.delete(req, res));
 
     }
 }
