@@ -19,6 +19,7 @@ class ListSuratJalanService {
                 deleted_at: null,
                 invoice: false,
                 surat_jalan: true,
+                cancel: false,
             }
         })
 
@@ -64,6 +65,7 @@ class ListSuratJalanService {
                 deleted_at: null,
                 invoice: true,
                 surat_jalan: true,
+                cancel: false,
             }
         })
 

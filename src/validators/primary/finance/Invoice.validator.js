@@ -26,9 +26,21 @@ class InvoiceValidator {
                 nullable: false,
             },
 
+            ubahHarga: {
+                type: "boolean",
+                nullable: false,
+            },
+
+            harga: {
+                type: "number",
+                minimum: 1,
+                nullable: false
+            },
+
+
         },
 
-        required: ["noInvoice", "berikat", "tanggal", "ppn"],
+        required: ["noInvoice", "berikat", "tanggal", "ppn", "ubahHarga", "harga"],
         additionalProperties: false,
     };
 }

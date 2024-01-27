@@ -15,7 +15,7 @@ class CustomerModel {
                 },
 
                 nomor: {
-                    type: DataTypes.INTEGER(11),
+                    type: DataTypes.STRING(50),
                     allowNull: false,
                 },
 
@@ -40,28 +40,28 @@ class CustomerModel {
                 },
 
                 nonpwp: {
-                    type: DataTypes.STRING(100),
+                    type: DataTypes.STRING(50),
                     allowNull: true,
                 },
 
                 notelp: {
-                    type: DataTypes.STRING(25),
-                    allowNull: false,
+                    type: DataTypes.STRING(250),
+                    allowNull: true,
                 },
 
                 nofax: {
-                    type: DataTypes.STRING(25),
+                    type: DataTypes.STRING(50),
                     allowNull: true,
                 },
 
                 alamat: {
-                    type: DataTypes.STRING(50),
+                    type: DataTypes.STRING(250),
                     allowNull: false,
                 },
 
                 alamatinvoice: {
-                    type: DataTypes.STRING(50),
-                    allowNull: false,
+                    type: DataTypes.STRING(250),
+                    allowNull: true,
                 },
 
 

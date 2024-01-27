@@ -19,8 +19,15 @@ class InvoiceRoute {
         this.API.get(this.routePrefix + "/get/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.InvoiceController.get(req, res));
 
+        this.API.get(this.routePrefix + "/cetakInvoice/:id", this.AuthorizationMiddleware.check(),
+            (req, res) => this.InvoiceController.cetakInvoice(req, res));
+
+
         this.API.get(this.routePrefix + "/getAll", this.AuthorizationMiddleware.check(),
             (req, res) => this.InvoiceController.getAll(req, res));
+
+        this.API.get(this.routePrefix + "/getBlmBayar", this.AuthorizationMiddleware.check(),
+            (req, res) => this.InvoiceController.getBlmBayar(req, res));
 
         this.API.put(this.routePrefix + "/update/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.InvoiceController.update(req, res));

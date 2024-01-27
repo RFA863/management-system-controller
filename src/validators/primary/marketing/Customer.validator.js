@@ -4,9 +4,9 @@ class CustomerValidator {
         properties: {
 
             nomor: {
-                type: "number",
-                maximum: 100000,
-                minimum: 1,
+                type: "string",
+                maxLength: 50,
+                minLength: 1,
                 nullable: false,
             },
 
@@ -38,37 +38,37 @@ class CustomerValidator {
 
             noNpwp: {
                 type: "string",
-                maxLength: 25,
+                maxLength: 50,
                 minLength: 0,
                 nullable: true,
             },
 
             noTelp: {
                 type: "string",
-                maxLength: 100,
-                minLength: 1,
-                nullable: false,
+                maxLength: 250,
+                minLength: 0,
+                nullable: true,
             },
 
             noFax: {
                 type: "string",
-                maxLength: 25,
+                maxLength: 50,
                 minLength: 0,
                 nullable: true,
             },
 
             alamat: {
                 type: "string",
-                maxLength: 50,
+                maxLength: 250,
                 minLength: 1,
                 nullable: false,
             },
 
             alamatInvoice: {
                 type: "string",
-                maxLength: 50,
+                maxLength: 250,
                 minLength: 0,
-                nullable: false,
+                nullable: true,
             },
         },
 

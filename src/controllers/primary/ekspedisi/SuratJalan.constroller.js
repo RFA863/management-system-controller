@@ -39,7 +39,7 @@ class SuratJalanController {
     }
 
     async get(req, res) {
-        if (req.middlewares.authorization.posisi !== "ekspedisi")
+        if (req.middlewares.authorization.posisi !== "ekspedisi" && req.middlewares.authorization.posisi !== "finance")
             return res.status(403).json({
                 messagge: "Forbidden",
             });
@@ -47,6 +47,23 @@ class SuratJalanController {
         const id = req.params.id;
 
         const getSrv = await this.SuratJalanService.get(id);
+
+        if (getSrv === -1) return res.status(404).json(this.ResponsePreset.resErr(
+            "404", "Data not Found", "service", { code: -1 }
+        ))
+
+        res.status(200).json(this.ResponsePreset.resOK("Ok", getSrv));
+    }
+
+    async cetakSuratJalan(req, res) {
+        if (req.middlewares.authorization.posisi !== "ekspedisi")
+            return res.status(403).json({
+                messagge: "Forbidden",
+            });
+
+        const id = req.params.id;
+
+        const getSrv = await this.SuratJalanService.cetakSuratJalan(id);
 
         if (getSrv === -1) return res.status(404).json(this.ResponsePreset.resErr(
             "404", "Data not Found", "service", { code: -1 }

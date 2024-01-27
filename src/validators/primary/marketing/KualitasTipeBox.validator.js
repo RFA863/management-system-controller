@@ -15,22 +15,22 @@ class KualitasTipeBoxValidator {
             },
             konstanta_panjang: {
                 type: "number",
-                minimum: 1,
+                minimum: -1000,
                 nullable: false,
             },
             konstanta_lebar_ganjil: {
                 type: "number",
-                minimum: 1,
+                minimum: -1000,
                 nullable: false,
             },
             konstanta_lebar_genap: {
                 type: "number",
-                minimum: 1,
+                minimum: -1000,
                 nullable: false,
             },
             kuping: {
                 type: "number",
-                minimum: 1,
+                minimum: -1000,
                 nullable: false,
             },
 

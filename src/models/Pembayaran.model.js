@@ -68,6 +68,11 @@ class PembayaranModel {
                     allowNull: false,
                 },
 
+                keterangan: {
+                    type: DataTypes.STRING(250),
+                    allowNull: true
+                },
+
                 created_at: {
                     type: DataTypes.DATE,
                     allowNull: false,

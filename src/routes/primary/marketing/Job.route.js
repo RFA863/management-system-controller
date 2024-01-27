@@ -33,6 +33,9 @@ class JobRoute {
         this.API.get(this.routePrefix + "/get/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.JobController.get(req, res));
 
+        this.API.get(this.routePrefix + "/cetakJob/:id", this.AuthorizationMiddleware.check(),
+            (req, res) => this.JobController.cetakJob(req, res));
+
         this.API.get(this.routePrefix + "/getJobOrder/:id", this.AuthorizationMiddleware.check(),
             (req, res) => this.JobController.getJobOrder(req, res));
 

@@ -32,7 +32,11 @@ class UserService {
     }
 
     async get() {
-        const getUser = await this.UserModel.findAll();
+        const getUser = await this.UserModel.findAll({
+            where: {
+                deleted_at: null
+            }
+        });
 
         if (getUser.length === 0) return -1;
 
@@ -64,6 +68,18 @@ class UserService {
         })
 
         return updateUser;
+    }
+
+    async delete(id) {
+        const deleteUser = await this.UserModel.update({
+            deleted_at: new Date(),
+            updated_at: new Date(),
+        }, {
+            where: { id: id, }
+
+        })
+
+        return deleteUser;
     }
 
 }

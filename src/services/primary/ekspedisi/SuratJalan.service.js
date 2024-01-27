@@ -2,7 +2,12 @@ import JobModel from "../../../models/Job.model.js";
 import OrderModel from "../../../models/Order.model.js";
 import SupirModel from "../../../models/Supir.model.js";
 import MobilModel from "../../../models/Mobil.model.js";
+import HargaModel from "../../../models/Harga.model.js";
+import UkuranModel from "../../../models/Ukuran.model.js";
+import KualitasModel from "../../../models/Kualitas.model.js";
+import CustomerModel from "../../../models/Customer.model.js";
 import SuratJalanModel from "../../../models/SuratJalan.model.js";
+import KualitasDetailModel from "../../../models/KualitasDetail.model.js";
 
 class SuratJalanService {
     constructor(Server) {
@@ -12,7 +17,12 @@ class SuratJalanService {
         this.OrderModel = new OrderModel(this.Server).table;
         this.SupirModel = new SupirModel(this.Server).table;
         this.MobilModel = new MobilModel(this.Server).table;
+        this.HargaModel = new HargaModel(this.Server).table;
+        this.UkuranModel = new UkuranModel(this.Server).table;
+        this.KualitasModel = new KualitasModel(this.Server).table;
+        this.CustomerModel = new CustomerModel(this.Server).table;
         this.SuratJalanModel = new SuratJalanModel(this.Server).table;
+        this.KualitasDetailModel = new KualitasDetailModel(this.Server).table;
     }
 
     async input(data, id) {
@@ -41,27 +51,37 @@ class SuratJalanService {
             }
         });
 
+        const getHarga = await this.HargaModel.findOne({
+            where: {
+                id_job: id
+            }
+        })
+
         let brngSelesai = getJob.jumlah;
         let brngSisa = 0;
-        let hargaKeseluruhan = getJob.harga_keseluruhan;
+        let hargaKeseluruhan = getHarga.harga_keseluruhan;
 
         if (data.closeOrder === true) {
             brngSelesai = data.selesai;
             brngSisa = getJob.jumlah - data.selesai;
-            hargaKeseluruhan = getJob.total_harga * data.selesai;
+            hargaKeseluruhan = getHarga.total_harga * data.selesai;
         }
 
         const updateJob = await this.JobModel.update({
             surat_jalan: true,
             selesai: brngSelesai,
             sisa: brngSisa,
-            harga_keseluruhan: hargaKeseluruhan,
             updated_at: new Date(),
         }, {
             where: {
                 id: id
             }
         })
+
+        const updateHarga = await this.HargaModel.update({
+            harga_keseluruhan: hargaKeseluruhan,
+            updated_at: new Date()
+        }, { where: { id_job: id } })
 
         return addSuratJalan;
     }
@@ -93,11 +113,118 @@ class SuratJalanService {
             }
         })
 
+        const getHarga = await this.HargaModel.findOne({
+            where: {
+                id_job: getSuratJalan.id_job,
+            }
+        })
+
+        const getCustomer = await this.CustomerModel.findOne({
+            where: {
+                id: getJob.id_customer,
+            }
+        })
+
+        const getUkuran = await this.UkuranModel.findOne({
+            where: {
+                id_job: getSuratJalan.id_job,
+            }
+        })
+
+        const getKualitasDetail = await this.KualitasDetailModel.findOne({
+            where: {
+                id: getJob.id_kualitas_detail,
+            }
+        })
+
+        const getKualitas = await this.KualitasModel.findOne({
+            where: {
+                id: getKualitasDetail.id_kualitas,
+            }
+        })
+
         getSuratJalan.dataValues.no_nt = getJob.dataValues.no_nt;
         getSuratJalan.dataValues.no_po = getJob.dataValues.no_po;
         getSuratJalan.dataValues.jumlah = getJob.dataValues.jumlah;
         getSuratJalan.dataValues.selesai = getJob.dataValues.selesai;
         getSuratJalan.dataValues.sisa = getJob.dataValues.sisa;
+        getSuratJalan.dataValues.keterangan = getJob.dataValues.keterangan;
+        getSuratJalan.dataValues.supir = getSupir.dataValues.nama;
+        getSuratJalan.dataValues.no_plat = getmobil.dataValues.noplat;
+        getSuratJalan.dataValues.harga_satuan = getHarga.dataValues.total_harga;
+        getSuratJalan.dataValues.total_harga = getHarga.dataValues.harga_keseluruhan;
+        getSuratJalan.dataValues.customer = getCustomer.dataValues.nama;
+        getSuratJalan.dataValues.ukuran_pengiriman = getCustomer.dataValues.ukuran_pengiriman;
+        getSuratJalan.dataValues.kualitas = getCustomer.dataValues.nama;
+
+        return getSuratJalan;
+    }
+
+    async cetakSuratJalan(id) {
+        const getSuratJalan = await this.SuratJalanModel.findOne({
+            where: {
+                id: id,
+            }
+        })
+
+        if (getSuratJalan === null) return -1;
+
+        const getJob = await this.JobModel.findOne({
+            where: {
+                id: getSuratJalan.id_job,
+            }
+        })
+
+        const getSupir = await this.SupirModel.findOne({
+            where: {
+                id: getSuratJalan.id_supir,
+            }
+        })
+
+        const getmobil = await this.MobilModel.findOne({
+            where: {
+                id: getSuratJalan.id_mobil,
+            }
+        })
+
+        const getCustomer = await this.CustomerModel.findOne({
+            where: {
+                id: getJob.id_customer
+            }
+        })
+
+        const getOrder = await this.OrderModel.findOne({
+            where: {
+                id: getJob.id_order,
+            }
+        })
+
+        const getKualitasDetail = await this.KualitasDetailModel.findOne({
+            where: {
+                id: getJob.id_kualitas_detail,
+            }
+        })
+
+        const getKualitas = await this.KualitasModel.findOne({
+            where: {
+                id: getKualitasDetail.id_kualitas,
+            }
+        })
+
+        const getUkuran = await this.UkuranModel.findOne({
+            where: {
+                id_job: getSuratJalan.id_job
+            }
+        })
+
+        getSuratJalan.dataValues.kualitas = getKualitas.dataValues.nama;
+        getSuratJalan.dataValues.customer = getCustomer.dataValues.nama;
+        getSuratJalan.dataValues.no_po = getOrder.dataValues.no_po;
+        getSuratJalan.dataValues.ukuran = getUkuran.dataValues.ukuran_pengiriman;
+        getSuratJalan.dataValues.no_nt = getJob.dataValues.no_nt;
+        getSuratJalan.dataValues.no_job = getJob.dataValues.no_job;
+        getSuratJalan.dataValues.jumlah = getJob.dataValues.jumlah;
+        getSuratJalan.dataValues.selesai = getJob.dataValues.selesai;
         getSuratJalan.dataValues.keterangan = getJob.dataValues.keterangan;
         getSuratJalan.dataValues.supir = getSupir.dataValues.nama;
         getSuratJalan.dataValues.no_plat = getmobil.dataValues.noplat;
@@ -179,12 +306,20 @@ class SuratJalanService {
             }
         });
 
+        const getHarga = await this.HargaModel.findOne({
+            where: {
+                id_job: getSuratJalan.id_job
+            }
+        })
+
         let brngSelesai = getJob.jumlah;
         let brngSisa = 0;
+        let hargaKeseluruhan = getHarga.harga_keseluruhan
 
         if (data.closeOrder === true) {
             brngSelesai = data.selesai;
             brngSisa = getJob.jumlah - data.selesai;
+            hargaKeseluruhan = getHarga.total_harga * data.selesai;
         }
 
         const updateJob = await this.JobModel.update({
@@ -196,6 +331,13 @@ class SuratJalanService {
             where: {
                 id: getSuratJalan.id_job
             }
+        })
+
+        const updateHarga = await this.HargaModel.update({
+            harga_keseluruhan: hargaKeseluruhan,
+            updated_at: new Date(),
+        }, {
+            where: { id_job: getSuratJalan.id_job }
         })
 
         return updateSuratJalan;

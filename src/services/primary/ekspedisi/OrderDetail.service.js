@@ -69,6 +69,7 @@ class OrderDetailService {
         const getJob = await this.JobModel.findAll({
             where: {
                 surat_jalan: true,
+                cancel: false
             }
         }, {
             attributes: ["id", "id_order", "id_customer", "id_kualitas_detail", "no_job", "jumlah", "sisa", "selesai", "surat_jalan"],
@@ -121,6 +122,7 @@ class OrderDetailService {
         const getJob = await this.JobModel.findAll({
             where: {
                 surat_jalan: false,
+                cancel: false
             }
         }, {
             attributes: ["id", "id_order", "id_customer", "id_kualitas_detail", "no_job", "jumlah", "sisa", "selesai"],

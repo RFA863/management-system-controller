@@ -294,7 +294,8 @@ class JobService {
     async getAll() {
         const getJob = await this.JobModel.findAll({
             where: {
-                cancel: false
+                cancel: false,
+                deleted_at: null,
             }
         })
 
@@ -390,7 +391,9 @@ class JobService {
     async get(id) {
         const getJob = await this.JobModel.findOne({
             where: {
-                id: id
+                id: id,
+                cancel: false,
+                deleted_at: null,
             }
         });
 
@@ -453,6 +456,92 @@ class JobService {
         return getJob;
 
 
+    }
+
+    async cetakJob(id) {
+        const getJob = await this.JobModel.findOne({
+            where: {
+                id: id,
+                cancel: false,
+                deleted_at: null,
+            }
+        });
+
+        if (getJob === null) return -1;
+
+
+        const getUkuran = await this.UkuranModel.findOne({
+            where: {
+                id_job: id
+            }
+        });
+
+        const getOrder = await this.OrderModel.findOne({
+            where: {
+                id: getJob.id_order,
+            }
+        })
+
+        const getCustomer = await this.CustomerModel.findOne({
+            where: {
+                id: getJob.id_customer,
+            }
+        })
+
+        const getTipeBox = await this.TipeBoxModel.findOne({
+            where: {
+                id: getJob.id_tipebox
+            }
+        })
+
+        const getKualitasDetail = await this.KualitasDetailModel.findOne({
+            where: {
+                id: getJob.id_kualitas_detail,
+            }
+        })
+
+        const getKualitas = await this.KualitasModel.findOne({
+            where: {
+                id: getKualitasDetail.id_kualitas
+            }
+        })
+
+        const getKualitasTipebox = await this.KualitasTipeBoxModel.findOne({
+            where: {
+                id_tipebox: getJob.id_tipebox,
+                id_kualitas: getKualitasDetail.id_kualitas,
+            }
+        })
+
+
+        getJob.dataValues.no_po = getOrder.dataValues.no_po;
+        getJob.dataValues.tanggal_order = getOrder.dataValues.tanggal_order;
+        getJob.dataValues.tanggal_kirim = getOrder.dataValues.tanggal_kirim;
+
+        getJob.dataValues.customer = getCustomer.dataValues.nama;
+        getJob.dataValues.alamat = getCustomer.dataValues.alamat;
+        getJob.dataValues.nomor = getCustomer.dataValues.nomor;
+
+        getJob.dataValues.lebar = getUkuran.dataValues.lebar;
+        getJob.dataValues.tinggi = getUkuran.dataValues.tinggi;
+        getJob.dataValues.ukuran = getUkuran.dataValues.ukuran;
+        getJob.dataValues.panjang = getUkuran.dataValues.panjang;
+        getJob.dataValues.total_lebar = getUkuran.dataValues.total_lebar;
+        getJob.dataValues.total_panjang = getUkuran.dataValues.total_panjang;
+
+
+        getJob.dataValues.tipebox = getTipeBox.dataValues.nama;
+        getJob.dataValues.kualitas = getKualitas.dataValues.nama;
+        getJob.dataValues.kualitas_detail = getKualitasDetail.dataValues.nama;
+        getJob.dataValues.kode_kualitas_detail = getKualitasDetail.dataValues.kode;
+
+        getJob.dataValues.konstanta_panjang = getKualitasTipebox.dataValues.konstanta_panjang;
+        getJob.dataValues.konstanta_lebar_ganjil = getKualitasTipebox.dataValues.konstanta_lebar_ganjil;
+        getJob.dataValues.konstanta_lebar_genap = getKualitasTipebox.dataValues.konstanta_lebar_genap;
+        getJob.dataValues.kuping = getKualitasTipebox.dataValues.kuping;
+
+
+        return getJob;
     }
 
     async getJobOrder(id) {

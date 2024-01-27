@@ -45,6 +45,8 @@ class RekeningService {
 
     }
 
+
+
     async update(data, id) {
         const getRekening = await this.RekeningModel.findOne({
             where: {

@@ -202,6 +202,22 @@ class JobController {
         res.status(200).json(this.ResponsePreset.resOK("Ok", getSrv));
     }
 
+    async cetakJob(req, res) {
+        if (req.middlewares.authorization.posisi !== "marketing")
+            return res.status(403).json({
+                messagge: "Forbidden",
+            });
+
+        const id = req.params.id;
+        const getSrv = await this.JobService.cetakJob(id);
+
+        if (getSrv === -1) return res.status(404).json(this.ResponsePreset.resErr(
+            "404", "Data not Found", "service", { code: -1 }
+        ))
+
+        res.status(200).json(this.ResponsePreset.resOK("Ok", getSrv));
+    }
+
     async getJobOrder(req, res) {
         if (req.middlewares.authorization.posisi !== "marketing")
             return res.status(403).json({
