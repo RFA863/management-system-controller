@@ -14,6 +14,7 @@ class RekeningService {
                 norekening: data.noRekening,
                 atasnama: data.atasNama,
                 ct: data.ct,
+                deleted_at: null,
             }
         })
 
@@ -45,8 +46,6 @@ class RekeningService {
 
     }
 
-
-
     async update(data, id) {
         const getRekening = await this.RekeningModel.findOne({
             where: {
@@ -54,6 +53,7 @@ class RekeningService {
                 norekening: data.noRekening,
                 atasnama: data.atasNama,
                 ct: data.ct,
+                deleted_at: null,
             }
         })
 

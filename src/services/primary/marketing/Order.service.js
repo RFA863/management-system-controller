@@ -17,6 +17,7 @@ class OrderService {
                 no_po: data.noPo,
                 tanggal_order: data.tanggalOrder,
                 tanggal_kirim: data.tanggalKirim,
+                deleted_at: null,
             }
         })
 
@@ -102,6 +103,7 @@ class OrderService {
                 no_po: data.noPo,
                 tanggal_order: data.tanggalOrder,
                 tanggal_kirim: data.tanggalKirim,
+                deleted_at: null,
             }
         })
 

@@ -14,6 +14,7 @@ class AturanTipeBoxService {
             where: {
                 id_tipebox: id,
                 nama: data.nama,
+                deleted_at: null,
 
             }
         })
@@ -59,7 +60,7 @@ class AturanTipeBoxService {
             where: {
                 id_tipebox: id,
                 nama: data.nama,
-
+                deleted_at: null,
             }
         })
 

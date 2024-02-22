@@ -15,6 +15,7 @@ class KualitasService {
         const getKualitas = await this.KualitasModel.findOne({
             where: {
                 nama: data.nama,
+                deleted_at: null,
             }
         })
 
@@ -45,6 +46,7 @@ class KualitasService {
         const getKualitas = await this.KualitasModel.findOne({
             where: {
                 nama: data.nama,
+                deleted_at: null,
             }
         })
 

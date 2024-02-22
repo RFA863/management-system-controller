@@ -10,7 +10,8 @@ class SupirService {
     async input(data) {
         const getSupir = await this.SupirModel.findOne({
             where: {
-                nama: data.nama
+                nama: data.nama,
+                deleted_at: null,
             }
         });
 
@@ -41,7 +42,8 @@ class SupirService {
     async update(data, id) {
         const getSupir = await this.SupirModel.findOne({
             where: {
-                nama: data.nama
+                nama: data.nama,
+                deleted_at: null,
             }
         });
 

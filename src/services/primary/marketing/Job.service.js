@@ -598,7 +598,6 @@ class JobService {
         return getJob;
     }
 
-
     async getJobDetail(id) {
         const getJob = await this.JobModel.findOne({
             where: {

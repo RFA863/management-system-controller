@@ -22,6 +22,7 @@ class TipeBoxService {
             where: {
                 nama: data.nama,
                 kode: data.kode,
+                deleted_at: null,
             }
         })
 
@@ -55,6 +56,7 @@ class TipeBoxService {
             where: {
                 nama: data.nama,
                 kode: data.kode,
+                deleted_at: null,
             }
         })
 

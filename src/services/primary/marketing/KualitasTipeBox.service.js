@@ -16,6 +16,7 @@ class KualitasTipeBoxService {
             where: {
                 id_tipebox: data.id_tipebox,
                 id_kualitas: data.id_kualitas,
+                deleted_at: null,
             }
         })
 
@@ -69,6 +70,7 @@ class KualitasTipeBoxService {
             where: {
                 id_tipebox: data.id_tipebox,
                 id_kualitas: data.id_kualitas,
+                deleted_at: null,
             }
         })
 

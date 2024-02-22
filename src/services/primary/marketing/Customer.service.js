@@ -20,6 +20,7 @@ class CustomerService {
                 nofax: data.noFax,
                 alamat: data.alamat,
                 alamatinvoice: data.alamatInvoice,
+                deleted_at: null,
             }
         });
 
@@ -71,6 +72,7 @@ class CustomerService {
                 nofax: data.noFax,
                 alamat: data.alamat,
                 alamatinvoice: data.alamatInvoice,
+                deleted_at: null,
             }
         });
 

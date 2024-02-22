@@ -15,6 +15,7 @@ class KualitasDetailService {
                 id_kualitas: data.id_kualitas,
                 nama: data.nama,
                 kode: data.kode,
+                deleted_at: null,
             }
         })
 
@@ -59,6 +60,7 @@ class KualitasDetailService {
                 id_kualitas: data.id_kualitas,
                 nama: data.nama,
                 kode: data.kode,
+                deleted_at: null,
             }
         })
 

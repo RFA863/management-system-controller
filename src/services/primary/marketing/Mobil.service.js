@@ -11,6 +11,7 @@ class MobilService {
         const getMobil = await this.MobilModel.findOne({
             where: {
                 noplat: data.noPlat,
+                deleted_at: null,
             }
         });
 
@@ -41,6 +42,7 @@ class MobilService {
         const getMobil = await this.MobilModel.findOne({
             where: {
                 noplat: data.noPlat,
+                deleted_at: null,
             }
         });
 

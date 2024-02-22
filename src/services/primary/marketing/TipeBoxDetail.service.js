@@ -16,6 +16,7 @@ class TipeBoxDetailService {
                 rumus_panjang: data.rumusPanjang,
                 rumus_lebar: data.rumusLebar,
                 rumus_oversize: data.rumusOversize,
+                deleted_at: null,
             }
         })
 
@@ -63,6 +64,7 @@ class TipeBoxDetailService {
                 rumus_panjang: data.rumusPanjang,
                 rumus_lebar: data.rumusLebar,
                 rumus_oversize: data.rumusOversize,
+                deleted_at: null,
             }
         })
 

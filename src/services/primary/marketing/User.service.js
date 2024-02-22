@@ -13,7 +13,8 @@ class UserService {
                 email: data.email,
                 password: data.password,
                 posisi: data.posisi,
-                akses: data.akses
+                akses: data.akses,
+                deleted_at: null,
             }
         })
 
@@ -49,7 +50,8 @@ class UserService {
                 email: data.email,
                 password: data.password,
                 posisi: data.posisi,
-                akses: data.akses
+                akses: data.akses,
+                deleted_at: null,
             }
         })
 

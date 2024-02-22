@@ -16,6 +16,7 @@ class IndexService {
             where: {
                 id_customer: data.id_customer,
                 id_kualitasdetail: data.id_kualitasDetail,
+                deleted_at: null,
             }
         });
 
@@ -63,7 +64,8 @@ class IndexService {
             where: {
                 id_customer: data.id_customer,
                 id_kualitasdetail: data.id_kualitasDetail,
-                indexvalue: data.indexValue
+                indexvalue: data.indexValue,
+                deleted_at: null,
             }
         });
 

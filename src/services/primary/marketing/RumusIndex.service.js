@@ -17,6 +17,7 @@ class RumusIndexService {
                 rumuslebar: data.rumusLebar,
                 rumusoversize: data.rumusOversize,
                 rumustotal: data.rumusTotal,
+                deleted_at: null,
             }
         })
 
@@ -66,6 +67,7 @@ class RumusIndexService {
                 rumuslebar: data.rumusLebar,
                 rumusoversize: data.rumusOversize,
                 rumustotal: data.rumusTotal,
+                deleted_at: null,
             }
         })
 
