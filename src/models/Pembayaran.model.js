@@ -54,7 +54,7 @@ class PembayaranModel {
                 },
 
                 total_bayar: {
-                    type: DataTypes.FLOAT,
+                    type: DataTypes.INTEGER,
                     allowNull: false,
                 },
 
@@ -64,7 +64,7 @@ class PembayaranModel {
                 },
 
                 sisa_bayar: {
-                    type: DataTypes.FLOAT,
+                    type: DataTypes.INTEGER,
                     allowNull: false,
                 },
 

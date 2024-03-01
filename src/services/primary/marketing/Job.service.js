@@ -160,8 +160,8 @@ class JobService {
             const a = (data.panjang + data.lebar) * 2 + data.index_panjang;
             const b = data.lebar + data.tinggi + data.index_lebar;
 
-            subTotal = (a * b * getIndex.indexvalue) / 1000000;
-            totalHarga = subTotal + data.penambahan_harga - data.pengurangan_harga;
+            subTotal = Math.round((a * b * getIndex.indexvalue) / 1000000);
+            totalHarga = Math.round(subTotal + data.penambahan_harga - data.pengurangan_harga);
 
             indexHarga = getIndex.indexvalue;
 
@@ -278,8 +278,8 @@ class JobService {
             const a = (data.panjang + data.lebar) * 2 + data.index_panjang;
             const b = data.lebar + data.tinggi + data.index_lebar;
 
-            subTotal = (a * b * getIndex.indexvalue) / 1000000;
-            totalHarga = subTotal + data.penambahan_harga - data.pengurangan_harga;
+            subTotal = Math.round((a * b * getIndex.indexvalue) / 1000000);
+            totalHarga = Math.round(subTotal + data.penambahan_harga - data.pengurangan_harga);
         }
 
         if (data.index === false) {
@@ -792,8 +792,8 @@ class JobService {
             const a = (data.panjang + data.lebar) * 2 + data.index_panjang;
             const b = data.lebar + data.tinggi + data.index_lebar;
 
-            subTotal = (a * b * getIndex.indexvalue) / 1000000;
-            totalHarga = subTotal + data.penambahan_harga - data.pengurangan_harga;
+            subTotal = Math.round((a * b * getIndex.indexvalue) / 1000000);
+            totalHarga = Math.round(subTotal + data.penambahan_harga - data.pengurangan_harga);
 
             indexHarga = getIndex.indexvalue;
 

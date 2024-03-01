@@ -40,7 +40,20 @@ class InvoiceService {
 
         if (getHarga === null) return -2;
 
-        let nominalPPN = (getHarga.harga_keseluruhan * data.ppn) / 100;
+        let nominalPPN = Math.round((getHarga.harga_keseluruhan * data.ppn) / 100);
+
+
+        if (data.ubahHarga === true) {
+            const updateHarga = await this.HargaModel.update({
+                harga_keseluruhan: data.harga
+            }, {
+                where: {
+                    id_job: getSuratJalan.id_job,
+                }
+            })
+
+            nominalPPN = Math.round((data.harga * data.ppn) / 100);
+        }
 
         if (data.berikat === true) {
             nominalPPN = 0
@@ -73,7 +86,7 @@ class InvoiceService {
 
         if (data.ubahHarga === true) {
             const updateHarga = await this.HargaModel.update({
-                total_harga: data.harga
+                harga_keseluruhan: data.harga
             }, {
                 where: {
                     id_job: getSuratJalan.id_job,
@@ -324,7 +337,20 @@ class InvoiceService {
 
         if (getHarga === null) return -2;
 
-        let nominalPPN = (getHarga.harga_keseluruhan * data.ppn) / 100;
+        let nominalPPN = Math.round((getHarga.harga_keseluruhan * data.ppn) / 100);
+
+        if (data.ubahHarga === true) {
+            const updateHarga = await this.HargaModel.update({
+                harga_keseluruhan: data.harga
+            }, {
+                where: {
+                    id_job: getInvoice.id_job
+                }
+            })
+
+            nominalPPN = Math.round((getHarga.harga_keseluruhan * data.ppn) / 100);
+
+        }
 
         if (data.berikat === true) {
             nominalPPN = 0
@@ -348,6 +374,9 @@ class InvoiceService {
                 id: id,
             }
         })
+
+
+
 
         return updateInvoice;
     }

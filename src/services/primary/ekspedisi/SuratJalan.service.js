@@ -154,8 +154,8 @@ class SuratJalanService {
         getSuratJalan.dataValues.harga_satuan = getHarga.dataValues.total_harga;
         getSuratJalan.dataValues.total_harga = getHarga.dataValues.harga_keseluruhan;
         getSuratJalan.dataValues.customer = getCustomer.dataValues.nama;
-        getSuratJalan.dataValues.ukuran_pengiriman = getCustomer.dataValues.ukuran_pengiriman;
-        getSuratJalan.dataValues.kualitas = getCustomer.dataValues.nama;
+        getSuratJalan.dataValues.ukuran_pengiriman = getUkuran.dataValues.ukuran_pengiriman;
+        getSuratJalan.dataValues.kualitas = getKualitas.dataValues.nama;
 
         return getSuratJalan;
     }

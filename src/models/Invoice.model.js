@@ -53,12 +53,12 @@ class InvoiceModel {
                 },
 
                 nominal_ppn: {
-                    type: DataTypes.FLOAT,
+                    type: DataTypes.INTEGER,
                     allowNull: true,
                 },
 
                 harga_bayar: {
-                    type: DataTypes.FLOAT,
+                    type: DataTypes.INTEGER,
                     allowNull: false,
                 },
 

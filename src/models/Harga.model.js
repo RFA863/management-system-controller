@@ -54,17 +54,17 @@ class HargaModel {
                 },
 
                 sub_total: {
-                    type: DataTypes.FLOAT,
+                    type: DataTypes.INTEGER,
                     allowNull: false,
                 },
 
                 total_harga: {
-                    type: DataTypes.FLOAT,
+                    type: DataTypes.INTEGER,
                     allowNull: false,
                 },
 
                 harga_keseluruhan: {
-                    type: DataTypes.FLOAT,
+                    type: DataTypes.INTEGER,
                     allowNull: false,
                 },
 

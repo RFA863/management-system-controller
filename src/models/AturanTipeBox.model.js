@@ -13,6 +13,7 @@ class AturanTipeBoxModel {
                     primaryKey: true,
                     autoIncrement: true,
                 },
+
                 id_tipebox: {
                     type: DataTypes.INTEGER,
                     allowNull: false,
@@ -21,6 +22,7 @@ class AturanTipeBoxModel {
                         key: "id",
                     },
                 },
+
                 nama: {
                     type: DataTypes.STRING(50),
                     allowNull: false,
